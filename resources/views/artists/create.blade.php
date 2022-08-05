@@ -8,7 +8,7 @@
                 <div class="form-group">
                     <label for="name">نام هنرمند:</label>
                     <input type="text" id="name" name="name"
-                        class="form-control @error('name') is-invalid @enderror">
+                           class="form-control @error('name') is-invalid @enderror" value="{{old('name')}}">
                     <span class="invalid-feedback" role="alert">
                         @error('name')
                             <strong>{{ $message }}</strong>
@@ -16,8 +16,9 @@
                     </span>
                 </div>
                 <div class="form-group">
-                    <label for="slug">slug:</label>
-                    <input type="text" id="slug" name="slug" class="form-control @error('slug') is-invalid @enderror">
+                    <label for="slug">slug (در صورت خالی گذاشتن این فیلد، به صورت خودکار نام هنرمند به اسلاگ تبدیل خواهد شد):</label>
+                    <input type="text" id="slug" name="slug" class="form-control @error('slug') is-invalid @enderror"
+                           value="{{old('slug')}}">
                     <span class="invalid-feedback" role="alert">
                         @error('slug')
                             <strong>{{ $message }}</strong>
@@ -26,7 +27,8 @@
                 </div>
                 <div class="form-group">
                     <label for="file">انتخاب تصویر:</label>
-                    <input type="file" name="image" class="form-control  @error('image') is-invalid @enderror" id="file">
+                    <input type="file" name="image" class="form-control  @error('image') is-invalid @enderror" id="file"
+                           value="{{old('image')}}">
                     <span class="invalid-feedback" role="alert">
                         @error('image')
                             <strong>{{ $message }}</strong>

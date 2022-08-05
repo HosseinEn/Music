@@ -1,17 +1,21 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreArtistRequest;
 use App\Http\Requests\UpdateArtistRequest;
 use App\Models\Artist;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+use \Cviebrock\EloquentSluggable\Services\SlugService;
 
 
 class ArtistController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->except(["index", "show"]);
+        $this->middleware('auth');
     }
     /**
      * Display a listing of the resource.
@@ -43,11 +47,7 @@ class ArtistController extends Controller
     public function store(StoreArtistRequest $request)
     {
         $validatedData = $request->validated();
-        // if(!empty($validatedData['slug'])) {
-        //     $validatedData["slug"] = $slug;
-        //     dd('here', $validatedData);
-        // }
-        $artist = Artist::create($validatedData);
+        Artist::create($validatedData);
         return redirect(route('artists.index'))->with('success','هنرمند با موفقیت ایجاد گردید!');
     }
 
@@ -58,7 +58,7 @@ class ArtistController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Artist $artist)
-    { 
+    {
         return view('artists.show', ['artist'=>$artist]);
     }
 
@@ -82,7 +82,24 @@ class ArtistController extends Controller
      */
     public function update(UpdateArtistRequest $request, Artist $artist)
     {
-        //
+        if($request->slug_based_on_name) {
+            $slugBase = $request->name;
+        }
+        else {
+            $slugBase = $request->slug;
+        }
+        $slug = SlugService::createSlug(Artist::class, 'slug', $slugBase, ["unique"=>false]);
+        $request->merge(["slug"=>$slug]);
+        $request->validate([
+            'slug' => [
+                Rule::unique('artists')->ignore($artist->id),
+            ],
+        ], [
+            'slug.unique' => 'اسلاگ قبلا استفاده شده است!'
+        ]);
+
+        $artist->update($request->all());
+        return redirect(route('artists.index'))->with('success', 'اطلاعات هنرمند با موفقیت ویرایش شد!');
     }
 
     /**

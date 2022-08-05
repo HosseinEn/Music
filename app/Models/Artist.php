@@ -25,6 +25,10 @@ class Artist extends Model
         return $this->hasMany(Song::class);
     }
 
+    public function image() {
+        return $this->morphOne(Image::class, "imageable");
+    }
+
     public function sluggable(): array
     {
         return [

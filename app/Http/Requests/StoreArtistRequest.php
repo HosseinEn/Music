@@ -26,7 +26,7 @@ class StoreArtistRequest extends FormRequest
         return [
             'name' => 'required|max:50',
             'slug' => 'unique:artists',
-            'image' => 'image|mimes:jpeg, jpg, png, gif'
+            'image' => 'image|mimes:jpeg,jpg,png,gif'
         ];
     }
 

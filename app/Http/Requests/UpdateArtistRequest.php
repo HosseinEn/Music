@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateArtistRequest extends FormRequest
 {
@@ -13,7 +14,7 @@ class UpdateArtistRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +25,18 @@ class UpdateArtistRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|max:50',
+            'image' => 'image|mimes:jpeg,jpg,png,gif'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'پر کردن نام هنرمند ضروری است!',
+            'name.max' => 'نام هنرمند حدااکثر می تواند ۵۰ کاراکتر باشد!',
+            'image.image' => 'فایل انتخاب شده یک تصویر نمی باشد!',
+            'image.mimes' => 'تصویر انتخاب شده باید پسوند مجاز داشته باشد. (jpg, jpeg, png)'
         ];
     }
 }
