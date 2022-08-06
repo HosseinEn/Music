@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder;
 
 class Artist extends Model
 {
@@ -27,6 +28,10 @@ class Artist extends Model
 
     public function image() {
         return $this->morphOne(Image::class, "imageable");
+    }
+
+    public function scopeLatest(Builder $query) {
+        return $query->orderBy('created_at', 'desc');
     }
 
     public function sluggable(): array

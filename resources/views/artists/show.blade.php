@@ -2,9 +2,18 @@
 
 @section('content')
     <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li><a href="{{ route('admin.home') }}">خانه</a></li>
+                <li><a href="{{ route('artists.index') }}">لیست هنرمندان</a></li>
+                <li>نمایش اطلاعات {{ $artist->name }}</li>
+            </ol>
+        </nav>
         <div class="row">
             هنرمند:{{ $artist->name }}<br>
-            <img src="" alt="Artist image here">
+            @if($artist->image)
+                <img src="{{ $artist->image->url() }}" alt="Artist image here" class="img-thumbnail" style="width: 100px;">
+            @endif
             <h3>آلبوم ها:</h3>
             <ul class="list-group mt-3">
                 @forelse ($artist->albums as $album)

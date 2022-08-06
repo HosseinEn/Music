@@ -8,7 +8,7 @@
                 <ol class="breadcrumb">
                     <li><a href="{{ route('admin.home') }}">خانه</a></li>
                     <li><a href="{{ route('artists.index') }}">لیست هنرمندان</a></li>
-                    <li>ویرایش اطلاعات {{ $artist->name }}</li>
+                    <li>ویرایش اطلاعات{{ $artist->name }}</li>
                 </ol>
             </nav>
 

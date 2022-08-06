@@ -2,7 +2,7 @@
 
 
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,10 +24,13 @@ Auth::routes();
 
 Auth::routes();
 
-Route::get('/admin/home', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin.home');
+Route::prefix('admin')->group(function() {
+    Route::get('/home', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin.home');
+    Route::resource('artists', \App\Http\Controllers\Admin\ArtistController::class);
+//    Route::post('artists?search', [\App\Http\Controllers\Admin\ArtistController::class, 'index'])->name('artists.search');
+});
 
-Route::resource('artists', \App\Http\Controllers\Admin\ArtistController::class);
 
 Route::get('/', function() {
-    return view('index');
+    return view('main.index');
 })->name('home');

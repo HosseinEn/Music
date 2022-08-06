@@ -3,6 +3,15 @@
 @section('content')
     <div class="container">
         <div class="row">
+
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li><a href="{{ route('admin.home') }}">خانه</a></li>
+                    <li><a href="{{ route('artists.index') }}">لیست هنرمندان</a></li>
+                    <li>ایجاد هنرمند جدید</li>
+                </ol>
+            </nav>
+
             <form action="{{ route('artists.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">

@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreArtistRequest;
 use App\Http\Requests\UpdateArtistRequest;
 use App\Models\Artist;
+use App\Models\Image;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
@@ -13,6 +16,7 @@ use \Cviebrock\EloquentSluggable\Services\SlugService;
 
 class ArtistController extends Controller
 {
+    private const PAGINATEDBY = 10;
     public function __construct()
     {
         $this->middleware('auth');
@@ -22,10 +26,24 @@ class ArtistController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $artists = Artist::withCount('albums')->get();
-        return view('artists.index', ['artists'=>$artists]);
+        $pageNumMultPageNum = $this->calculateCounter($request->query('page'));
+        if($request->has('search')) {
+            $searchParam = $request->get('search');
+            $artists = Artist::where('name', 'like', "%{$searchParam}%")->paginate(self::PAGINATEDBY);
+        }
+        else {
+            $artists = Artist::withCount('albums')->latest()->paginate(self::PAGINATEDBY);
+        }
+        return view('artists.index',
+            ['artists'=>$artists,
+            'pageNumMultPageNum'=>$pageNumMultPageNum]);
+    }
+
+    public function calculateCounter($page) {
+        $pageNumber = max(1, (int) $page);
+        return self::PAGINATEDBY * ($pageNumber - 1);
     }
 
     /**
@@ -47,8 +65,21 @@ class ArtistController extends Controller
     public function store(StoreArtistRequest $request)
     {
         $validatedData = $request->validated();
-        Artist::create($validatedData);
+        $artist = Artist::create($validatedData);
+        if($request->has('image')) {
+            $imageFile = $request->file('image');
+            $path = $this->storeImageOnDisk($imageFile, $artist);
+            $image = Image::make(["path" => $path]);
+            $artist->image()->save($image);
+        }
         return redirect(route('artists.index'))->with('success','هنرمند با موفقیت ایجاد گردید!');
+    }
+
+    public function storeImageOnDisk($imageFile, $artist) {
+        $date = now()->format("Y-m-d");
+        $extension = $imageFile->guessClientExtension();
+        $path = $imageFile->storeAs("public/artist_images", "artist_{$artist->id}_{$date}.{$extension}");
+        return $path;
     }
 
     /**
@@ -97,7 +128,20 @@ class ArtistController extends Controller
         ], [
             'slug.unique' => 'اسلاگ قبلا استفاده شده است!'
         ]);
-
+        if($request->has('image')) {
+            $imageFile = $request->file('image');
+            if(!$artist->image) {
+                $path = $this->storeImageOnDisk($imageFile, $artist);
+                $image = Image::make(["path" => $path]);
+                $artist->image()->save($image);
+            }
+            else {
+                $oldImagePath = $artist->image->path;
+                Storage::delete($oldImagePath);
+                $path = $this->storeImageOnDisk($imageFile, $artist);
+                $artist->image()->update(["path"=>$path]);
+            }
+        }
         $artist->update($request->all());
         return redirect(route('artists.index'))->with('success', 'اطلاعات هنرمند با موفقیت ویرایش شد!');
     }
@@ -110,6 +154,9 @@ class ArtistController extends Controller
      */
     public function destroy(Artist $artist)
     {
-        //
+        Storage::delete($artist->image->path);
+        $artist->image()->delete();
+        $artist->delete();
+        return redirect()->back()->with('success', 'هنرمند با موفقیت حذف شد!');
     }
 }
