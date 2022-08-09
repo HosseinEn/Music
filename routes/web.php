@@ -2,7 +2,6 @@
 
 
 use Illuminate\Support\Facades\Auth;
-
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,16 +17,10 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
-Auth::routes();
-
-Route::prefix('admin')->group(function() {
+Route::prefix('admin')->middleware('is_admin')->group(function() {
     Route::get('/home', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin.home');
     Route::resource('artists', \App\Http\Controllers\Admin\ArtistController::class);
-//    Route::post('artists?search', [\App\Http\Controllers\Admin\ArtistController::class, 'index'])->name('artists.search');
+    Route::resource('albums' , \App\Http\Controllers\Admin\AlbumController::class);
 });
 
 

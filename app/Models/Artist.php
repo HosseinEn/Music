@@ -2,21 +2,17 @@
 
 namespace App\Models;
 
+use App\Traits\ModelsCommonMethods;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 
 class Artist extends Model
 {
-    use HasFactory, Sluggable;
+    use ModelsCommonMethods;
+    use HasFactory;
 
     protected $fillable = ["name", "slug", "user_id"];
-
-    public function getRouteKeyName()
-    {
-        return 'slug';
-    }
 
     public function albums() {
         return $this->hasMany(Album::class);
@@ -26,24 +22,7 @@ class Artist extends Model
         return $this->hasMany(Song::class);
     }
 
-    public function image() {
-        return $this->morphOne(Image::class, "imageable");
-    }
-
-    public function scopeLatest(Builder $query) {
-        return $query->orderBy('created_at', 'desc');
-    }
-
-    public function user() {
-        return $this->belongsTo(User::class);
-    }
-
-    public function sluggable(): array
-    {
-        return [
-            'slug' => [
-                'source' => 'name'
-            ]
-        ];
+    public function scopeSoloSongs(Builder $query) {
+        return $this->songs()->doesntHave('album');
     }
 }

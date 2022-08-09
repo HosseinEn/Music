@@ -4,41 +4,45 @@
         <th class="text-center">#</th>
         <th class="text-center">نام</th>
         <th class="text-center">اسلاگ</th>
+        <th class="text-center">هنرمند</th>
         <th class="text-center">ویرایش</th>
         <th class="text-center">نمایش</th>
         <th class="text-center">حذف</th>
         <th class="text-center">تاریخ ایجاد</th>
         <th class="text-center">ایجاد شده توسط</th>
+        <th>افزودن موسیقی</th>
     </tr>
     </thead>
     <tbody>
-    @forelse ($artists as $artist)
+    @forelse ($albums as $album)
         <tr class="text-center">
             <th scope="row">{{ $loop->iteration + $pageNumMultiplyPageNum }}</th>
-            <td>{{ $artist->name }}</td>
-            <td>{{ $artist->slug }}</td>
+            <td>{{ $album->name }}</td>
+            <td>{{ $album->slug }}</td>
+            <td>{{ $album->artist->name }}</td>
             <td>
-                <a class="btn btn-warning" href="{{ route('artists.edit', $artist->slug) }}">ویرایش</a>
+                <a class="btn btn-warning" href="#">ویرایش</a>
             </td>
             <td>
-                <a class="btn btn-primary" href="{{ route('artists.show', $artist->slug) }}">مشاهده</a>
+                <a class="btn btn-primary" href="#">مشاهده</a>
             </td>
             <td>
-                <form action="{{ route('artists.destroy', $artist->slug) }}" method="POST">
+                <form action="#" method="POST">
                     @csrf
                     @method('delete')
                     <input type="submit" value="حذف" class="btn btn-danger">
                 </form>
             </td>
-            <td>{{ $artist->created_at->format('Y-m-d') }}</td>
-            <td>{{ $artist->user->name }}</td>
+            <td>{{ $album->created_at->format('Y-m-d') }}</td>
+            <td>{{ $album->user->name }}</td>
+            <td><a href="">افزودن</a></td>
         </tr>
     @empty
         <tr>
-            <th>هنرمندی پیدا نشد!</th>
+            <th>آلبومی پیدا نشد!</th>
         </tr>
     @endforelse
     </tbody>
 </table>
 
-{{ $artists->links() }}
+{{ $albums->links() }}

@@ -16,6 +16,14 @@ class Image extends Model
         return $this->morphTo();
     }
 
+    public function song() {
+        return $this->morphTo();
+    }
+
+    public function album() {
+        return $this->morphTo();
+    }
+
     public function url() {
         return Storage::url($this->path);
     }

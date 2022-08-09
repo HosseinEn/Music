@@ -20,11 +20,16 @@
                     <li class="list-group-item active">
                         <h5>{{ $album->name }}</h5>
                     </li>
-                    @foreach ($album->songs as $song)
+                    @forelse ($album->songs as $song)
                         <li class="list-group-item">
                             {{ $song->name }}
+                            <hr>
                         </li>
-                    @endforeach
+                    @empty
+                        <li class="list-group-item">
+                            در این آلبوم موسیقی ای وجود ندارد!
+                        </li>
+                    @endforelse
                 @empty
                     <li class="list-group-item">
                         هنرمند هیچ آلبومی ندارد!
@@ -35,7 +40,7 @@
             <hr class="mt-5">
             <h3 class="mt-5">تک موسیقی ها:</h3>
             <ul class="list-group">
-                @forelse ($artist->songs as $song)
+                @forelse ($soloSongs as $song)
                     <li class="list-group-item">{{ $song->name }}</li>
                 @empty
                     <li class="list-group-item">هنرمند آهنگ تکی ندارد!</li>

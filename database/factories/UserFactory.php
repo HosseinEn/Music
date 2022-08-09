@@ -20,16 +20,18 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => '$2y$10$csK/3SZe3NmFTV1en3qx9uKMCxgt8HAHZ1wVwSqGZKwQQrUSmM9Mm', // password
             'remember_token' => Str::random(10),
+            'is_admin'=>false
         ];
     }
 
- 
+
     public function createHozi()
     {
         return $this->state(function (array $attributes) {
             return [
                 'name' => 'Hozi',
-                'email'=>'hozi@gmail.com'
+                'email'=>'hozi@gmail.com',
+                'is_admin'=>true
             ];
         });
     }

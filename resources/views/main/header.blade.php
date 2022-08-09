@@ -42,8 +42,18 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="{{ route('login') }}">ورود</a></li>
-                    <li><a href="{{ route('register')  }}">ثبت نام</a></li>
+                    @guest
+                        <li><a href="{{ route('login') }}">ورود</a></li>
+                        <li><a href="{{ route('register')  }}">ثبت نام</a></li>
+                    @else
+                        <li><a href="#">{{ Auth::user()->name }}</a></li>
+                        <li>
+                            <form action="{{ route('logout') }}" method="POST">
+                                @csrf
+                                <input type="submit" value="logout" class="btn btn-danger">
+                            </form>
+                        </li>
+                    @endguest
                     <li><a href="#latestalbum">Latest Album</a></li>
                     <li><a href="#featuredalbum">Featured Album</a></li>
                     <li><a href="#joinus">Join Us</a></li>

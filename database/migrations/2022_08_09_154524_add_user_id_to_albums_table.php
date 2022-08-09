@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTagsTable extends Migration
+class AddUserIdToAlbumsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreateTagsTable extends Migration
      */
     public function up()
     {
-        Schema::create('tags', function (Blueprint $table) {
-            $table->id();
-            $table->string('name', 60);
-            $table->string('slug', 60)->unique();
-            $table->timestamps();
+        Schema::table('albums', function (Blueprint $table) {
+            $table->unsignedBigInteger('user_id');
+            $table->foreign("user_id")->references("id")->on("users");
         });
     }
 
@@ -28,6 +26,8 @@ class CreateTagsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tags');
+        Schema::table('albums', function (Blueprint $table) {
+            //
+        });
     }
 }

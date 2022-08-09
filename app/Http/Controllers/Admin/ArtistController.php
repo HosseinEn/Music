@@ -30,21 +30,18 @@ class ArtistController extends Controller
     public function index(Request $request)
     {
         $pageNumMultiplyPageNum = $this->calculateCounter($request->query('page'));
+
         if($request->has('search')) {
             $searchParam = $request->get('search');
-            $artists = Artist::with("user")->where('name', 'like', "%{$searchParam}%")->paginate(self::PAGINATEDBY);
+            $artists = Artist::with("user")
+                ->where('name', 'like', "%{$searchParam}%")->paginate(self::PAGINATEDBY);
         }
         else {
-            $artists = Artist::withCount('albums')->latest()->paginate(self::PAGINATEDBY);
+            $artists = Artist::with("user")->withCount('albums')->latest()->paginate(self::PAGINATEDBY);
         }
         return view('artists.index',
             ['artists'=>$artists,
-            'pageNumMultPageNum'=>$pageNumMultiplyPageNum]);
-    }
-
-    public function calculateCounter($page) {
-        $pageNumber = max(1, (int) $page);
-        return self::PAGINATEDBY * ($pageNumber - 1);
+            'pageNumMultiplyPageNum'=>$pageNumMultiplyPageNum]);
     }
 
     /**
@@ -70,19 +67,13 @@ class ArtistController extends Controller
         $artist = Artist::create($validatedData);
         if($request->has('image')) {
             $imageFile = $request->file('image');
-            $path = $this->storeImageOnDisk($imageFile, $artist);
+            $path = $this->storeImageOnPublicDisk($imageFile, 'artist', $artist->id);
             $image = Image::make(["path" => $path]);
             $artist->image()->save($image);
         }
         return redirect(route('artists.index'))->with('success','هنرمند با موفقیت ایجاد گردید!');
     }
 
-    public function storeImageOnDisk($imageFile, $artist) {
-        $date = now()->format("Y-m-d");
-        $extension = $imageFile->guessClientExtension();
-        $path = $imageFile->storeAs("public/artist_images", "artist_{$artist->id}_{$date}.{$extension}");
-        return $path;
-    }
 
     /**
      * Display the specified resource.
@@ -92,7 +83,12 @@ class ArtistController extends Controller
      */
     public function show(Artist $artist)
     {
-        return view('artists.show', ['artist'=>$artist]);
+//        dd($artist->soloSongs()->get());
+        return view('artists.show',
+            ['artist'=>$artist,
+             'albums'=> $artist->albums,
+             'soloSongs' => $artist->soloSongs()->get()
+            ]);
     }
 
     /**
@@ -133,14 +129,14 @@ class ArtistController extends Controller
         if($request->has('image')) {
             $imageFile = $request->file('image');
             if(!$artist->image) {
-                $path = $this->storeImageOnDisk($imageFile, $artist);
+                $path = $this->storeImageOnPublicDisk($imageFile, 'artist', $artist->id);
                 $image = Image::make(["path" => $path]);
                 $artist->image()->save($image);
             }
             else {
                 $oldImagePath = $artist->image->path;
                 Storage::delete($oldImagePath);
-                $path = $this->storeImageOnDisk($imageFile, $artist);
+                $path = $this->storeImageOnPublicDisk($imageFile, 'artist', $artist->id);
                 $artist->image()->update(["path"=>$path]);
             }
         }
