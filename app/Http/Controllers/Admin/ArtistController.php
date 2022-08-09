@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateArtistRequest;
 use App\Models\Artist;
 use App\Models\Image;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -28,17 +29,17 @@ class ArtistController extends Controller
      */
     public function index(Request $request)
     {
-        $pageNumMultPageNum = $this->calculateCounter($request->query('page'));
+        $pageNumMultiplyPageNum = $this->calculateCounter($request->query('page'));
         if($request->has('search')) {
             $searchParam = $request->get('search');
-            $artists = Artist::where('name', 'like', "%{$searchParam}%")->paginate(self::PAGINATEDBY);
+            $artists = Artist::with("user")->where('name', 'like', "%{$searchParam}%")->paginate(self::PAGINATEDBY);
         }
         else {
             $artists = Artist::withCount('albums')->latest()->paginate(self::PAGINATEDBY);
         }
         return view('artists.index',
             ['artists'=>$artists,
-            'pageNumMultPageNum'=>$pageNumMultPageNum]);
+            'pageNumMultPageNum'=>$pageNumMultiplyPageNum]);
     }
 
     public function calculateCounter($page) {
@@ -65,6 +66,7 @@ class ArtistController extends Controller
     public function store(StoreArtistRequest $request)
     {
         $validatedData = $request->validated();
+        $validatedData["user_id"] = Auth::user()->id;
         $artist = Artist::create($validatedData);
         if($request->has('image')) {
             $imageFile = $request->file('image');

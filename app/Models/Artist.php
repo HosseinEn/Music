@@ -11,7 +11,7 @@ class Artist extends Model
 {
     use HasFactory, Sluggable;
 
-    protected $fillable = ["name", "slug"];
+    protected $fillable = ["name", "slug", "user_id"];
 
     public function getRouteKeyName()
     {
@@ -32,6 +32,10 @@ class Artist extends Model
 
     public function scopeLatest(Builder $query) {
         return $query->orderBy('created_at', 'desc');
+    }
+
+    public function user() {
+        return $this->belongsTo(User::class);
     }
 
     public function sluggable(): array

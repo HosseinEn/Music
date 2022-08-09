@@ -27,7 +27,7 @@
                     @endforeach
                 @empty
                     <li class="list-group-item">
-                        Artist has no album!
+                        هنرمند هیچ آلبومی ندارد!
                     </li>
                 @endforelse
             </ul>
@@ -38,7 +38,7 @@
                 @forelse ($artist->songs as $song)
                     <li class="list-group-item">{{ $song->name }}</li>
                 @empty
-                    <li class="list-group-item">Artist has no solo song!</li>
+                    <li class="list-group-item">هنرمند آهنگ تکی ندارد!</li>
                 @endforelse
             </ul>
         </div>
