@@ -28,10 +28,10 @@ class StoreAlbumRequest extends FormRequest
             'slug' => 'unique:albums',
             'cover' => 'required|image|mimes:jpeg,jpg,png,gif',
             'song' => 'mimes:mp3,mp4',
+            //            'song' => 'required|mimes:mp3,mp4'
             'released_date' => 'required|date',
             'artist_id' => 'exists:artists,id|required',
             'duration'=>'required'
-//            'song' => 'required|mimes:mp3,mp4'
         ];
     }
 

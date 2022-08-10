@@ -21,9 +21,9 @@ class Controller extends BaseController
     }
 
     public function storeImageOnPublicDisk($imageFile, $name, $id) {
-        $date = now()->format("Y-m-d");
+        $dateAndTime = now()->format("Y-m-d_hmsu");
         $extension = $imageFile->guessClientExtension();
-        $path = $imageFile->storeAs("public/{$name}_images", "{$name}_{$id}_{$date}.{$extension}");
+        $path = $imageFile->storeAs("public/{$name}_images", "{$name}_{$id}_{$dateAndTime}.{$extension}");
         return $path;
     }
 }
