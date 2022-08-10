@@ -21,6 +21,8 @@ Route::prefix('admin')->middleware('is_admin')->group(function() {
     Route::get('/home', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin.home');
     Route::resource('artists', \App\Http\Controllers\Admin\ArtistController::class);
     Route::resource('albums' , \App\Http\Controllers\Admin\AlbumController::class);
+    Route::post('/albums/song/delete',
+        [\App\Http\Controllers\Admin\AlbumController::class, 'deleteSongFromAlbum'])->name('album.song.delete');
 });
 
 

@@ -64,18 +64,28 @@ class ArtistController extends Controller
     {
         $validatedData = $request->validated();
         $validatedData["user_id"] = Auth::user()->id;
+        if(!isset($validatedData["slug"])) {
+            $this->validateSlugBasedOneName($request, $validatedData);
+        }
         $artist = Artist::create($validatedData);
         if($request->has('image')) {
-            $imageFile = $request->file('image');
-            $path = $this->storeImageOnPublicDisk($imageFile, 'artist', $artist->id);
-            $image = Image::make(["path" => $path]);
-            $artist->image()->save($image);
+            $this->addImageToModelAndStore($request, $artist, 'artist', 'image');
         }
         return redirect(route('artists.index'))->with('success','هنرمند با موفقیت ایجاد گردید!');
     }
 
+    public function validateSlugBasedOneName($request, $validatedData)
+    {
+        $slug = SlugService::createSlug(Artist::class, 'slug', $validatedData["name"]);
+        $request->merge(["slug"=>$slug]);
+        $request->validate([
+            'slug' => [
+                Rule::unique('artists')
+            ],
+        ], $this->slugMessage());
+    }
 
-    /**
+        /**
      * Display the specified resource.
      *
      * @param  \App\Models\Artist  $artist
@@ -111,38 +121,15 @@ class ArtistController extends Controller
      */
     public function update(UpdateArtistRequest $request, Artist $artist)
     {
-        if($request->slug_based_on_name) {
-            $slugBase = $request->name;
-        }
-        else {
-            $slugBase = $request->slug;
-        }
+        $slugBase = $this->slugBasedOnNameOrUserInputIfNotNull($request);
         $slug = SlugService::createSlug(Artist::class, 'slug', $slugBase, ["unique"=>false]);
         $request->merge(["slug"=>$slug]);
-        $request->validate([
-            'slug' => [
-                Rule::unique('artists')->ignore($artist->id),
-            ],
-        ], [
-            'slug.unique' => 'اسلاگ قبلا استفاده شده است!'
-        ]);
-        if($request->has('image')) {
-            $imageFile = $request->file('image');
-            if(!$artist->image) {
-                $path = $this->storeImageOnPublicDisk($imageFile, 'artist', $artist->id);
-                $image = Image::make(["path" => $path]);
-                $artist->image()->save($image);
-            }
-            else {
-                $oldImagePath = $artist->image->path;
-                Storage::delete($oldImagePath);
-                $path = $this->storeImageOnPublicDisk($imageFile, 'artist', $artist->id);
-                $artist->image()->update(["path"=>$path]);
-            }
-        }
+        $this->uniqueSlugOnUpdate($request, $artist, 'artists');
+        $this->handleImageOnUpdate($request, $artist, 'artist', 'image');
         $artist->update($request->all());
         return redirect(route('artists.index'))->with('success', 'اطلاعات هنرمند با موفقیت ویرایش شد!');
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -152,7 +139,9 @@ class ArtistController extends Controller
      */
     public function destroy(Artist $artist)
     {
-        Storage::delete($artist->image->path);
+        if($artist->image) {
+            Storage::delete($artist->image->path);
+        }
         $artist->image()->delete();
         $artist->delete();
         return redirect()->back()->with('success', 'هنرمند با موفقیت حذف شد!');

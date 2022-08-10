@@ -10,7 +10,6 @@
         <th class="text-center">حذف</th>
         <th class="text-center">تاریخ ایجاد</th>
         <th class="text-center">ایجاد شده توسط</th>
-        <th>افزودن موسیقی</th>
     </tr>
     </thead>
     <tbody>
@@ -21,13 +20,13 @@
             <td>{{ $album->slug }}</td>
             <td>{{ $album->artist->name }}</td>
             <td>
-                <a class="btn btn-warning" href="#">ویرایش</a>
+                <a class="btn btn-warning" href="{{ route('albums.edit', $album->slug) }}">ویرایش</a>
             </td>
             <td>
                 <a class="btn btn-primary" href="#">مشاهده</a>
             </td>
             <td>
-                <form action="#" method="POST">
+                <form action="{{ route('albums.destroy', $album->slug) }}" method="POST">
                     @csrf
                     @method('delete')
                     <input type="submit" value="حذف" class="btn btn-danger">
@@ -35,7 +34,6 @@
             </td>
             <td>{{ $album->created_at->format('Y-m-d') }}</td>
             <td>{{ $album->user->name }}</td>
-            <td><a href="">افزودن</a></td>
         </tr>
     @empty
         <tr>

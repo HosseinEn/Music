@@ -27,11 +27,12 @@ class StoreAlbumRequest extends FormRequest
             'name' => 'required|max:50',
             'slug' => 'unique:albums',
             'cover' => 'required|image|mimes:jpeg,jpg,png,gif',
-            'song' => 'mimes:mp3,mp4',
-            //            'song' => 'required|mimes:mp3,mp4'
+            'songs' =>'required',
             'released_date' => 'required|date',
             'artist_id' => 'exists:artists,id|required',
-            'duration'=>'required'
+            'duration_hours'=>'required',
+            'duration_minutes'=>'required',
+            'duration_seconds'=>'required',
         ];
     }
 
@@ -44,12 +45,14 @@ class StoreAlbumRequest extends FormRequest
             'cover.image' => 'فایل انتخاب شده یک تصویر نمی باشد!',
             'cover.mimes' => 'تصویر انتخاب شده باید پسوند مجاز داشته باشد. (jpg, jpeg, png)',
             'cover.required'=>'افزودن کاور برای آلبوم اجباری است!',
-            'song.mimes' =>'موسیقی باید پسوند mp3 یا mp4 داشته باشد!',
             'released_date.required' => 'تاریخ انتشار را انتخاب نمایید!',
             'released_date.date' => 'تاریخ را به درستی وارد نمایید!',
             'artist_id.required'=> 'یک هنرمند را انتخاب نمایید!',
             'artist_id.exists' => 'یک هنرمند را از لیست انتخاب نمایید!',
-            'duration.required' => 'طول زمانی آلبوم را وارد نمایید!'
+            'duration_hours.required' => 'ساعت را وارد نمایید! (از صفر)',
+            'duration_minutes.required' => 'دقیقه را وارد نمایید! (از صفر الی شصت)',
+            'duration_seconds.required' => 'ثانیه را وارد نمایید! (از صفر الی شصت)',
+            'songs.required' => 'انتخاب حداقل یکی موسیقی برای البوم اجباری است.'
         ];
     }
 }

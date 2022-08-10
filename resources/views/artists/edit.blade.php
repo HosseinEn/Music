@@ -58,7 +58,7 @@
                             بازگشت
                         </button>
                     </a>
-                    <button type="submit" class="btn btn-primary">ایجاد</button>
+                    <button type="submit" class="btn btn-primary">ویرایش</button>
                 </div>
             </form>
         </div>

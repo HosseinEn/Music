@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\ModelsCommonMethods;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,4 +21,5 @@ class Album extends Model
     public function songs() {
         return $this->hasMany(Song::class);
     }
+
 }
