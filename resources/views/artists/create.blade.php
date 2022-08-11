@@ -25,9 +25,10 @@
                     </span>
                 </div>
                 <div class="form-group">
-                    <label for="slug">slug (در صورت خالی گذاشتن این فیلد، به صورت خودکار نام هنرمند به اسلاگ تبدیل خواهد شد):</label>
+                    <label for="slug">slug:</label>
                     <input type="text" id="slug" name="slug" class="form-control @error('slug') is-invalid @enderror"
                            value="{{old('slug')}}">
+                    <small>در صورت خالی گذاشتن این فیلد، به صورت خودکار نام هنرمند به اسلاگ تبدیل خواهد شد</small>
                     <span class="invalid-feedback" role="alert">
                         @error('slug')
                             <strong>{{ $message }}</strong>

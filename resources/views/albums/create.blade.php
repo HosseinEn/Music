@@ -1,13 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+    <div class="container">
         <div class="row">
-{{--            @if($errors->any())--}}
-{{--                @foreach($errors->all() as $error)--}}
-{{--                    {{$error}}<br>--}}
-{{--                @endforeach--}}
-{{--            @endif--}}
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li><a href="{{ route('admin.home') }}">خانه</a></li>
@@ -21,7 +16,7 @@
                 <div class="form-group">
                     <label for="name">نام آلبوم:</label>
                     <input type="text" id="name" name="name"
-                           class="form-control @error('name') is-invalid @enderror" value="{{old('name')}}">
+                        class="form-control @error('name') is-invalid @enderror" value="{{old('name')}}">
                     <span class="invalid-feedback" role="alert">
                         @error('name')
                             <strong>{{ $message }}</strong>
@@ -31,7 +26,7 @@
                 <div class="form-group">
                     <label for="slug">slug:</label>
                     <input type="text" id="slug" name="slug" class="form-control @error('slug') is-invalid @enderror"
-                           value="{{old('slug')}}">
+                        value="{{old('slug')}}">
                     <small>در صورت خالی گذاشتن این فیلد، به صورت خودکار نام آلبوم به اسلاگ تبدیل خواهد شد.</small>
                     <span class="invalid-feedback" role="alert">
                         @error('slug')
@@ -82,8 +77,8 @@
                 <div class="form-group">
                     <label for="released_date">تاریخ انتشار آلبوم:</label>
                     <input type="date" id="start" name="released_date"
-                           value="{{ old('released_date') }}"
-                           min="" max="" class="form-control @error('released_date') is-invalid @enderror">
+                        value="{{ old('released_date') }}"
+                        min="" max="" class="form-control @error('released_date') is-invalid @enderror">
                     <span class="invalid-feedback" role="alert">
                         @error('released_date')
                             <strong>{{ $message }}</strong>
@@ -112,7 +107,7 @@
                 <div class="form-group">
                     <label for="cover">انتخاب تصویر:</label>
                     <input type="file" name="cover" class="form-control  @error('cover') is-invalid @enderror" id="cover"
-                           value="{{old('cover')}}">
+                        value="{{old('cover')}}">
                     <span class="invalid-feedback" role="alert">
                         @error('cover')
                             <strong>{{ $message }}</strong>
@@ -126,11 +121,5 @@
         </div>
     </div>
 
-    <script type="application/javascript">
-        $(document).ready(function () {
-            $('select').selectize({
-                sortField: 'text'
-            });
-        });
-    </script>
+
 @endsection

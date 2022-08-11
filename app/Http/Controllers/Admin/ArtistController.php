@@ -6,12 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreArtistRequest;
 use App\Http\Requests\UpdateArtistRequest;
 use App\Models\Artist;
-use App\Models\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
 
 
@@ -64,23 +61,12 @@ class ArtistController extends Controller
     {
         $validatedData = $request->validated();
         $validatedData["user_id"] = Auth::user()->id;
-        $this->createSlug($validatedData);
+        $this->createSlug($validatedData, Artist::class);
         $artist = Artist::create($validatedData);
         if($request->has('image')) {
             $this->addImageToModelAndStore($request, $artist, 'artist', 'image');
         }
         return redirect(route('artists.index'))->with('success','هنرمند با موفقیت ایجاد گردید!');
-    }
-
-    public function createSlug(& $validatedData) {
-        if(!isset($validatedData["slug"])) {
-            $slugBase = $validatedData["name"];
-        }
-        else {
-            $slugBase = $validatedData["slug"];
-        }
-        $slug = SlugService::createSlug(Artist::class, 'slug', strtolower($slugBase));
-        $validatedData["slug"] = $slug;
     }
 
     /**
@@ -91,7 +77,6 @@ class ArtistController extends Controller
      */
     public function show(Artist $artist)
     {
-//        dd($artist->soloSongs()->get());
         return view('artists.show',
             ['artist'=>$artist,
              'albums'=> $artist->albums,

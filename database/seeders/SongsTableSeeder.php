@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Album;
 use App\Models\Artist;
 use App\Models\Song;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class SongsTableSeeder extends Seeder
@@ -16,19 +17,18 @@ class SongsTableSeeder extends Seeder
      */
     public function run()
     {
-        $genre = collect(["New age", "Modern Classic", "Lo-Fi", "Pop", "Funk"]);
-        Song::factory(20)->make()->each(function($song) use ($genre) {
+        Song::factory(20)->make()->each(function($song) {
             $song->artist()->associate(Artist::inRandomOrder()->get()->first());
-            $song->genre = $genre->random();
+            $song->user_id = User::inRandomOrder()->get()->first()->id;
             $song->save();
         });
         // songs with albums
-        Song::factory(20)->make()->each(function($song) use ($genre) {
+        Song::factory(20)->make()->each(function($song) {
             $album = Album::inRandomOrder()->get()->first();
             $artist = $album->artist;
             $song->artist()->associate($artist);
             $song->album()->associate($album);
-            $song->genre = $genre->random();
+            $song->user_id = User::inRandomOrder()->get()->first()->id;
             $song->save();
         });
     }

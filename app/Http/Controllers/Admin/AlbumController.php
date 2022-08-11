@@ -7,13 +7,11 @@ use App\Http\Requests\StoreAlbumRequest;
 use App\Http\Requests\UpdateAlbumRequest;
 use App\Models\Album;
 use App\Models\Artist;
-use App\Models\Image;
 use App\Models\Song;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
 
 class AlbumController extends Controller
 {
@@ -75,38 +73,13 @@ class AlbumController extends Controller
         $validatedData = $request->validated();
         $validatedData["user_id"] = Auth::user()->id;
         $validatedData["duration"] = $this->createDuration($validatedData);
-        $this->createSlug($validatedData);
+        $this->createSlug($validatedData, Album::class);
         $album = Album::create($validatedData);
         if($request->has('cover')) {
             $this->addImageToModelAndStore($request, $album, 'album', 'cover');
         }
         $this->addSongsToAlbum($album, $validatedData["songs"]);
         return redirect(route('albums.index'))->with('success', 'آلبوم با موفقیت ایجاد شد!');
-    }
-
-    public function createDuration($validatedData) {
-        $seconds = $validatedData["duration_seconds"];
-        $minutes = $validatedData["duration_minutes"];
-        $hours   = $validatedData["duration_hours"];
-        $this->unsetDurationSubsets($validatedData);
-        return $hours . ':' . $minutes . ':' . $seconds;
-    }
-
-    public function unsetDurationSubsets(& $validatedData) {
-        unset($validatedData["duration_seconds"]);
-        unset($validatedData["duration_minutes"]);
-        unset($validatedData["duration_hours"]);
-    }
-    
-    public function createSlug(& $validatedData) {
-        if(!isset($validatedData["slug"])) {
-            $slugBase = $validatedData["name"];
-        }
-        else {
-            $slugBase = $validatedData["slug"];
-        }
-        $slug = SlugService::createSlug(Album::class, 'slug', strtolower($slugBase));
-        $validatedData["slug"] = $slug;
     }
 
     /**
@@ -117,7 +90,7 @@ class AlbumController extends Controller
      */
     public function show(Album $album)
     {
-        //
+        return view('albums.show', ["album"=>$album]);
     }
 
     /**

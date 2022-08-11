@@ -97,6 +97,10 @@ class ArtistTest extends TestCase
         $response->assertSeeText("hozi");
     }
 
+    // public function test_slugCreatedByName() {
+
+    // }
+
     public function createDummyArtist($user) {
         $artist = [
             "name"=>"hozi",

@@ -22,4 +22,8 @@ class Album extends Model
         return $this->hasMany(Song::class);
     }
 
+    public function tags() {
+        return $this->morphToMany(Tag::class, 'taggable');
+    }
+
 }

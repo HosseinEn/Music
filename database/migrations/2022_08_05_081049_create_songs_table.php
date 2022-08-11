@@ -22,7 +22,6 @@ class CreateSongsTable extends Migration
             $table->foreign('artist_id')->references('id')->on('artists')->onDelete('cascade'); 
             $table->string('slug')->unique();
             $table->string('quality');
-            $table->string('genre');
             $table->string('duration');
             $table->date('released_date');
             $table->timestamps();

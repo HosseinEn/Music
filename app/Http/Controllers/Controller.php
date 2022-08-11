@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Image;
+use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -82,5 +83,38 @@ class Controller extends BaseController
         $model->image()->update(["path"=>$path]);
     }
 
+    public function createDuration(& $validatedData) {
+        $seconds = $validatedData["duration_seconds"];
+        $minutes = $validatedData["duration_minutes"];
+        $hours   = $validatedData["duration_hours"];
+        $this->unsetDurationSubsets($validatedData);
+        return $hours . ':' . $minutes . ':' . $seconds;
+    }
 
+    public function unsetDurationSubsets(& $validatedData) {
+        unset($validatedData["duration_seconds"]);
+        unset($validatedData["duration_minutes"]);
+        unset($validatedData["duration_hours"]);
+    }
+
+    public function createSlug(& $validatedData, $model) {
+        if(!isset($validatedData["slug"])) {
+            $slugBase = $validatedData["name"];
+        }
+        else {
+            $slugBase = $validatedData["slug"];
+        }
+        $slug = SlugService::createSlug($model, 'slug', strtolower($slugBase));
+        if(empty($slug)) {
+            $this->slugIsNotValid();
+        }
+        $validatedData["slug"] = $slug;
+    }
+
+    public function slugIsNotValid() {
+        $error = \Illuminate\Validation\ValidationException::withMessages([
+            'slug' => ['اسلاگ معتبر نمی باشد!'],
+         ]);
+         throw $error;
+    }
 }

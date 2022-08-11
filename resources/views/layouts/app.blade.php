@@ -81,6 +81,9 @@
                             <li class="nav-item">
                                 <a  class="nav-link" href="{{ route('albums.index') }}">آلبوم ها</a>
                             </li>
+                            <li class="nav-item">
+                                <a  class="nav-link" href="{{ route('songs.index') }}">موسیقی ها</a>
+                            </li>
                         @endguest
                     </ul>
                 </div>
@@ -91,5 +94,12 @@
             @yield('content')
         </main>
     </div>
+    <script type="application/javascript">
+        $(document).ready(function () {
+            $('select').selectize({
+                sortField: 'text'
+            });
+        });
+    </script>
 </body>
 </html>
