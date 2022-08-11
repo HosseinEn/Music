@@ -64,9 +64,7 @@ class ArtistController extends Controller
     {
         $validatedData = $request->validated();
         $validatedData["user_id"] = Auth::user()->id;
-        if(!isset($validatedData["slug"])) {
-            $this->validateSlugBasedOneName($request, $validatedData);
-        }
+        $this->createSlug($validatedData);
         $artist = Artist::create($validatedData);
         if($request->has('image')) {
             $this->addImageToModelAndStore($request, $artist, 'artist', 'image');
@@ -74,18 +72,18 @@ class ArtistController extends Controller
         return redirect(route('artists.index'))->with('success','هنرمند با موفقیت ایجاد گردید!');
     }
 
-    public function validateSlugBasedOneName($request, $validatedData)
-    {
-        $slug = SlugService::createSlug(Artist::class, 'slug', $validatedData["name"]);
-        $request->merge(["slug"=>$slug]);
-        $request->validate([
-            'slug' => [
-                Rule::unique('artists')
-            ],
-        ], $this->slugMessage());
+    public function createSlug(& $validatedData) {
+        if(!isset($validatedData["slug"])) {
+            $slugBase = $validatedData["name"];
+        }
+        else {
+            $slugBase = $validatedData["slug"];
+        }
+        $slug = SlugService::createSlug(Artist::class, 'slug', strtolower($slugBase));
+        $validatedData["slug"] = $slug;
     }
 
-        /**
+    /**
      * Display the specified resource.
      *
      * @param  \App\Models\Artist  $artist
@@ -122,7 +120,7 @@ class ArtistController extends Controller
     public function update(UpdateArtistRequest $request, Artist $artist)
     {
         $slugBase = $this->slugBasedOnNameOrUserInputIfNotNull($request);
-        $slug = SlugService::createSlug(Artist::class, 'slug', $slugBase, ["unique"=>false]);
+        $slug = SlugService::createSlug(Artist::class, 'slug', strtolower($slugBase), ["unique"=>false]);
         $request->merge(["slug"=>$slug]);
         $this->uniqueSlugOnUpdate($request, $artist, 'artists');
         $this->handleImageOnUpdate($request, $artist, 'artist', 'image');

@@ -75,16 +75,12 @@ class AlbumController extends Controller
         $validatedData = $request->validated();
         $validatedData["user_id"] = Auth::user()->id;
         $validatedData["duration"] = $this->createDuration($validatedData);
-        $this->unsetDurationSubsets($validatedData);
-        if(!isset($validatedData["slug"])) {
-            $this->validateSlugBasedOneName($request, $validatedData);
-        }
+        $this->createSlug($validatedData);
         $album = Album::create($validatedData);
         if($request->has('cover')) {
             $this->addImageToModelAndStore($request, $album, 'album', 'cover');
         }
-        $songs = Song::whereIn('id', $validatedData["songs"])->get();
-        $album->songs()->saveMany($songs);
+        $this->addSongsToAlbum($album, $validatedData["songs"]);
         return redirect(route('albums.index'))->with('success', 'آلبوم با موفقیت ایجاد شد!');
     }
 
@@ -92,6 +88,7 @@ class AlbumController extends Controller
         $seconds = $validatedData["duration_seconds"];
         $minutes = $validatedData["duration_minutes"];
         $hours   = $validatedData["duration_hours"];
+        $this->unsetDurationSubsets($validatedData);
         return $hours . ':' . $minutes . ':' . $seconds;
     }
 
@@ -100,17 +97,16 @@ class AlbumController extends Controller
         unset($validatedData["duration_minutes"]);
         unset($validatedData["duration_hours"]);
     }
-
-    public function validateSlugBasedOneName($request, $validatedData) {
-
-        $slug = SlugService::createSlug(Album::class, 'slug', $validatedData["name"]);
-        $request->merge(["slug"=>$slug]);
-        $request->validate([
-            'slug' => [
-                Rule::unique('albums')
-            ],
-        ], $this->slugMessage());
-
+    
+    public function createSlug(& $validatedData) {
+        if(!isset($validatedData["slug"])) {
+            $slugBase = $validatedData["name"];
+        }
+        else {
+            $slugBase = $validatedData["slug"];
+        }
+        $slug = SlugService::createSlug(Album::class, 'slug', strtolower($slugBase));
+        $validatedData["slug"] = $slug;
     }
 
     /**
@@ -152,12 +148,18 @@ class AlbumController extends Controller
     public function update(UpdateAlbumRequest $request, Album $album)
     {
         $slugBase = $this->slugBasedOnNameOrUserInputIfNotNull($request);
-        $slug = SlugService::createSlug(Album::class, 'slug', $slugBase, ["unique"=>false]);
+        $slug = SlugService::createSlug(Album::class, 'slug', strtolower($slugBase), ["unique"=>false]);
         $request->merge(["slug"=>$slug]);
         $this->uniqueSlugOnUpdate($request, $album, 'albums');
         $this->handleImageOnUpdate($request, $album, 'album', 'cover');
+        $this->addSongsToAlbum($album, $request->songs);
         $album->update($request->all());
         return redirect(route('albums.index'))->with('success', 'اطلاعات آلبوم با موفقیت ویرایش شد!');
+    }
+
+    public function addSongsToAlbum($album, $songs) {
+        $songs = Song::whereIn('id', $songs ?? [])->get();
+        $album->songs()->saveMany($songs);
     }
 
     /**
@@ -170,8 +172,8 @@ class AlbumController extends Controller
     {
         if($album->image) {
             $imagePath = $album->image->path;
+            Storage::delete($imagePath);
         }
-        Storage::delete($imagePath);
         $album->image()->delete();
         $album->songs()->delete();
         $album->delete();
