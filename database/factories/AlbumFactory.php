@@ -17,7 +17,7 @@ class AlbumFactory extends Factory
     public function definition()
     {
         return [
-            'name'=>$name = $this->faker->name(),
+            'name'=>$name = $this->faker->unique()->word(),
             'slug'=>Str::slug($name),
             'released_date'=>Carbon::now()->subDays(rand(0, 1000)),
             'duration'=>'2:23'

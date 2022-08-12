@@ -40,6 +40,7 @@ class UpdateAlbumRequest extends FormRequest
             'name.max' => 'نام آلبوم حدااکثر می تواند ۵۰ کاراکتر باشد!',
             'cover.image' => 'فایل انتخاب شده یک تصویر نمی باشد!',
             'cover.mimes' => 'تصویر انتخاب شده باید پسوند مجاز داشته باشد. (jpg, jpeg, png)',
+            'cover.uploaded' => 'فایل تصویر به درستی آپلود نشد!',
             'released_date.required' => 'تاریخ انتشار را انتخاب نمایید!',
             'released_date.date' => 'تاریخ را به درستی وارد نمایید!',
             'artist_id.required'=> 'یک هنرمند را انتخاب نمایید!',

@@ -36,7 +36,8 @@ class UpdateArtistRequest extends FormRequest
             'name.required' => 'پر کردن نام هنرمند ضروری است!',
             'name.max' => 'نام هنرمند حدااکثر می تواند ۵۰ کاراکتر باشد!',
             'image.image' => 'فایل انتخاب شده یک تصویر نمی باشد!',
-            'image.mimes' => 'تصویر انتخاب شده باید پسوند مجاز داشته باشد. (jpg, jpeg, png)'
+            'image.mimes' => 'تصویر انتخاب شده باید پسوند مجاز داشته باشد. (jpg, jpeg, png)',
+            'image.uploaded' => 'فایل تصویر به درستی آپلود نشد!',
         ];
     }
 }

@@ -4,6 +4,7 @@
         <th class="text-center">#</th>
         <th class="text-center">نام</th>
         <th class="text-center">اسلاگ</th>
+        <th class="text-center">کیفیت</th>
         <th class="text-center">ویرایش</th>
         <th class="text-center">نمایش</th>
         <th class="text-center">حذف</th>
@@ -17,6 +18,7 @@
             <th scope="row">{{ $loop->iteration + $pageNumMultiplyPageNum }}</th>
             <td>{{ $song->name }}</td>
             <td>{{ $song->slug }}</td>
+            <td>{{ $song->quality }}</td>
             <td>
                 <a class="btn btn-warning" href="{{ route('songs.edit', $song->slug) }}">ویرایش</a>
             </td>

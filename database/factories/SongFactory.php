@@ -16,11 +16,10 @@ class SongFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $name = $this->faker->name(),
+            'name' => $name = $this->faker->unique()->word(),
             'slug' => Str::slug($name),
-            'quality' => '320',
-            'duration'=>'3:50',
             'released_date'=>Carbon::now()->subDays(rand(0, 1000)),
+            'published'=>false
         ];
     }
 }
