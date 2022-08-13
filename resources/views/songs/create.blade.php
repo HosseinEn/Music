@@ -10,6 +10,11 @@
                 <li>ایجاد موسیقی جدید</li>
             </ol>
         </nav>
+        @if($errors->any())
+            @foreach($errors->all() as $error)
+                {{$error}}
+            @endforeach
+        @endif
         <form action="{{ route('songs.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group">

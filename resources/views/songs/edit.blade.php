@@ -57,14 +57,17 @@
                     @enderror
                 </span>
             </div>
-            {{ $song->songFiles }}
             <div class="form-group">
-                <label for="quality">کیفیت:</label>
-                <select name="quality" id="quality">
-                    <option value="128_320" {{ ($song->songFiles()->quality128Exists() && $song->songFiles()->quality320Exists()) ?  'selected' : ''}}>128 و 320</option>
-                    <option value="128" {{ $song->songFiles()->quality128Exists() ?  'selected' : ''}}>128</option>
-                    <option value="320" {{ $song->songFiles()->quality320Exists() ?  'selected' : ''}}>320</option>
-                </select>
+                <label for="quality">کیفیت موجود:</label>
+                @if($song->songFiles()->quality128Exists() && $song->songFiles()->quality320Exists())
+                    <input type="text" class="form-control" value="128 & 320" disabled>
+                @endif
+                @if($song->songFiles()->quality128Exists() && !$song->songFiles()->quality320Exists())
+                    <input type="text" class="form-control" value="128" disabled>
+                @endif
+                @if(!$song->songFiles()->quality128Exists() && $song->songFiles()->quality320Exists())
+                    <input type="text" class="form-control" value="320" disabled>
+                @endif
                 <span class="invalid-feedback" role="alert">
                     @error('quality')
                         <strong>{{ $message }}</strong>
@@ -74,15 +77,24 @@
             <div class="form-group">
                 <label for="song_file">فایل موسیقی:</label>
                 <br>
-                <small><b>در این بخش می توانید بر حسب کیفیت مشخص شده در فیلد بالا، یک موسیقی در بخش ۱۲۸ یا ۳۲۰ یا هردو آپلود نمایید.</b></small>
-                <br>
                 128kbps<input type="file" name="song_file_128" class="form-control @error('song_file_128') is-invalid @enderror">
+                @if($song->songFiles()->quality128Exists())
+                    <a href="{{ route('admin.download.song', $song->slug) }}?quality=128">
+                        <button type="button" class="btn btn-success mt-3">Download 128kbps</button>
+                    </a>
+                @endif
                 <span class="invalid-feedback" role="alert">
                     @error('song_file_128')
                         <strong>{{ $message }}</strong>
                     @enderror
                 </span>
+                <br>
                 320kbps<input type="file" name="song_file_320" class="form-control @error('song_file_320') is-invalid @enderror">
+                @if($song->songFiles()->quality320Exists())
+                    <a href="{{ route('admin.download.song', $song->slug) }}?quality=320">
+                        <button type="button" class="btn btn-success mt-3">Download 320kbps</button>
+                    </a>
+                @endif
                 <span class="invalid-feedback" role="alert">
                     @error('song_file_320')
                         <strong>{{ $message }}</strong>

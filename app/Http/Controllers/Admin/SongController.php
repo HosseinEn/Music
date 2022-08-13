@@ -9,7 +9,7 @@ use App\Models\Album;
 use App\Models\Artist;
 use App\Models\Song;
 use App\Models\Tag;
-use App\Services\SongUploadService;
+use App\Services\SongCreateAndUploadService;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -71,7 +71,7 @@ class SongController extends Controller
      * @param  \App\Http\Requests\StoreSongRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreSongRequest $request, SongUploadService $songUpload)
+    public function store(StoreSongRequest $request, SongCreateAndUploadService $songUploadAndCreate)
     {
         $validatedData = $request->validated();
         $validatedData["user_id"] = Auth::user()->id;
@@ -79,8 +79,7 @@ class SongController extends Controller
         $duration = $this->createDuration($validatedData);
         $request->merge(["duration"=>$duration]);
         $this->createSlug($validatedData, Song::class);
-        $song = Song::create($validatedData);
-        $songUpload->validateSongFileAndStore($request, $song);
+        $song = $songUploadAndCreate->validateSongFileAndStore($request, $validatedData);
         if(isset($request->album)) {
             $this->addSongToAlbum($song, $request->album);
         }
@@ -137,7 +136,7 @@ class SongController extends Controller
      * @param  \App\Models\Song  $song
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateSongRequest $request, Song $song, SongUploadService $songUpload)
+    public function update(UpdateSongRequest $request, Song $song, SongCreateAndUploadService $songUpload)
     {
         $slugBase = $this->slugBasedOnNameOrUserInputIfNotNull($request);
         $slug = SlugService::createSlug(Song::class, 'slug', strtolower($slugBase), ["unique"=>false]);
@@ -147,7 +146,7 @@ class SongController extends Controller
         if(isset($request->album)) {
             $this->addSongToAlbum($song, $request->album);
         }
-        $songUpload->validateSongFileAndStore($request, $song);
+        $songUpload->validateSongFileAndUpdate($request, $song);
         $song->tags()->sync($request->tags);
         $song->update($request->all());
         return redirect(route('songs.index'))->with('success', 'اطلاعات آهنگ با موفقیت ویرایش شد!');
@@ -164,6 +163,12 @@ class SongController extends Controller
         if($song->image) {
             $imagePath = $song->image->path;
             Storage::delete($imagePath);
+        }
+        if($song->songFiles) {
+            $song128Path = $song->songFiles()->quality128Path();
+            $song320Path = $song->songFiles()->quality320Path();
+            Storage::delete($song128Path);
+            Storage::delete($song320Path); 
         }
         $song->image()->delete();
         $song->delete();

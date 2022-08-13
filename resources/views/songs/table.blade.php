@@ -5,6 +5,7 @@
         <th class="text-center">نام</th>
         <th class="text-center">اسلاگ</th>
         <th class="text-center">کیفیت</th>
+        <th class="text-center">وضعیت انتشار</th>
         <th class="text-center">ویرایش</th>
         <th class="text-center">نمایش</th>
         <th class="text-center">حذف</th>
@@ -18,7 +19,18 @@
             <th scope="row">{{ $loop->iteration + $pageNumMultiplyPageNum }}</th>
             <td>{{ $song->name }}</td>
             <td>{{ $song->slug }}</td>
-            <td>{{ $song->quality }}</td>
+            <td>
+                @if($song->songFiles()->quality128Exists() && $song->songFiles()->quality320Exists())
+                    128 & 320
+                @endif
+                @if($song->songFiles()->quality128Exists() && !$song->songFiles()->quality320Exists())
+                    128
+                @endif
+                @if(!$song->songFiles()->quality128Exists() && $song->songFiles()->quality320Exists())
+                    320
+                @endif
+            </td>
+            <td>{{ $song->published == 1 ? '✅' : '❌' }}</td>
             <td>
                 <a class="btn btn-warning" href="{{ route('songs.edit', $song->slug) }}">ویرایش</a>
             </td>

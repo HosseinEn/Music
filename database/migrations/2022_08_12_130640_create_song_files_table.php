@@ -20,6 +20,7 @@ class CreateSongFilesTable extends Migration
             $table->string("quality");
             $table->string("duration");
             $table->string("path");
+            $table->string("extension");
             $table->timestamps();
         });
     }

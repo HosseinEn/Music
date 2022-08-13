@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\Admin\SongFileAccessController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +24,7 @@ Route::prefix('admin')->middleware('is_admin')->group(function() {
     Route::post('/albums/song/delete',
         [\App\Http\Controllers\Admin\AlbumController::class, 'deleteSongFromAlbum'])->name('album.song.delete');
     Route::resource('songs', \App\Http\Controllers\Admin\SongController::class);
+    Route::get('/song/{song}/download', [SongFileAccessController::class, "downloadUnpublishedFile"])->name('admin.download.song');
 });
 
 
