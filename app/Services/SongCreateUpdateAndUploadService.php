@@ -7,7 +7,7 @@ use App\Models\SongFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class SongCreateAndUploadService {
+class SongCreateUpdateAndUploadService {
 
     private $request;
     private $song;
@@ -45,6 +45,8 @@ class SongCreateAndUploadService {
         $this->updateFileIfChanged("128");
         $this->updateFileIfChanged("320");
     }
+
+ 
 
     private function throwQualityError() {
         $error = \Illuminate\Validation\ValidationException::withMessages([
@@ -119,17 +121,7 @@ class SongCreateAndUploadService {
     private function updateFileIfChanged(string $fileQuality) {
         if($this->request->has("song_file_{$fileQuality}")) {
             $this->validateFile($fileQuality);      
-            $oldSongPath = $this->getOldStoredFilePathByQuality($fileQuality);
-            Storage::delete($oldSongPath);
-            $songFile = $this->request->file("song_file_{$fileQuality}");
-            $this->extension = $songFile->guessClientExtension();
-            $this->dateAndTime = now()->format("Y-m-d_hmsu");
-            if($this->songHasBeenPublished()) {
-                $path = $this->storePublishedFileOnDisk($fileQuality, $songFile);
-            }
-            else {
-                $path = $this->storeUnpublishedFileOnDisk($fileQuality, $songFile);
-            }
+            $path = $this->replaceSongFile($fileQuality);
             if($this->songFileExists($fileQuality)) {
                 $this->song->songFiles()->where("quality", $fileQuality)->update([
                     "duration"=>$this->request->duration,
@@ -140,6 +132,21 @@ class SongCreateAndUploadService {
                 $this->createRelation($path, $fileQuality);
             }
         }
+    }
+
+    private function replaceSongFile($fileQuality) {
+        $oldSongPath = $this->getOldStoredFilePathByQuality($fileQuality);
+        Storage::delete($oldSongPath);
+        $songFile = $this->request->file("song_file_{$fileQuality}");
+        $this->extension = $songFile->guessClientExtension();
+        $this->dateAndTime = now()->format("Y-m-d_hmsu");
+        if($this->songHasBeenPublished()) {
+            $path = $this->storePublishedFileOnDisk($fileQuality, $songFile);
+        }
+        else {
+            $path = $this->storeUnpublishedFileOnDisk($fileQuality, $songFile);
+        }
+        return $path;
     }
 
     private function songFileExists($fileQuality) {

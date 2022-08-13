@@ -14,7 +14,7 @@ class SongFileAccessController extends Controller
         $this->middleware('auth');
     }
 
-    public function downloadUnpublishedFile(Request $request, Song $song) {
+    public function downloadSongFile(Request $request, Song $song) {
         $quality = "";
         if($request->has('quality')) {
             $quality = $request->query("quality");

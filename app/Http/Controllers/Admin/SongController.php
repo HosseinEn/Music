@@ -9,7 +9,8 @@ use App\Models\Album;
 use App\Models\Artist;
 use App\Models\Song;
 use App\Models\Tag;
-use App\Services\SongCreateAndUploadService;
+use App\Services\MoveSongBetweenDisksService;
+use App\Services\SongCreateUpdateAndUploadService;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -71,7 +72,7 @@ class SongController extends Controller
      * @param  \App\Http\Requests\StoreSongRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreSongRequest $request, SongCreateAndUploadService $songUploadAndCreate)
+    public function store(StoreSongRequest $request, SongCreateUpdateAndUploadService $songUploadAndCreate)
     {
         $validatedData = $request->validated();
         $validatedData["user_id"] = Auth::user()->id;
@@ -136,7 +137,8 @@ class SongController extends Controller
      * @param  \App\Models\Song  $song
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateSongRequest $request, Song $song, SongCreateAndUploadService $songUpload)
+    public function update(UpdateSongRequest $request, Song $song, 
+        SongCreateUpdateAndUploadService $songUpload, MoveSongBetweenDisksService $moveSong)
     {
         $slugBase = $this->slugBasedOnNameOrUserInputIfNotNull($request);
         $slug = SlugService::createSlug(Song::class, 'slug', strtolower($slugBase), ["unique"=>false]);
@@ -147,9 +149,16 @@ class SongController extends Controller
             $this->addSongToAlbum($song, $request->album);
         }
         $songUpload->validateSongFileAndUpdate($request, $song);
+        if($this->songStatusChanged($request, $song)) {
+            $moveSong->moveSongBetweenDisksAndUpdatePath($request, $song);
+        }
         $song->tags()->sync($request->tags);
         $song->update($request->all());
         return redirect(route('songs.index'))->with('success', 'اطلاعات آهنگ با موفقیت ویرایش شد!');
+    }
+
+    public function songStatusChanged($request, $song) {
+        return $request->published != $song->published;
     }
 
     /**
