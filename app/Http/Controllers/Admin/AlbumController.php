@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateAlbumRequest;
 use App\Models\Album;
 use App\Models\Artist;
 use App\Models\Song;
+use App\Services\MoveSongBetweenDisksService;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -126,13 +127,31 @@ class AlbumController extends Controller
         $this->uniqueSlugOnUpdate($request, $album, 'albums');
         $this->handleImageOnUpdate($request, $album, 'album', 'cover');
         $this->addSongsToAlbum($album, $request->songs);
+        $albumStatusBeforeUpdate = $album->published;
         $album->update($request->all());
+        if($this->albumStatusChanged($request, $albumStatusBeforeUpdate)) {
+            $this->changeStatusOfRelatedSongs($album);
+        }
         return redirect(route('albums.index'))->with('success', 'اطلاعات آلبوم با موفقیت ویرایش شد!');
     }
 
     public function addSongsToAlbum($album, $songs) {
         $songs = Song::whereIn('id', $songs ?? [])->get();
         $album->songs()->saveMany($songs);
+    }
+
+    public function albumStatusChanged($request, $albumStatusBeforeUpdate) {
+        return $request->published != $albumStatusBeforeUpdate;
+    }
+
+    public function changeStatusOfRelatedSongs($album) {
+        $songs = $album->songs;
+        $moveSongs = new MoveSongBetweenDisksService();
+        foreach($songs as $song) {
+            $song->published = $album->published;
+            $song->save();
+            $moveSongs->moveSongBetweenDisksAndUpdatePath($song);
+        }
     }
 
     /**

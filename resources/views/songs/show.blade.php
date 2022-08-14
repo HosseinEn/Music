@@ -31,6 +31,16 @@
                         @endforeach        
                     </p>
                 @endif
+                @if($song->songFiles()->quality128Exists())
+                    <a href="{{ route('admin.download.song', $song->slug) }}?quality=128">
+                        <button type="button" class="btn btn-success mt-3">Download 128kbps</button>
+                    </a>
+                @endif
+                @if($song->songFiles()->quality320Exists())
+                    <a href="{{ route('admin.download.song', $song->slug) }}?quality=320">
+                        <button type="button" class="btn btn-success mt-3">Download 320kbps</button>
+                    </a>
+                @endif
             </div>
             
     </div>

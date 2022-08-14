@@ -5,6 +5,7 @@
         <th class="text-center">نام</th>
         <th class="text-center">اسلاگ</th>
         <th class="text-center">هنرمند</th>
+        <th class="text-center">وضعیت انتشار</th>
         <th class="text-center">ویرایش</th>
         <th class="text-center">نمایش</th>
         <th class="text-center">حذف</th>
@@ -19,6 +20,7 @@
             <td>{{ $album->name }}</td>
             <td>{{ $album->slug }}</td>
             <td>{{ $album->artist->name }}</td>
+            <td>{{ $album->published == 1 ? '✅' : '❌' }}</td>
             <td>
                 <a class="btn btn-warning" href="{{ route('albums.edit', $album->slug) }}">ویرایش</a>
             </td>

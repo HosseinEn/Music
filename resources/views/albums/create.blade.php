@@ -35,6 +35,18 @@
                     </span>
                 </div>
                 <div class="form-group">
+                    <label for="published">وضعیت آلبوم:</label>
+                    <select name="published" id="published" class="@error('published') is-invalid @enderror">
+                        <option value="0"{{ old('published') == "0" ? 'selected' : ''}}>منتشر نشده</option>
+                        <option value="1"{{ old('published') == "1" ? 'selected' : ''}}>منتشر شده</option>
+                    </select>
+                    <span class="invalid-feedback" role="alert">
+                        @error('published')
+                            <strong>{{ $message }}</strong>
+                        @enderror
+                    </span>
+                </div>
+                <div class="form-group">
                     <label for="duration_seconds"> طول زمانی آلبوم:</label>
                     <br>
                     <input value="{{ old('duration_seconds') }}" type="number" style="width: 8rem;" class="@error('duration_seconds') is-invalid @enderror" name="duration_seconds" min="0" max="60">

@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Storage;
 
 class MoveSongBetweenDisksService {
 
-    private $request;
     private $song;
 
     private const FILE_128_UPLOAD_UNPUBLISHED_PATH = "/unpublished_song_files/128";
@@ -15,8 +14,7 @@ class MoveSongBetweenDisksService {
     private const FILE_320_UPLOAD_PUBLISHED_PATH = "/public/published_song_files/320";
 
 
-    public function moveSongBetweenDisksAndUpdatePath($request, $song) {
-        $this->request = $request;
+    public function moveSongBetweenDisksAndUpdatePath($song) {
         $this->song = $song;
         if($this->songHasBeenPublished()) {
             $this->moveFileTo("public");
@@ -64,7 +62,7 @@ class MoveSongBetweenDisksService {
     }
 
     private function songHasBeenPublished() {
-        return $this->request->published;
+        return $this->song->published;
     }
 
     private function getOldStoredFilePathByQuality(string $fileQuality)  {

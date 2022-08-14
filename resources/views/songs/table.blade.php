@@ -6,6 +6,7 @@
         <th class="text-center">اسلاگ</th>
         <th class="text-center">کیفیت</th>
         <th class="text-center">وضعیت انتشار</th>
+        <th>آلبوم</th>
         <th class="text-center">ویرایش</th>
         <th class="text-center">نمایش</th>
         <th class="text-center">حذف</th>
@@ -31,6 +32,13 @@
                 @endif
             </td>
             <td>{{ $song->published == 1 ? '✅' : '❌' }}</td>
+            <td>
+                @if($song->album)
+                    <a href="{{ route('albums.show', $song->album->slug) }}">{{ $song->album->name }}</a>
+                @else
+                    ندارد
+                @endif
+            </td>
             <td>
                 <a class="btn btn-warning" href="{{ route('songs.edit', $song->slug) }}">ویرایش</a>
             </td>

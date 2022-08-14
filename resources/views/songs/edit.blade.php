@@ -51,6 +51,7 @@
                         هنرمندی در حال حاضر وجود ندارد!
                     @endforelse
                 </select>
+                <a href="{{ route('artists.create') }}">ایجاد هنرمند جدید</a>
                 <span class="invalid-feedback" role="alert">
                     @error('artist_id')
                         <strong>{{ $message }}</strong>
@@ -77,7 +78,8 @@
             <div class="form-group">
                 <label for="song_file">فایل موسیقی:</label>
                 <br>
-                128kbps<input type="file" name="song_file_128" class="form-control @error('song_file_128') is-invalid @enderror">
+                <span class="badge bg-secondary mb-1">128kbps</span>
+                <input type="file" name="song_file_128" class="form-control @error('song_file_128') is-invalid @enderror">
                 @if($song->songFiles()->quality128Exists())
                     <a href="{{ route('admin.download.song', $song->slug) }}?quality=128">
                         <button type="button" class="btn btn-success mt-3">Download 128kbps</button>
@@ -89,7 +91,8 @@
                     @enderror
                 </span>
                 <br>
-                320kbps<input type="file" name="song_file_320" class="form-control @error('song_file_320') is-invalid @enderror">
+                <span class="badge bg-secondary mb-1">320kbps</span>
+                <input type="file" name="song_file_320" class="form-control @error('song_file_320') is-invalid @enderror">
                 @if($song->songFiles()->quality320Exists())
                     <a href="{{ route('admin.download.song', $song->slug) }}?quality=320">
                         <button type="button" class="btn btn-success mt-3">Download 320kbps</button>
@@ -163,6 +166,8 @@
                     @endforelse
                 </select>
                 <small> می تواند خالی باشد. (برای حذف آلبوم می توانید روی فیلد کلیک نمایید و سپس کلید backspace را روی کیبورد خود بفشارید)</small>
+                <br>
+                <a href="{{ route('albums.create') }}">ایجاد آلبوم جدید</a>
                 <span class="invalid-feedback" role="alert">
                     @error('released_date')
                         <strong>{{ $message }}</strong>

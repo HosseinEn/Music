@@ -149,11 +149,12 @@ class SongController extends Controller
             $this->addSongToAlbum($song, $request->album);
         }
         $songUpload->validateSongFileAndUpdate($request, $song);
-        if($this->songStatusChanged($request, $song)) {
-            $moveSong->moveSongBetweenDisksAndUpdatePath($request, $song);
-        }
         $song->tags()->sync($request->tags);
+        $songBeforeUpdate = $song;
         $song->update($request->all());
+        if($this->songStatusChanged($request, $songBeforeUpdate)) {
+            $moveSong->moveSongBetweenDisksAndUpdatePath($song);
+        }
         return redirect(route('songs.index'))->with('success', 'اطلاعات آهنگ با موفقیت ویرایش شد!');
     }
 

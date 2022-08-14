@@ -44,6 +44,19 @@
                     </span>
                 </div>
                 <div class="form-group">
+                    <label for="published">وضعیت آلبوم:</label>
+                    <select name="published" id="published" class="@error('published') is-invalid @enderror">
+                        <option value="0"{{ $album->published == "0" ? 'selected' : ''}}>منتشر نشده</option>
+                        <option value="1"{{ $album->published == "1" ? 'selected' : ''}}>منتشر شده</option>
+                    </select>
+                    <small>با تغییر وضعیت انتشار آلبوم، وضعیت انتشار موسیقی های مرتبط نیز به طور خودکار تغییر می کند.</small>
+                    <span class="invalid-feedback" role="alert">
+                        @error('published')
+                            <strong>{{ $message }}</strong>
+                        @enderror
+                    </span>
+                </div>
+                <div class="form-group">
                     <label for="duration_seconds"> طول زمانی آلبوم:</label>
                     <input type="text" name="duration" value="{{ $album->duration }}" class="form-control">
                     <small>format=hour:min:sec</small>

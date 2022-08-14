@@ -49,6 +49,7 @@
                         هنرمندی در حال حاضر وجود ندارد!
                     @endforelse
                 </select>
+                <a href="{{ route('artists.create') }}">ایجاد هنرمند جدید</a>
                 <span class="invalid-feedback" role="alert">
                     @error('artist_id')
                         <strong>{{ $message }}</strong>
@@ -73,13 +74,16 @@
                 <br>
                 <small><b>در این بخش می توانید بر حسب کیفیت مشخص شده در فیلد بالا، یک موسیقی در بخش ۱۲۸ یا ۳۲۰ یا هردو آپلود نمایید.</b></small>
                 <br>
-                128kbps<input type="file" name="song_file_128" class="form-control @error('song_file_128') is-invalid @enderror">
+                <span class="badge bg-secondary mb-1">128kbps</span>
+                <input type="file" name="song_file_128" class="form-control @error('song_file_128') is-invalid @enderror">
                 <span class="invalid-feedback" role="alert">
                     @error('song_file_128')
                         <strong>{{ $message }}</strong>
                     @enderror
                 </span>
-                320kbps<input type="file" name="song_file_320" class="form-control @error('song_file_320') is-invalid @enderror">
+                <br>
+                <span class="badge bg-secondary mb-1">320kbps</span>
+                <input type="file" name="song_file_320" class="form-control @error('song_file_320') is-invalid @enderror">
                 <span class="invalid-feedback" role="alert">
                     @error('song_file_320')
                         <strong>{{ $message }}</strong>
@@ -160,6 +164,8 @@
                     @endforelse
                 </select>
                 <small>می تواند خالی باشد.</small>
+                <br>
+                <a href="{{ route('albums.create') }}">ایجاد آلبوم جدید</a>
                 <span class="invalid-feedback" role="alert">
                     @error('released_date')
                         <strong>{{ $message }}</strong>

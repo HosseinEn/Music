@@ -20,7 +20,8 @@ class AlbumFactory extends Factory
             'name'=>$name = $this->faker->unique()->word(),
             'slug'=>Str::slug($name),
             'released_date'=>Carbon::now()->subDays(rand(0, 1000)),
-            'duration'=>'2:23'
+            'duration'=>'2:23',
+            'published' => false
         ];
     }
 }
