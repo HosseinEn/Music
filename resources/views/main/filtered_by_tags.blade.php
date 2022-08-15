@@ -30,7 +30,7 @@
             <div class="featured-element">
                 <div class="row">
                     @forelse ($items as $item)
-                        <div class="col-md-4 col-sm-6">
+                        <div class="col-md-3 col-sm-6">
                             <!-- featured item -->
                             <div class="featured-item ">
                                 <!-- image container -->

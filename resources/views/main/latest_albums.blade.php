@@ -18,7 +18,7 @@
                         <div class="figure">
                             <!-- image -->
                             {{-- <img class="img-responsive" src="img/album/1.jpg" alt="" /> --}}
-                            <img class="img-responsive" src="{{ $album->image->url() }}" alt="" />
+                            <img class="img-responsive" src="{{ $album->image ? $album->image->url() : asset('img/user/1.jpg') }}" alt="" />
                             <!-- disk image -->
                             <img class="img-responsive disk" src="img/album/disk.png" alt="" />
                         </div>

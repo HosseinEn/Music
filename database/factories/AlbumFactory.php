@@ -21,7 +21,7 @@ class AlbumFactory extends Factory
             'slug'=>Str::slug($name),
             'released_date'=>Carbon::now()->subDays(rand(0, 1000)),
             'duration'=>'2:23',
-            'published' => false
+            'published' => (bool)random_int(0, 1)
         ];
     }
 }

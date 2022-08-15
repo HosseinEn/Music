@@ -83,6 +83,9 @@
                             <li class="nav-item">
                                 <a  class="nav-link" href="{{ route('songs.index') }}">موسیقی ها</a>
                             </li>
+                            <li class="nav-item">
+                                <a  class="nav-link" href="{{ route('tags.index') }}">ژانر ها</a>
+                            </li>
                         @endguest
                     </ul>
                 </div>

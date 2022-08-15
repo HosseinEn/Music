@@ -12,13 +12,13 @@
             <div class="featured-element">
                 <div class="row">
                     @forelse ($albums as $album)
-                        <div class="col-md-4 col-sm-6">
+                        <div class="col-md-3 col-sm-6">
                             <!-- featured item -->
                             <div class="featured-item ">
                                 <!-- image container -->
                                 <div class="figure">
                                     <!-- image -->
-                                    <img class="img-responsive" src="{{ $album->image->url() }}" alt="Song's cover" />
+                                    <img class="img-responsive" src="{{ $album->image ? $album->image->url() : asset('img/user/1.jpg') }}" alt="Song's cover" />
                                     <!-- paragraph -->
                                     <p>
                                         @foreach ($album->tags as $tag)

@@ -19,7 +19,7 @@ class SongFactory extends Factory
             'name' => $name = $this->faker->unique()->word(),
             'slug' => Str::slug($name),
             'released_date'=>Carbon::now()->subDays(rand(0, 1000)),
-            'published'=>false
+            'published'=>(bool)random_int(0, 1)
         ];
     }
 }

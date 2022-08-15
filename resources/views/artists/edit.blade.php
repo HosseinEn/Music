@@ -31,13 +31,13 @@
                 <div class="form-group">
                     <label for="slug">slug:</label>
                     <input type="text" id="slug" name="slug" class="form-control @error('slug') is-invalid @enderror" value="{{ $artist->slug }}">
+                    برحسب نام خودکار بروزرسانی شود.
+                    <input type="checkbox" name="slug_based_on_name">
                     <span class="invalid-feedback" role="alert">
                         @error('slug')
                             <strong>{{ $message }}</strong>
                         @enderror
                     </span>
-                    برحسب نام خودکار بروزرسانی شود.
-                    <input type="checkbox" name="slug_based_on_name">
                 </div>
                 <div class="form-group">
                     <label for="file">انتخاب تصویر:</label>

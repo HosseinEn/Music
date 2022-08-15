@@ -46,6 +46,18 @@ class User extends Authenticatable
         return $this->hasMany(Artist::class);
     }
 
+    public function tags() {
+        return $this->hasMany(Tag::class);
+    }
+
+    public function songs() {
+        return $this->hasMany(Song::class);
+    }
+
+    public function albums() {
+        return $this->hasMany(Album::class);
+    }
+
     public static function boot() {
         parent::boot();
     }

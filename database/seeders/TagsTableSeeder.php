@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Tag;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class TagsTableSeeder extends Seeder
@@ -19,7 +20,8 @@ class TagsTableSeeder extends Seeder
         foreach($tags as $tag=>$slug) {
             Tag::create([
                 "name"=>$tag,
-                "slug"=>$slug
+                "slug"=>$slug,
+                "user_id"=>User::inRandomOrder()->get()->first()->id
             ]);
         }
     }

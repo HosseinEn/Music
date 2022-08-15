@@ -34,7 +34,7 @@ class ArtistController extends Controller
                 ->where('name', 'like', "%{$searchParam}%")->paginate(self::PAGINATEDBY);
         }
         else {
-            $artists = Artist::with("user")->withCount('albums')->latest()->paginate(self::PAGINATEDBY);
+            $artists = Artist::with("user")->latest()->paginate(self::PAGINATEDBY);
         }
         return view('artists.index',
             ['artists'=>$artists,

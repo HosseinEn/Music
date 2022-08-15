@@ -61,10 +61,10 @@ class HomeController extends Controller
         $show = $request->has("show") ? $request->query("show") : "songs";
         $items = [];
         if($show == "albums") {
-            $items = $tag->albums()->orderBy("released_date", "desc")->paginate(20);
+            $items = $tag->albums()->with(["image", "artist", "tags"])->orderBy("released_date", "desc")->paginate(20);
         }
         else if ($show == "songs") {
-            $items = $tag->songs()->soloSongs()->orderBy("released_date", "desc")->paginate(20);
+            $items = $tag->songs()->soloSongs()->with(["image", "artist", "tags"])->orderBy("released_date", "desc")->paginate(20);
         }
 
         $tags = Tag::get();
