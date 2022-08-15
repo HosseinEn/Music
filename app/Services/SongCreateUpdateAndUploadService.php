@@ -15,8 +15,8 @@ class SongCreateUpdateAndUploadService {
     private $extension;
     private const FILE_128_UPLOAD_UNPUBLISHED_PATH = "/unpublished_song_files/128";
     private const FILE_320_UPLOAD_UNPUBLISHED_PATH = "/unpublished_song_files/320";
-    private const FILE_128_UPLOAD_PUBLISHED_PATH = "/public/published_song_files/128";
-    private const FILE_320_UPLOAD_PUBLISHED_PATH = "/public/published_song_files/320";
+    private const FILE_128_UPLOAD_PUBLISHED_PATH = "public/published_song_files/128";
+    private const FILE_320_UPLOAD_PUBLISHED_PATH = "public/published_song_files/320";
 
     public function validateSongFileAndStore($request, $validatedData) {
         $this->request = $request;

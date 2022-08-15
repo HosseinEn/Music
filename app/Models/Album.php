@@ -26,4 +26,11 @@ class Album extends Model
         return $this->morphToMany(Tag::class, 'taggable');
     }
 
+    public function tagIDs() {
+        return $this->tags()->get()->pluck('id')->toArray()?? [];
+    }
+
+    public function scopePublished(Builder $query) {
+        return $query->where('published', true);
+    }
 }

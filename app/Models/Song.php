@@ -34,9 +34,12 @@ class Song extends Model
         return $this->tags()->get()->pluck('id')->toArray()?? [];
     }
 
-
     public function songFiles() {
         // songs can be 128 or 320
         return $this->hasMany(SongFile::class);
+    }
+
+    public function scopePublished(Builder $query) {
+        return $query->where('published', true);
     }
 }

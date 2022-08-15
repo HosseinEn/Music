@@ -33,6 +33,7 @@ class StoreAlbumRequest extends FormRequest
             'duration_hours'=>'required',
             'duration_minutes'=>'required',
             'duration_seconds'=>'required',
+            'tags'=>'required'
         ];
     }
 
@@ -53,7 +54,8 @@ class StoreAlbumRequest extends FormRequest
             'duration_hours.required' => 'ساعت را وارد نمایید! (از صفر)',
             'duration_minutes.required' => 'دقیقه را وارد نمایید! (از صفر الی شصت)',
             'duration_seconds.required' => 'ثانیه را وارد نمایید! (از صفر الی شصت)',
-            'songs.required' => 'انتخاب حداقل یکی موسیقی برای البوم اجباری است.'
+            'songs.required' => 'انتخاب حداقل یکی موسیقی برای البوم اجباری است.',
+            'tags.required'=>'انتخاب ژانر برای آلبوم اجباری است!'
         ];
     }
 }

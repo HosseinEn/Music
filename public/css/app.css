@@ -430,7 +430,7 @@ hr {}
     text-transform: uppercase;
 }
 
-.hero-playlist .album-details h5 {
+.hero-playlist .album-details  h5 {
     margin-top: 15px;
     margin-bottom: 20px;
     font-size: 18px;

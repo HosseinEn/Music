@@ -20,7 +20,10 @@
                     <form>
                         <div>
                             <div class="row">
-                                <div class="col-md-8"><input class="form-control" type="search" name="search"></div>
+                                <div class="col-md-8">
+                                    <input class="form-control" type="search" name="search" 
+                                    placeholder="نام موسیقی، آلبوم یا هنرمند را جستجو کنید...">
+                                </div>
                                 <div class="col-md-4"><button class="btn btn-secondary">جستجو</button></div>
                             </div>
                         </div>

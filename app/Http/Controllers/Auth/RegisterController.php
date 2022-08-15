@@ -53,7 +53,23 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
+        ],$this->messages());
+    }
+
+    protected function messages() {
+        return [
+            "name.required" => "لطفا نام را پر نمایید!",
+            "name.string" => "تنها رشته برای نام مجاز می باشد!",
+            "name.max" => "حداکثر ۲۰۰ کاراکتر برای نام مجاز می باشد!",
+            "email.required" => "لطفا ایمیل را پر نمایید!",
+            "email.string" => "تنها رشته برای ایمیل مجاز است!",
+            "email.max" => "حداکثر ۲۰۰ کاراکتر برای ایمیل مجاز است!",
+            "email.unique" => "ایمیل قبلا استفاده شده است.",
+            "password.required" => "لطفا پسوورد را پر نمایید!",
+            "password.string" => "تنها رشته برای پسوورد مجاز است!",
+            "password.min" => "حداقل ۸ کاراکتر برای پسوود مجاز است!",
+            "password.confirmed" => "پسوورد ها با یکدیگر مطابقت ندارند!"
+        ];
     }
 
     /**
@@ -68,6 +84,7 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'is_admin' => false
         ]);
     }
 }

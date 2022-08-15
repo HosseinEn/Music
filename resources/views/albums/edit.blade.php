@@ -67,6 +67,24 @@
                     </span>
                 </div>
                 <div class="form-group">
+                    <label for="tags">ژانرها:</label>
+                    <select id="tags" name="tags[]" class="@error('tags') is-invalid @enderror" multiple
+                        placeholder="ژانر را جتسجو  یا انتخاب کنید">
+                        @forelse($tags as $tag)
+                            <option value="{{ $tag->id }}" {{ in_array($tag->id, $album->tagIDs())  ? 'selected' : '' }} >
+                                {{ $tag->name }}
+                            </option>
+                        @empty
+                            <option value="">ژانری در حال حاضر وجود ندارد!</option>
+                        @endforelse
+                    </select>
+                    <span class="invalid-feedback" role="alert">
+                        @error('tags')
+                            <strong>{{ $message }}</strong>
+                        @enderror
+                    </span>
+                </div>
+                <div class="form-group">
                     <label for="artist">انتخاب هنرمند:</label>
                     <select id="artist" name="artist_id" placeholder="یک هنرمند را جتسجو  یا انتخاب کنید"
                             class="@error('artist_id') is-invalid @enderror">

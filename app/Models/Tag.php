@@ -16,4 +16,9 @@ class Tag extends Model
     public function albums() {
         return $this->morphedByMany(Album::class, 'taggable');
     }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 }

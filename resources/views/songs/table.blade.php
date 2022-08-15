@@ -6,10 +6,12 @@
         <th class="text-center">اسلاگ</th>
         <th class="text-center">کیفیت</th>
         <th class="text-center">وضعیت انتشار</th>
-        <th>آلبوم</th>
+        <th class="text-center">آلبوم</th>
+        <th class="text-center">هنرمند</th>
         <th class="text-center">ویرایش</th>
         <th class="text-center">نمایش</th>
         <th class="text-center">حذف</th>
+        <th class="text-center">تاریخ انتشار</th>
         <th class="text-center">تاریخ ایجاد</th>
         <th class="text-center">ایجاد شده توسط</th>
     </tr>
@@ -21,13 +23,16 @@
             <td>{{ $song->name }}</td>
             <td>{{ $song->slug }}</td>
             <td>
-                @if($song->songFiles()->quality128Exists() && $song->songFiles()->quality320Exists())
+                @if($song->songFiles->where("quality", "128")->count() != 0 &&
+                         $song->songFiles->where("quality", "320")->count() != 0)
                     128 & 320
                 @endif
-                @if($song->songFiles()->quality128Exists() && !$song->songFiles()->quality320Exists())
+                @if($song->songFiles->where("quality", "128")->count() != 0 &&
+                            $song->songFiles->where("quality", "320")->count() == 0)
                     128
                 @endif
-                @if(!$song->songFiles()->quality128Exists() && $song->songFiles()->quality320Exists())
+                @if($song->songFiles->where("quality", "128")->count() == 0 &&
+                            $song->songFiles->where("quality", "320")->count() != 0)
                     320
                 @endif
             </td>
@@ -39,6 +44,7 @@
                     ندارد
                 @endif
             </td>
+            <td>{{$song->artist->name }}</td>
             <td>
                 <a class="btn btn-warning" href="{{ route('songs.edit', $song->slug) }}">ویرایش</a>
             </td>
@@ -52,6 +58,7 @@
                     <input type="submit" value="حذف" class="btn btn-danger">
                 </form>
             </td>
+            <td>{{ $song->released_date }}</td>
             <td>{{ $song->created_at->format('Y-m-d') }}</td>
             <td>{{ $song->user->name }}</td>
         </tr>

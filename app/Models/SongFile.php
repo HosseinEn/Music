@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class SongFile extends Model
 {
@@ -49,5 +50,9 @@ class SongFile extends Model
 
     public function scopeQuality320Exists(Builder $query) {
         return $query->where('quality', 320)->exists();
+    }
+
+    public function url() {
+        return Storage::url($this->path);
     }
 }

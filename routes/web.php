@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\SongFileAccessController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::prefix('admin')->middleware('is_admin')->group(function() {
+    // Route::get('counts', [HomeController::class, 'counts']);
     Route::get('/home', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin.home');
     Route::resource('artists', \App\Http\Controllers\Admin\ArtistController::class);
     Route::resource('albums' , \App\Http\Controllers\Admin\AlbumController::class);
@@ -26,10 +26,16 @@ Route::prefix('admin')->middleware('is_admin')->group(function() {
         [\App\Http\Controllers\Admin\AlbumController::class, 'deleteSongFromAlbum'])->name('album.song.delete');
     Route::resource('songs', \App\Http\Controllers\Admin\SongController::class);
     Route::get('/song/{song}/download', [SongFileAccessController::class, "downloadSongFile"])->name('admin.download.song');
-    Route::get('counts', [HomeController::class, 'counts']);
 });
 
 
-Route::get('/', function() {
-    return view('main.index');
-})->name('home');
+Route::get('/', [App\Http\Controllers\HomeController::class, "index"])
+    ->name('home');
+Route::get('/albums', [App\Http\Controllers\HomeController::class, "albums"])
+    ->name('front.albums');
+Route::get('/songs', [App\Http\Controllers\HomeController::class, "songs"])
+    ->name('front.songs');  
+Route::get('/tags/{tag}', [App\Http\Controllers\HomeController::class, "tags"])
+    ->name('front.tags');
+
+

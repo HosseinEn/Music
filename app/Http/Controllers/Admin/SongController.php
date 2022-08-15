@@ -34,11 +34,19 @@ class SongController extends Controller
         $pageNumMultiplyPageNum = $this->calculateCounter($request->query('page'));
         if($request->has('search')) {
             $searchParam = $request->get('search');
-            $songs = Song::with(["user", "artist"])
-                ->where('name', 'like', "%{$searchParam}%")->paginate(self::PAGINATEDBY);
+            $songs = Song::with(["user", "artist", "songFiles", "album"])
+                ->where('name', 'like', "%{$searchParam}%")
+                ->orWhereHas('album', function($query) use ($searchParam) {
+                    return $query->where('name', 'like', "%{$searchParam}%");
+                })
+                ->orWhereHas('artist', function($query) use ($searchParam) {
+                    return $query->where('name', 'like', "%{$searchParam}%");
+                })
+                ->paginate(self::PAGINATEDBY);
         }
         else {
-            $songs = Song::with(["user", "artist"])->latest()->paginate(self::PAGINATEDBY);
+            $songs = Song::with(["user", "artist", "songFiles", "album"])
+                ->latest()->paginate(self::PAGINATEDBY);
         }
         return view('songs.index',
             [

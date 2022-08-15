@@ -26,10 +26,10 @@ class UpdateAlbumRequest extends FormRequest
         return [
             'name' => 'required|max:50',
             'cover' => 'image|mimes:jpeg,jpg,png,gif',
-//            'songs' =>'required',
             'released_date' => 'required|date',
             'artist_id' => 'exists:artists,id|required',
-            'duration'=>'required'
+            'duration'=>'required',
+            'tags'=>'required'
         ];
     }
 
@@ -45,8 +45,8 @@ class UpdateAlbumRequest extends FormRequest
             'released_date.date' => 'تاریخ را به درستی وارد نمایید!',
             'artist_id.required'=> 'یک هنرمند را انتخاب نمایید!',
             'artist_id.exists' => 'یک هنرمند را از لیست انتخاب نمایید!',
-            'duration.required'=>'طول زمانی آلبوم نمی تواند خالی باشد!'
-//            'songs.required' => 'انتخاب حداقل یکی موسیقی برای البوم اجباری است.'
+            'duration.required'=>'طول زمانی آلبوم نمی تواند خالی باشد!',
+            'tags.required'=>'انتخاب ژانر برای آلبوم اجباری است!'
         ];
     }
 }

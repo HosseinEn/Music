@@ -81,30 +81,7 @@
 
             @include('main.header')
 
-            @include('main.banner')
-
-			<!-- block for animate navigation menu -->
-			<div class="nav-animate"></div>
-
-            @include('main.latest_albums')
-
-            @include('main.promo')
-
-            @include('main.featured_albums')
-
-            @include('main.call_to_action')
-
-            @include('main.work_with_us')
-
-            @include('main.work_with_us')
-
-            @include('main.events')
-
-            @include('main.about')
-
-            @include('main.meet')
-
-            @include('main.contact')
+			@yield('content')
 
 	        @include('main.footer')
 

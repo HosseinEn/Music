@@ -26,7 +26,7 @@ class SongsTableSeeder extends Seeder
             $songFile = SongFile::make([
                 "duration"=>"1:1:1",
                 "quality"=>$quality->random(),
-                "path"=>"someplace",
+                "path"=>"public/storage/published_song_files/128/song_0_128kbps_2022-00-00_000000000000.mp3",
                 "extension"=>"mp3"
             ]);
             $song->songFiles()->save($songFile);

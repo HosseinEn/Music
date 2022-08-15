@@ -48,19 +48,18 @@
                     @else
                         <li><a href="{{ route('admin.home') }}">{{ Auth::user()->name }}</a></li>
                         <li>
-                            <form action="{{ route('logout') }}" method="POST">
+                            <form action="{{ route('logout') }}" method="POST" style="margin-top: 18px;">
                                 @csrf
-                                <input type="submit" value="logout" class="btn btn-danger">
+                                <input type="submit" value="خروج" class="btn btn-danger">
                             </form>
                         </li>
                     @endguest
-                    <li><a href="#latestalbum">Latest Album</a></li>
-                    <li><a href="#featuredalbum">Featured Album</a></li>
-                    <li><a href="#joinus">Join Us</a></li>
-                    <li><a href="#portfolio">Portfolio</a></li>
-                    <li><a href="#events">Events</a></li>
-                    <li><a href="#team">Team</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="{{ route('home') }}#latestalbum">جدیدترین آلبوم ها</a></li>
+                    <li><a href="{{ route('home') }}#latestsongs">جدیدترین موسیقی ها</a></li>
+                    <li><a href="{{ route('home') }}#genres">ژانرها</a></li>
+                    <li><a href="{{ route('home') }}#events">رویداد ها</a></li>
+                    <li><a href="{{ route('home') }}#artists">هنرمندان</a></li>
+                    <li><a href="{{ route('home') }}#contact">ارتباط با ما</a></li>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->

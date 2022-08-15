@@ -26,21 +26,31 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('home');
-    }
-
-    public function counts() {
         $artistsCount = Artist::count();
         $usersCount = User::count();
         $songsCount = Song::count();
         $albumsCount = Album::count();
-        return response()->json([
+        return view('home', [
             "artistsCount" =>$artistsCount,
             "usersCount"=>$usersCount,
             "songsCount"=>$songsCount,
-            "albumsCount"=>$albumsCount
+            "albumsCount"=>$albumsCount,
         ]);
     }
+
+    // public function counts() {
+    //     $artistsCount = Artist::count();
+    //     $usersCount = User::count();
+    //     $songsCount = Song::count();
+    //     $albumsCount = Album::count();
+    //     return response()->json([
+    //         "artistsCount" =>$artistsCount,
+    //         "usersCount"=>$usersCount,
+    //         "songsCount"=>$songsCount,
+    //         "albumsCount"=>$albumsCount,
+    //         "redirect"=>route('admin.home')
+    //     ]);
+    // }
 }

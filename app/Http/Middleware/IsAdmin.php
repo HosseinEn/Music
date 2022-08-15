@@ -23,6 +23,7 @@ class IsAdmin
             }
             else {
                 return redirect(route('home'));
+                // return abort(404);
             }
         }
         return redirect(route('login'));

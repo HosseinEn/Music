@@ -75,7 +75,24 @@
                           </div>
                         </div>
                       </div>
-                  
+                      <script>
+                          var options = {
+                              chart: {
+                                  type: 'area'
+                              },
+                              series: [{
+                                  name: 'تعداد',
+                                  data: [{!! $songsCount !!}, {!! $usersCount !!}, {!! $artistsCount !!}, {!! $albumsCount !!}]
+                              }],
+                              xaxis: {
+                                  categories: ["موسیقی ها", "کاربران", "هنرمندان", "آلبوم ها"]
+                              }
+                          }
+                          
+                          var chart = new ApexCharts(document.querySelector("#chart"), options);
+                          
+                          chart.render();
+                    </script>
                 </div>
             </div>
         </div>
