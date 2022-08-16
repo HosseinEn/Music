@@ -156,6 +156,9 @@ class SongController extends Controller
         if(isset($request->album)) {
             $this->addSongToAlbum($song, $request->album);
         }
+        else {
+            $song->album()->disassociate();
+        }
         $songUpload->validateSongFileAndUpdate($request, $song);
         $song->tags()->sync($request->tags);
         $songStatusBeforeUpdate = $song->published;
@@ -178,17 +181,7 @@ class SongController extends Controller
      */
     public function destroy(Song $song)
     {
-        if($song->image) {
-            $imagePath = $song->image->path;
-            Storage::delete($imagePath);
-        }
-        if($song->songFiles) {
-            $song128Path = $song->songFiles()->quality128Path();
-            $song320Path = $song->songFiles()->quality320Path();
-            Storage::delete($song128Path);
-            Storage::delete($song320Path); 
-        }
-        $song->image()->delete();
+        // Model events
         $song->delete();
         return redirect()->back()->with('success', 'موسیقی با موفقیت حذف گردید!');
     }

@@ -27,4 +27,13 @@ class Image extends Model
     public function url() {
         return Storage::url($this->path);
     }
+
+    public static function boot() {
+        parent::boot();
+
+        Image::deleting(function($image) {
+            $imagePath = $image->path;
+            Storage::delete($imagePath);
+        });
+    }
 }

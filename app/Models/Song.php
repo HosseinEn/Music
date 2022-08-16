@@ -6,6 +6,7 @@ use App\Traits\ModelsCommonMethods;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Song extends Model
 {
@@ -41,5 +42,17 @@ class Song extends Model
 
     public function scopePublished(Builder $query) {
         return $query->where('published', true);
+    }
+
+    public static function boot() {
+        parent::boot();
+
+        Song::deleting(function($song) {
+            $songFiles = $song->songFiles; 
+            foreach($songFiles as $songFile) {
+                $songFile->delete();
+            }
+            $song->image->delete();
+        });
     }
 }

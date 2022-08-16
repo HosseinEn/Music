@@ -122,10 +122,7 @@ class ArtistController extends Controller
      */
     public function destroy(Artist $artist)
     {
-        if($artist->image) {
-            Storage::delete($artist->image->path);
-        }
-        $artist->image()->delete();
+        $artist->image->delete();
         $artist->delete();
         return redirect()->back()->with('success', 'هنرمند با موفقیت حذف شد!');
     }

@@ -30,6 +30,7 @@ class StoreAlbumRequest extends FormRequest
             'songs' =>'required',
             'released_date' => 'required|date',
             'publish_date' => 'required|date',
+            'published'=>'required',
             'artist_id' => 'exists:artists,id|required',
             'duration_hours'=>'required',
             'duration_minutes'=>'required',
@@ -59,6 +60,7 @@ class StoreAlbumRequest extends FormRequest
             'tags.required'=>'انتخاب ژانر برای آلبوم اجباری است!',
             'publish_date.required' => 'تاریخ انتشار خودکار را انتخاب نمایید!',
             'publish_date.date' => 'تاریخ را به درستی وارد نمایید!',
+            'published'=>'وضعیت آلبوم را مشخص نمایید!'
         ];
     }
 }

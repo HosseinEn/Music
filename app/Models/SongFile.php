@@ -55,4 +55,13 @@ class SongFile extends Model
     public function url() {
         return Storage::url($this->path);
     }
+
+    public static function boot() {
+        parent::boot();
+
+        SongFile::deleting(function($songFile) {
+            $filePath = $songFile->path;
+            Storage::delete($filePath);
+        });
+    }
 }

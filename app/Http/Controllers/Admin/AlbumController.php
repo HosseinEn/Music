@@ -85,9 +85,7 @@ class AlbumController extends Controller
         $album = Album::create($validatedData);
         if($request->has('cover')) {
             $this->addImageToModelAndStore($request, $album, 'album', 'cover');
-        }
-        $this->addSongsToAlbum($album, $validatedData["songs"]);
-        $album->tags()->attach($request->tags);
+        }       
         return redirect(route('albums.index'))->with('success', 'آلبوم با موفقیت ایجاد شد!');
     }
 
@@ -136,9 +134,8 @@ class AlbumController extends Controller
         $request->merge(["slug"=>$slug]);
         $this->uniqueSlugOnUpdate($request, $album, 'albums');
         $this->handleImageOnUpdate($request, $album, 'album', 'cover');
-        $this->addSongsToAlbum($album, $request->songs);
-        $album->tags()->sync($request->tags);
         $albumStatusBeforeUpdate = $album->published;
+        $album->tags()->sync(request()->tags);
         $album->update($request->all());
         if($this->albumStatusChanged($request, $albumStatusBeforeUpdate)) {
             $this->changeStatusOfRelatedSongs($album);
@@ -146,24 +143,12 @@ class AlbumController extends Controller
         return redirect(route('albums.index'))->with('success', 'اطلاعات آلبوم با موفقیت ویرایش شد!');
     }
 
-    public function addSongsToAlbum($album, $songs) {
-        $songs = Song::whereIn('id', $songs ?? [])->get();
-        $album->songs()->saveMany($songs);
-    }
+
 
     public function albumStatusChanged($request, $albumStatusBeforeUpdate) {
         return $request->published != $albumStatusBeforeUpdate;
     }
 
-    public function changeStatusOfRelatedSongs($album) {
-        $songs = $album->songs;
-        $moveSongs = new MoveSongBetweenDisksService();
-        foreach($songs as $song) {
-            $song->published = $album->published;
-            $song->save();
-            $moveSongs->moveSongBetweenDisksAndUpdatePath($song);
-        }
-    }
 
     /**
      * Remove the specified resource from storage.
@@ -173,14 +158,9 @@ class AlbumController extends Controller
      */
     public function destroy(Album $album)
     {
-        if($album->image) {
-            $imagePath = $album->image->path;
-            Storage::delete($imagePath);
-        }
-        $album->image()->delete();
-        $album->songs()->delete();
+        // Model events
         $album->delete();
-        return redirect()->back()->with('success', 'آلبوم با موفقیت حذف گردید!');
+        return redirect()->back()->with('success', 'آلبوم  همراه با موسیقی ها با موفقیت حذف گردیدند!');
     }
 
     public function deleteSongFromAlbum(Request $request) {

@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <div class="row">
+        <div class="row  bg-secondary">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li><a href="{{ route('admin.home') }}">خانه</a></li>
@@ -81,7 +81,7 @@
                     </span>
                     <small>format=hour:min:sec</small>
                 </div>
-                <div class="form-group">
+               <div class="form-group">
                     <label for="tags">ژانرها:</label>
                     <select id="tags" name="tags[]" class="@error('tags') is-invalid @enderror" multiple
                         placeholder="ژانر را جتسجو  یا انتخاب کنید">
@@ -97,7 +97,7 @@
                         @error('tags')
                             <strong>{{ $message }}</strong>
                         @enderror
-                    </span>
+                    </span> 
                 </div>
                 <div class="form-group">
                     <label for="artist">انتخاب هنرمند:</label>
