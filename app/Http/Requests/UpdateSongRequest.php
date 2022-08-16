@@ -27,6 +27,7 @@ class UpdateSongRequest extends FormRequest
             'name'=>'required|max:50',
             'cover' => 'image|mimes:jpeg,jpg,png,gif',
             'released_date' => 'required|date',
+            'publish_date' => 'required|date',
             'artist_id' => 'exists:artists,id|required',
             'duration'=>'required',
         ];
@@ -42,6 +43,8 @@ class UpdateSongRequest extends FormRequest
             'cover.uploaded' => 'فایل تصویر به درستی آپلود نشد!',
             'released_date.required' => 'تاریخ انتشار را انتخاب نمایید!',
             'released_date.date' => 'تاریخ را به درستی وارد نمایید!',
+            'publish_date.required' => 'تاریخ انتشار خودکار را انتخاب نمایید!',
+            'publish_date.date' => 'تاریخ را به درستی وارد نمایید!',
             'artist_id.required'=> 'یک هنرمند را انتخاب نمایید!',
             'artist_id.exists' => 'یک هنرمند را از لیست انتخاب نمایید!',
             'duration.required' => 'طول زمانی را وارد نمایید!',

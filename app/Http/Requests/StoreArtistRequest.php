@@ -26,7 +26,7 @@ class StoreArtistRequest extends FormRequest
         return [
             'name' => 'required|max:50',
             'slug' => 'unique:artists',
-            'image' => 'image|mimes:jpeg,jpg,png,gif'
+            'image' => 'required|image|mimes:jpeg,jpg,png,gif'
         ];
     }
 
@@ -39,6 +39,7 @@ class StoreArtistRequest extends FormRequest
             'image.image' => 'فایل انتخاب شده یک تصویر نمی باشد!',
             'image.mimes' => 'تصویر انتخاب شده باید پسوند مجاز داشته باشد. (jpg, jpeg, png)',
             'image.uploaded' => 'فایل تصویر به درستی آپلود نشد!',
+            'image.required'=>'انتخاب یک عکس ضروری است!'
         ];
     }
 }

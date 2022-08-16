@@ -36,7 +36,13 @@
                     320
                 @endif
             </td>
-            <td>{{ $song->published == 1 ? '✅' : '❌' }}</td>
+            <td>
+                @if($song->published)
+                    منتشر شده ✅
+                @else
+                    منتشر نشده ❌
+                @endif
+            </td>
             <td>
                 @if($song->album)
                     <a href="{{ route('albums.show', $song->album->slug) }}">{{ $song->album->name }}</a>
@@ -58,7 +64,9 @@
                     <input type="submit" value="حذف" class="btn btn-danger">
                 </form>
             </td>
-            <td>{{ $song->released_date }}</td>
+            <td>
+                {{(new Carbon\Carbon($song->publish_date))->diffForHumans(now())}} الان
+            </td>
             <td>{{ $song->created_at->format('Y-m-d') }}</td>
             <td>{{ $song->user->name }}</td>
         </tr>

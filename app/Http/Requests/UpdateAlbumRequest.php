@@ -29,7 +29,8 @@ class UpdateAlbumRequest extends FormRequest
             'released_date' => 'required|date',
             'artist_id' => 'exists:artists,id|required',
             'duration'=>'required',
-            'tags'=>'required'
+            'tags'=>'required',
+            'publish_date' => 'required|date',
         ];
     }
 
@@ -46,7 +47,9 @@ class UpdateAlbumRequest extends FormRequest
             'artist_id.required'=> 'یک هنرمند را انتخاب نمایید!',
             'artist_id.exists' => 'یک هنرمند را از لیست انتخاب نمایید!',
             'duration.required'=>'طول زمانی آلبوم نمی تواند خالی باشد!',
-            'tags.required'=>'انتخاب ژانر برای آلبوم اجباری است!'
+            'tags.required'=>'انتخاب ژانر برای آلبوم اجباری است!',
+            'publish_date.required' => 'تاریخ انتشار خودکار را انتخاب نمایید!',
+            'publish_date.date' => 'تاریخ را به درستی وارد نمایید!',
         ];
     }
 }

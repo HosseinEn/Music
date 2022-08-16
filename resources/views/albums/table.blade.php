@@ -9,6 +9,7 @@
         <th class="text-center">ویرایش</th>
         <th class="text-center">نمایش</th>
         <th class="text-center">حذف</th>
+        <th class="text-center">تاریخ انتشار</th>
         <th class="text-center">تاریخ ایجاد</th>
         <th class="text-center">ایجاد شده توسط</th>
     </tr>
@@ -20,7 +21,13 @@
             <td>{{ $album->name }}</td>
             <td>{{ $album->slug }}</td>
             <td>{{ $album->artist->name }}</td>
-            <td>{{ $album->published == 1 ? '✅' : '❌' }}</td>
+            <td>
+                @if($album->published)
+                    منتشر شده ✅
+                @else
+                    منتشر نشده ❌
+                @endif
+            </td>
             <td>
                 <a class="btn btn-warning" href="{{ route('albums.edit', $album->slug) }}">ویرایش</a>
             </td>
@@ -33,6 +40,9 @@
                     @method('delete')
                     <input type="submit" value="حذف" class="btn btn-danger">
                 </form>
+            </td>
+            <td>
+                {{(new Carbon\Carbon($album->publish_date))->diffForHumans(now())}} الان
             </td>
             <td>{{ $album->created_at->format('Y-m-d') }}</td>
             <td>{{ $album->user->name }}</td>

@@ -158,16 +158,16 @@ class SongController extends Controller
         }
         $songUpload->validateSongFileAndUpdate($request, $song);
         $song->tags()->sync($request->tags);
-        $songBeforeUpdate = $song;
+        $songStatusBeforeUpdate = $song->published;
         $song->update($request->all());
-        if($this->songStatusChanged($request, $songBeforeUpdate)) {
+        if($this->songStatusChanged($request, $songStatusBeforeUpdate)) {
             $moveSong->moveSongBetweenDisksAndUpdatePath($song);
         }
         return redirect(route('songs.index'))->with('success', 'اطلاعات آهنگ با موفقیت ویرایش شد!');
     }
 
-    public function songStatusChanged($request, $song) {
-        return $request->published != $song->published;
+    public function songStatusChanged($request, $songStatusBeforeUpdate) {
+        return $request->published != $songStatusBeforeUpdate;
     }
 
     /**

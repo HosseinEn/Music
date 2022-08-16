@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Jobs\PublishFiles;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -15,7 +16,13 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        /* 
+            Auto publish songs | albums 
+            Run php artisan schedule:work and comment out this code.
+        */
+        // $schedule->call(function() {
+        //     PublishFiles::dispatch();
+        // })->everyMinute();
     }
 
     /**

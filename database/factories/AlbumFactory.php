@@ -19,7 +19,8 @@ class AlbumFactory extends Factory
         return [
             'name'=>$name = $this->faker->unique()->word(),
             'slug'=>Str::slug($name),
-            'released_date'=>Carbon::now()->subDays(rand(0, 1000)),
+            'released_date'=>Carbon::now()->subDays(rand(-1000, 1000)),
+            'publish_date'=>Carbon::now()->subDays(rand(-1000, 1000)),
             'duration'=>'2:23',
             'published' => (bool)random_int(0, 1)
         ];
