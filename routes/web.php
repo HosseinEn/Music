@@ -38,4 +38,7 @@ Route::get('/songs', [App\Http\Controllers\HomeController::class, "songs"])
     ->name('front.songs');  
 Route::get('/tags/{tag}', [App\Http\Controllers\HomeController::class, "tags"])
     ->name('front.tags');
-
+Route::get('/song/{song}', [App\Http\Controllers\HomeController::class, "showSong"])
+    ->name('show.song');
+    Route::get('/song/{song}/download', [App\Http\Controllers\HomeController::class, "downloadSong"])
+->name('download.song');

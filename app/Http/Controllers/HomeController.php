@@ -7,6 +7,7 @@ use App\Models\Artist;
 use App\Models\Song;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
 {
@@ -57,6 +58,10 @@ class HomeController extends Controller
         ]);  
     }
 
+    public function showSong(Song $song) {
+        return view('main.single_song', ["song"=>$song]);
+    }
+
     public function tags(Request $request, Tag $tag) {
         $show = $request->has("show") ? $request->query("show") : "songs";
         $items = [];
@@ -73,5 +78,25 @@ class HomeController extends Controller
             "tag"=>$tag,
             "tags"=>$tags
         ]);
+    }
+
+    public function downloadSong(Request $request, Song $song) {
+        $quality = "";
+        if($request->has('quality')) {
+            $quality = $request->query("quality");
+        }
+        if($quality == "128" && $song->songFiles()->quality128Exists()) {
+            $songFile = $song->songFiles()->get128File()->first();
+            $songPath = $songFile->path;
+        }
+        else if ($quality == "320" && $song->songFiles()->quality320Exists()) {
+            $songFile = $song->songFiles()->get320File()->first();
+            $songPath = $songFile->path;
+        }
+        else {
+            abort(404);
+        }
+        $downloadName = $song->artist->name . " - " . $song->name . " ({$quality}) " . "." . $songFile->extension;
+        return Storage::download($songPath, $downloadName);
     }
 }

@@ -19,18 +19,18 @@ class SongFileAccessController extends Controller
         if($request->has('quality')) {
             $quality = $request->query("quality");
         }
-        if($quality == "128") {
+        if($quality == "128" && $song->songFiles()->quality128Exists()) {
             $songFile = $song->songFiles()->get128File()->first();
             $songPath = $songFile->path;
         }
-        else if ($quality == "320") {
+        else if ($quality == "320" && $song->songFiles()->quality320Exists()) {
             $songFile = $song->songFiles()->get320File()->first();
             $songPath = $songFile->path;
         }
         else {
             abort(404);
         }
-        $downloadName = $song->artist->name . " - " . $song->name . "." . $songFile->extension;
+        $downloadName = $song->artist->name . " - " . $song->name . " ({$quality}) " . "." . $songFile->extension;
         return Storage::download($songPath, $downloadName);
     }
 }

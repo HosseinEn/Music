@@ -52,9 +52,6 @@
                                             <p><strong>Album</strong>: {{$album->name}} &nbsp;|&nbsp; <strong>Artist</strong>: {{$album->artist->name }}</p>
                                         </div>
                                         <div class="clearfix"></div>
-
-
-
                                     </li>
                                 @empty
                                     موسیقی در این آلبوم وجود ندارد!

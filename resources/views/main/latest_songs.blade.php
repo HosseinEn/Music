@@ -23,19 +23,21 @@
                                     @endforeach
                                 </p>
                             </div>
-                            <div class="hero-playlist">
-                                <div class="album-details">
-                                    <!-- title -->
-                                    <h4>{{ $song->name }}</h4>
-                                    <!-- composed by -->
-                                    <h5>{{ $song->artist->name }}</h5>
-                                    <!-- paragraph -->
+                            <a href="{{ route('show.song', $song->slug) }}" class="text-decoration-none">
+                                <div class="hero-playlist">
+                                    <div class="album-details">
+                                        <!-- title -->
+                                        <h4>{{ $song->name }}</h4>
+                                        <!-- composed by -->
+                                        <h5>{{ $song->artist->name }}</h5>
+                                        <!-- paragraph -->
 
-                                    <br>
+                                        <br>
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
-                    </div>          
+                    </div>
                 @empty
                     آهنگی در حال حاضر وجود ندارد!
                 @endforelse
