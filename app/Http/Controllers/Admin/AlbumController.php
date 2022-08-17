@@ -134,20 +134,14 @@ class AlbumController extends Controller
         $request->merge(["slug"=>$slug]);
         $this->uniqueSlugOnUpdate($request, $album, 'albums');
         $this->handleImageOnUpdate($request, $album, 'album', 'cover');
-        $albumStatusBeforeUpdate = $album->published;
         $album->tags()->sync(request()->tags);
         $album->update($request->all());
-        if($this->albumStatusChanged($request, $albumStatusBeforeUpdate)) {
-            $this->changeStatusOfRelatedSongs($album);
-        }
         return redirect(route('albums.index'))->with('success', 'اطلاعات آلبوم با موفقیت ویرایش شد!');
     }
 
 
 
-    public function albumStatusChanged($request, $albumStatusBeforeUpdate) {
-        return $request->published != $albumStatusBeforeUpdate;
-    }
+
 
 
     /**

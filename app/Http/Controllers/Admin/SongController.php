@@ -146,7 +146,7 @@ class SongController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateSongRequest $request, Song $song, 
-        SongCreateUpdateAndUploadService $songUpload, MoveSongBetweenDisksService $moveSong)
+        SongCreateUpdateAndUploadService $songUpload)
     {
         $slugBase = $this->slugBasedOnNameOrUserInputIfNotNull($request);
         $slug = SlugService::createSlug(Song::class, 'slug', strtolower($slugBase), ["unique"=>false]);
@@ -161,16 +161,8 @@ class SongController extends Controller
         }
         $songUpload->validateSongFileAndUpdate($request, $song);
         $song->tags()->sync($request->tags);
-        $songStatusBeforeUpdate = $song->published;
         $song->update($request->all());
-        if($this->songStatusChanged($request, $songStatusBeforeUpdate)) {
-            $moveSong->moveSongBetweenDisksAndUpdatePath($song);
-        }
         return redirect(route('songs.index'))->with('success', 'اطلاعات آهنگ با موفقیت ویرایش شد!');
-    }
-
-    public function songStatusChanged($request, $songStatusBeforeUpdate) {
-        return $request->published != $songStatusBeforeUpdate;
     }
 
     /**

@@ -60,7 +60,7 @@
                     <label for="publish_date">تاریخ انتشار خودکار موسیقی در وبسایت:</label>
                     <input type="date" id="start" name="publish_date"
                         value="{{ $album->publish_date }}"
-                        min="{{ now()->format('Y-m-d') }}" max="" class="form-control @error('publish_date') is-invalid @enderror">
+                        min="" max="" class="form-control @error('publish_date') is-invalid @enderror">
                     <small>در صورتی که تاریخی پس از حال حاضر را انتخاب نمایید و وضعیت انتشار را "منتشر نشده" قرار دهید، موسیقی به طور خودکار در تاریخ مورد نظر منتشر خواهد شد.</small>
                     <span class="invalid-feedback" role="alert">
                         @error('publish_date')

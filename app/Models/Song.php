@@ -44,15 +44,4 @@ class Song extends Model
         return $query->where('published', true);
     }
 
-    public static function boot() {
-        parent::boot();
-
-        Song::deleting(function($song) {
-            $songFiles = $song->songFiles; 
-            foreach($songFiles as $songFile) {
-                $songFile->delete();
-            }
-            $song->image->delete();
-        });
-    }
 }

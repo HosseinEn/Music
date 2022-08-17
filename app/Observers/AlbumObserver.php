@@ -40,6 +40,7 @@ class AlbumObserver
      */
     public function updating(Album $album)
     {
+        $this->changeStatusOfRelatedSongs($album);
     }
 
     public function saving(Album $album) {
@@ -51,6 +52,7 @@ class AlbumObserver
         $album->songs()->saveMany($songs);
     }
 
+    
     /**
      * Handle the Album "deleting" event.
      *
