@@ -11,7 +11,7 @@
         <th class="text-center">ویرایش</th>
         <th class="text-center">نمایش</th>
         <th class="text-center">حذف</th>
-        <th class="text-center">تاریخ انتشار</th>
+        <th class="text-center">تاریخ انتشار خودکار</th>
         <th class="text-center">تاریخ ایجاد</th>
         <th class="text-center">ایجاد شده توسط</th>
     </tr>
@@ -37,10 +37,18 @@
                 @endif
             </td>
             <td>
-                @if($song->published)
-                    منتشر شده ✅
-                @else
-                    منتشر نشده ❌
+                @if($song->album)
+                    @if($song->album->published)
+                        منتشر شده ✅
+                    @else
+                        منتشر نشده ❌
+                    @endif
+                @else 
+                    @if($song->published)
+                        منتشر شده ✅
+                    @else
+                        منتشر نشده ❌
+                    @endif
                 @endif
             </td>
             <td>
@@ -65,7 +73,27 @@
                 </form>
             </td>
             <td>
-                {{(new Carbon\Carbon($song->publish_date))->diffForHumans(now())}} الان
+                @if($song->album)
+                    @if($song->album->published)
+                        منتشر شده
+                    @else
+                        @if($song->album->auto_publish)
+                            {{(new Carbon\Carbon($song->album->publish_date))->diffForHumans(now())}} الان
+                        @else
+                            نامشخص
+                        @endif
+                    @endif
+                @else
+                    @if($song->published)
+                        منتشر شده
+                    @else
+                        @if($song->auto_publish)
+                            {{(new Carbon\Carbon($song->publish_date))->diffForHumans(now())}} الان
+                        @else
+                            نامشخص
+                        @endif
+                    @endif
+                @endif
             </td>
             <td>{{ $song->created_at->format('Y-m-d') }}</td>
             <td>{{ $song->user->name }}</td>

@@ -104,30 +104,59 @@
                     @enderror
                 </span>
             </div>
-            <div class="form-group">
-                <label for="published">وضعیت موسیقی:</label>
-                <select name="published" id="published" class="@error('published') is-invalid @enderror">
-                    <option value="0"{{ $song->published == 0 ? 'selected' : ''}}>منتشر نشده</option>
-                    <option value="1"{{ $song->published == 1 ? 'selected' : ''}}>منتشر شده</option>
-                </select>
-                <span class="invalid-feedback" role="alert">
-                    @error('published')
-                        <strong>{{ $message }}</strong>
-                    @enderror
-                </span>
-            </div>
-            <div class="form-group">
-                <label for="publish_date">تاریخ انتشار خودکار موسیقی در وبسایت:</label>
-                <input type="date" id="start" name="publish_date"
-                    value="{{ $song->publish_date }}"
-                    min="" max="" class="form-control @error('publish_date') is-invalid @enderror">
-                <small>در صورتی که تاریخی پس از حال حاضر را انتخاب نمایید و وضعیت انتشار را "منتشر نشده" قرار دهید، موسیقی به طور خودکار در تاریخ مورد نظر منتشر خواهد شد.</small>
-                <span class="invalid-feedback" role="alert">
-                    @error('publish_date')
-                        <strong>{{ $message }}</strong>
-                    @enderror
-                </span>
-            </div>
+            @if($song->album)
+                <p class="text-primary"><b>اعمال تغییرات بر روی وضعیت و انتشار خودکار موسیقی عضو آلبوم امکان پذیر نمی باشد.</b></p>
+                <div style="background-color: gray;">
+                    <div class="form-group">
+                        <label for="">وضعیت موسیقی:</label>
+                        <select name="" id="" disabled >
+                            <option value="0"{{ $song->album->published == 0 ? 'selected' : ''}}>منتشر نشده</option>
+                            <option value="1"{{ $song->album->published == 1 ? 'selected' : ''}}>منتشر شده</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="">فعالسازی انتشار خودکار:</label>
+                        <input type="checkbox" {{$song->album->auto_publish ? 'checked' : ''}} disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="">تاریخ انتشار خودکار موسیقی در وبسایت:</label>
+                        <input type="date" id="" name=""
+                            value="{{ $song->album->publish_date }}"
+                            min="" max="" class="form-control" disabled>
+                    </div>
+                </div>
+            @else
+                <div class="form-group">
+                    <label for="published">وضعیت موسیقی:</label>
+                    <select name="published" id="published" class="@error('published') is-invalid @enderror">
+                        <option value="0"{{ $song->published == 0 ? 'selected' : ''}}>منتشر نشده</option>
+                        <option value="1"{{ $song->published == 1 ? 'selected' : ''}}>منتشر شده</option>
+                    </select>
+                    <span class="invalid-feedback" role="alert">
+                        @error('published')
+                            <strong>{{ $message }}</strong>
+                        @enderror
+                    </span>
+                </div>
+                <div class="form-group">
+                    <label for="autopublishe">فعالسازی انتشار خودکار:</label>
+                    <input type="checkbox" name="auto_publish" id="autopublish" {{$song->auto_publish ? 'checked' : ''}}
+                    onchange="document.querySelector('#publish_date').disabled = !document.querySelector('#autopublish').checked;">
+                </div>
+                <div class="form-group">
+                    <label for="publish_date">تاریخ انتشار خودکار موسیقی در وبسایت:</label>
+                    <input type="date" id="publish_date" name="publish_date"
+                        value="{{ $song->publish_date }}" {{$song->auto_publish ? '' : 'disabled' }}
+                        min="" max="" class="form-control @error('publish_date') is-invalid @enderror">
+                    <small>در صورتی که تاریخی پس از حال حاضر را انتخاب نمایید و وضعیت انتشار را "منتشر نشده" قرار دهید، موسیقی به طور خودکار در تاریخ مورد نظر منتشر خواهد شد.</small>
+                    <span class="invalid-feedback" role="alert">
+                        @error('publish_date')
+                            <strong>{{ $message }}</strong>
+                        @enderror
+                    </span>
+                </div>    
+            @endif
+
             <div class="form-group">
                 <label for="tags">ژانرها:</label>
                 <select id="tags" name="tags[]" class="@error('tags') is-invalid @enderror" multiple

@@ -81,6 +81,7 @@ class AlbumController extends Controller
         $validatedData = $request->validated();
         $validatedData["user_id"] = Auth::user()->id;
         $validatedData["duration"] = $this->createDuration($validatedData);
+        $validatedData["auto_publish"] = $request->auto_publish ? true : false;
         $this->createSlug($validatedData, Album::class);
         $album = Album::create($validatedData);
         if($request->has('cover')) {
@@ -131,7 +132,11 @@ class AlbumController extends Controller
     {
         $slugBase = $this->slugBasedOnNameOrUserInputIfNotNull($request);
         $slug = SlugService::createSlug(Album::class, 'slug', strtolower($slugBase), ["unique"=>false]);
-        $request->merge(["slug"=>$slug]);
+        $request->merge([
+             "slug"=>$slug,
+             "auto_publish"=>$request->auto_publish ? true : false,
+             "publish_date"=>$request->auto_publish ? $request->publish_date : null
+        ]);
         $this->uniqueSlugOnUpdate($request, $album, 'albums');
         $this->handleImageOnUpdate($request, $album, 'album', 'cover');
         $album->tags()->sync(request()->tags);

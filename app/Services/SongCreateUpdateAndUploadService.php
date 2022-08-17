@@ -108,13 +108,13 @@ class SongCreateUpdateAndUploadService {
 
     private function storePublishedFileOnDisk($fileQuality, $songFile) {
         $path = $songFile->storeAs($this->getPublishedFilePathByQuality($fileQuality),
-        "song_{$this->song->id}_{$fileQuality}kbps_{$this->dateAndTime}.{$this->extension}");
+        "{$this->song->slug}_{$this->song->artist->name}_{$fileQuality}kbps_{$this->dateAndTime}.{$this->extension}");
         return $path;
     }
     
     private function storeUnpublishedFileOnDisk($fileQuality, $songFile) {
         $path = $songFile->storeAs($this->getUnpublishedFilePathByQuality($fileQuality),
-        "song_{$this->song->id}_{$fileQuality}kbps_{$this->dateAndTime}.{$this->extension}");
+        "{$this->song->slug}_{$this->song->artist->name}_{$fileQuality}kbps_{$this->dateAndTime}.{$this->extension}");
         return $path;
     }
 

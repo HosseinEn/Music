@@ -53,11 +53,11 @@ class MoveSongBetweenDisksService {
         }
         if($to == "public") {
             return $this->getPublishedFilePathByQuality($fileQuality) .
-                "/". "song_{$this->song->id}_{$fileQuality}kbps_{$dateAndTime}.{$extension}";
+                "/". "{$this->song->slug}_{$this->song->artist->name}_{$fileQuality}kbps_{$dateAndTime}.{$extension}";
         }
         else {
             return $this->getUnpublishedFilePathByQuality($fileQuality) .
-            "/". "song_{$this->song->id}_{$fileQuality}kbps_{$dateAndTime}.{$extension}";
+            "/". "{$this->song->slug}_{$this->song->artist->name}_{$fileQuality}kbps_{$dateAndTime}.{$extension}";
         }
     }
 

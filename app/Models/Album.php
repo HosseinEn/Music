@@ -13,7 +13,7 @@ class Album extends Model
     use HasFactory;
     use ModelsCommonMethods;
 
-    protected $fillable = ["name", "slug", "user_id", "released_date", "artist_id", "duration", "published", "publish_date"];
+    protected $fillable = ["name", "slug", "user_id", "released_date", "artist_id", "duration", "published", "publish_date", "auto_publish"];
 
     public function artist() {
         return $this->belongsTo(Artist::class);

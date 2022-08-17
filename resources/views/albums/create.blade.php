@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <div class="row  bg-secondary">
+        <div class="row">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li><a href="{{ route('admin.home') }}">خانه</a></li>
@@ -11,7 +11,7 @@
                 </ol>
             </nav>
 
-            <form action="{{ route('albums.store') }}" method="POST" enctype="multipart/form-data">
+            <form class="bg-dark text-white" action="{{ route('albums.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
                     <label for="name">نام آلبوم:</label>
@@ -47,8 +47,13 @@
                     </span>
                 </div>
                 <div class="form-group">
+                    <label for="autopublishe">فعالسازی انتشار خودکار:</label>
+                    <input type="checkbox" name="auto_publish" id="autopublish" 
+                    onchange="document.querySelector('#publish_date').disabled = !document.querySelector('#autopublish').checked;">
+                </div>
+                <div class="form-group">
                     <label for="publish_date">تاریخ انتشار خودکار موسیقی در وبسایت:</label>
-                    <input type="date" id="start" name="publish_date"
+                    <input type="date" id="publish_date" name="publish_date" disabled
                         value="{{ old('publish_date') }}"
                         min="{{ now()->format('Y-m-d') }}" max="" class="form-control @error('publish_date') is-invalid @enderror">
                     <small>در صورتی که تاریخی پس از حال حاضر را انتخاب نمایید و وضعیت انتشار را "منتشر نشده" قرار دهید، موسیقی به طور خودکار در تاریخ مورد نظر منتشر خواهد شد.</small>
@@ -61,19 +66,19 @@
                 <div class="form-group">
                     <label for="duration_seconds"> طول زمانی آلبوم:</label>
                     <br>
-                    <input value="{{ old('duration_seconds') }}" type="number" style="width: 8rem;" class="@error('duration_seconds') is-invalid @enderror" name="duration_seconds" min="0" max="60">
+                    <input value="{{ old('duration_seconds') }}" type="number" style="width: 8rem;" class="@error('duration_seconds') is-invalid @enderror text-dark" name="duration_seconds" min="0" max="60">
                     <span class="invalid-feedback" role="alert">
                         @error('duration_seconds')
                             <strong>{{ $message }}</strong>
                         @enderror
                     </span>
-                    <input value="{{ old('duration_minutes') }}" type="number" style="width: 8rem;" class="@error('duration_minutes') is-invalid @enderror" name="duration_minutes" min="0" max="60">
+                    <input value="{{ old('duration_minutes') }}" type="number" style="width: 8rem;" class="@error('duration_minutes') is-invalid @enderror text-dark" name="duration_minutes" min="0" max="60">
                     <span class="invalid-feedback" role="alert">
                         @error('duration_minutes')
                             <strong>{{ $message }}</strong>
                         @enderror
                     </span>
-                    <input value="{{ old('duration_hours') }}" type="number" style="width: 8rem;" class="@error('duration_hours') is-invalid @enderror" name="duration_hours" min="0">
+                    <input value="{{ old('duration_hours') }}" type="number" style="width: 8rem;" class="@error('duration_hours') is-invalid @enderror text-dark" name="duration_hours" min="0">
                     <span class="invalid-feedback" role="alert">
                         @error('duration_hours')
                             <strong>{{ $message }}</strong>

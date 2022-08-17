@@ -82,9 +82,11 @@ class SongController extends Controller
      */
     public function store(StoreSongRequest $request, SongCreateUpdateAndUploadService $songUploadAndCreate)
     {
+        // TODO event for song belong to album
         $validatedData = $request->validated();
         $validatedData["user_id"] = Auth::user()->id;
         $validatedData["published"] = $request->published;
+        $validatedData["auto_publish"] = $request->auto_publish ? true : false;
         $duration = $this->createDuration($validatedData);
         $request->merge(["duration"=>$duration]);
         $this->createSlug($validatedData, Song::class);
@@ -150,7 +152,11 @@ class SongController extends Controller
     {
         $slugBase = $this->slugBasedOnNameOrUserInputIfNotNull($request);
         $slug = SlugService::createSlug(Song::class, 'slug', strtolower($slugBase), ["unique"=>false]);
-        $request->merge(["slug"=>$slug]);
+        $request->merge([
+            "slug"=>$slug,
+            "auto_publish"=>$request->auto_publish ? true : false,
+            "publish_date"=>$request->auto_publish ? $request->publish_date : null
+        ]);
         $this->uniqueSlugOnUpdate($request, $song, 'songs');
         $this->handleImageOnUpdate($request, $song, 'song', 'cover');
         if(isset($request->album)) {

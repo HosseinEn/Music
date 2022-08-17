@@ -29,13 +29,13 @@ class StoreAlbumRequest extends FormRequest
             'cover' => 'required|image|mimes:jpeg,jpg,png,gif',
             'songs' =>'required',
             'released_date' => 'required|date',
-            'publish_date' => 'required|date',
+            'publish_date' => 'date',
             'published'=>'required',
             'artist_id' => 'exists:artists,id|required',
             'duration_hours'=>'required',
             'duration_minutes'=>'required',
             'duration_seconds'=>'required',
-            'tags'=>'required'
+            'tags'=>'required',
         ];
     }
 
@@ -58,7 +58,7 @@ class StoreAlbumRequest extends FormRequest
             'duration_seconds.required' => 'ثانیه را وارد نمایید! (از صفر الی شصت)',
             'songs.required' => 'انتخاب حداقل یکی موسیقی برای البوم اجباری است.',
             'tags.required'=>'انتخاب ژانر برای آلبوم اجباری است!',
-            'publish_date.required' => 'تاریخ انتشار خودکار را انتخاب نمایید!',
+            // 'publish_date.required' => 'تاریخ انتشار خودکار را انتخاب نمایید!',
             'publish_date.date' => 'تاریخ را به درستی وارد نمایید!',
             'published'=>'وضعیت آلبوم را مشخص نمایید!'
         ];

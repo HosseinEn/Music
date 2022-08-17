@@ -9,7 +9,7 @@
         <th class="text-center">ویرایش</th>
         <th class="text-center">نمایش</th>
         <th class="text-center">حذف</th>
-        <th class="text-center">تاریخ انتشار</th>
+        <th class="text-center">تاریخ انتشار خودکار</th>
         <th class="text-center">تاریخ ایجاد</th>
         <th class="text-center">ایجاد شده توسط</th>
     </tr>
@@ -42,7 +42,15 @@
                 </form>
             </td>
             <td>
-                {{(new Carbon\Carbon($album->publish_date))->diffForHumans(now())}} الان
+                @if($album->published)
+                    منتشر شده
+                @else
+                    @if($album->auto_publish)
+                        {{(new Carbon\Carbon($album->publish_date))->diffForHumans(now())}} الان
+                    @else
+                        نامشخص 
+                    @endif
+                @endif
             </td>
             <td>{{ $album->created_at->format('Y-m-d') }}</td>
             <td>{{ $album->user->name }}</td>

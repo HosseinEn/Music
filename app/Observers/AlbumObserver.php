@@ -18,15 +18,17 @@ class AlbumObserver
     {
         $album->tags()->attach(request()->tags);
         $this->addSongsToAlbum($album, request()->songs);
-        $this->changeStatusOfRelatedSongs($album);
+        $this->updateRelatedSongs($album);
     }
 
 
-    public function changeStatusOfRelatedSongs($album) {
+    public function updateRelatedSongs($album) {
         $songs = $album->songs;
         $moveSongs = new MoveSongBetweenDisksService();
         foreach($songs as $song) {
             $song->published = $album->published;
+            $song->auto_publish = $album->auto_publish;
+            $song->publish_date = $album->publish_date;
             $song->save();
             $moveSongs->moveSongBetweenDisksAndUpdatePath($song);
         }
@@ -40,7 +42,7 @@ class AlbumObserver
      */
     public function updating(Album $album)
     {
-        $this->changeStatusOfRelatedSongs($album);
+        $this->updateRelatedSongs($album);
     }
 
     public function saving(Album $album) {

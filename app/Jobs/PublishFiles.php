@@ -34,24 +34,16 @@ class PublishFiles
     public function handle()
     {
         $now = now();
-        $albums = Album::where("publish_date", "<", $now)->where("published", false)->get();
-        $songs = Song::soloSongs()->where("publish_date", "<", $now)->where("published", false)->get();
-        $moveSongs = new MoveSongBetweenDisksService();
-
+        $albums = Album::where("auto_publish", true)->where("publish_date", "<", $now)->where("published", false)->get();
+        $songs = Song::soloSongs()->where("auto_publish", true)->where("publish_date", "<", $now)->where("published", false)->get();
 
         foreach($albums as $album) {
-            $album->published = true;
-            $album->save();
-            foreach($album->songs as $song) {
-                $song->published = true;
-                $song->save();
-                $moveSongs->moveSongBetweenDisksAndUpdatePath($song);
-            }
+            // Album observer handle file transfer and song updates
+            $album->update(["published"=>true]);
         }
         foreach($songs as $song) {
-            $song->published = true;
-            $song->save();
-            $moveSongs->moveSongBetweenDisksAndUpdatePath($song);
+            // Song observer handle file transfer and song updates
+            $song->update(["published"=>true]);
         }
     }
 }

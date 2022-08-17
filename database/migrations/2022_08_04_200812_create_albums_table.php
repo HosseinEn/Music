@@ -21,6 +21,11 @@ class CreateAlbumsTable extends Migration
             $table->unsignedBigInteger('artist_id');
             $table->foreign('artist_id')->references('id')->on('artists')->onDelete('cascade');
             $table->string('duration');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign("user_id")->references("id")->on("users");
+            $table->boolean('published')->default(false);
+            $table->date('publish_date')->nullable();
+            $table->boolean('auto_publish')->default(false);    
             $table->timestamps();
         });
     }

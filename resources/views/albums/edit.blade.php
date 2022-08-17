@@ -57,9 +57,14 @@
                     </span>
                 </div>
                 <div class="form-group">
+                    <label for="autopublishe">فعالسازی انتشار خودکار:</label>
+                    <input type="checkbox" name="auto_publish" id="autopublish" {{$album->auto_publish ? 'checked' : ''}}
+                    onchange="document.querySelector('#publish_date').disabled = !document.querySelector('#autopublish').checked;">
+                </div>
+                <div class="form-group">
                     <label for="publish_date">تاریخ انتشار خودکار موسیقی در وبسایت:</label>
-                    <input type="date" id="start" name="publish_date"
-                        value="{{ $album->publish_date }}"
+                    <input type="date" id="publish_date" name="publish_date"
+                        value="{{ $album->publish_date }}" {{$album->auto_publish ? '' : 'disabled' }}
                         min="" max="" class="form-control @error('publish_date') is-invalid @enderror">
                     <small>در صورتی که تاریخی پس از حال حاضر را انتخاب نمایید و وضعیت انتشار را "منتشر نشده" قرار دهید، موسیقی به طور خودکار در تاریخ مورد نظر منتشر خواهد شد.</small>
                     <span class="invalid-feedback" role="alert">

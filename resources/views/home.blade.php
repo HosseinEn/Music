@@ -75,6 +75,7 @@
                           </div>
                         </div>
                       </div>
+                      <script src="{{ asset('js/apexchart.js') }}"></script>
                       <script>
                           var options = {
                               chart: {
