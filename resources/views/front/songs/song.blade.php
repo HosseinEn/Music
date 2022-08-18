@@ -26,7 +26,7 @@
     <body style="">
         {{-- https://mdbootstrap.com/img/Photos/Others/images/76.jpg --}}
         <div class="bg-image"   
-            style="background-image:linear-gradient(rgba(254, 4, 4, 0.527),rgba(102, 100, 100, 0.5)), url('{{ $song->image->url() }}');">
+            style="background-image:linear-gradient(rgba(254, 4, 4, 0.527),rgba(102, 100, 100, 0.5)), url('{{ $song->image ? $song->image->url() : asset('img/user/1.jpg') }}');">
             <a class="btn btn-primary" style="float: right;" href="{{ route('home') }}">Home</a>
             <div class="container">
                 <div class="row text-center"  >

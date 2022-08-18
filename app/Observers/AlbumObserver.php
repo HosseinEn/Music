@@ -63,7 +63,9 @@ class AlbumObserver
      */
     public function deleting(Album $album)
     {
-        $album->image->delete();
+        if($album->image) {
+            $album->image->delete();
+        }
         $songs = $album->songs;
         foreach($songs as $song) {
             $song->delete();

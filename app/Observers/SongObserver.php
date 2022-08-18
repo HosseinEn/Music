@@ -32,7 +32,9 @@ class SongObserver
         foreach($songFiles as $songFile) {
             $songFile->delete();
         }
-        $song->image->delete();
+        if($song->image) {
+            $song->image->delete();
+        }
     }
 
 }

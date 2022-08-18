@@ -26,7 +26,7 @@
     <body style="">
         @forelse($album->songs as $song)
             <div class="bg-image"   
-                    style="background-image:linear-gradient(rgba(254, 4, 4, 0.527),rgba(102, 100, 100, 0.5)), url('{{ $song->image->url() }}');">
+                    style="background-image:linear-gradient(rgba(254, 4, 4, 0.527),rgba(102, 100, 100, 0.5)), url('{{ $song->image ? $song->image->url() : asset('img/user/1.jpg') }}');">
                 <a class="btn btn-primary" style="float: right;" href="{{ route('home') }}">Home</a>
                 <ul class="list-group" style="position : absolute;  width:400px;">
                     @foreach($album->songs as $songQuickAccess)

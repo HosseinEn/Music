@@ -122,7 +122,7 @@ class ArtistController extends Controller
      */
     public function destroy(Artist $artist)
     {
-        $artist->image->delete();
+        // Model event implemented 
         $artist->delete();
         return redirect()->back()->with('success', 'هنرمند با موفقیت حذف شد!');
     }

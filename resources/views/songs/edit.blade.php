@@ -10,11 +10,6 @@
                 <li>ویرایش موسیقی {{$song->name}}</li>
             </ol>
         </nav>
-        @if($errors->any())
-            @foreach($errors->all() as $error)
-                {{$error}}
-            @endforeach
-        @endif
         <form action="{{ route('songs.update', $song->slug) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')

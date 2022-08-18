@@ -23,6 +23,7 @@ Route::prefix('admin')->middleware('is_admin')->group(function() {
     Route::resource('artists', \App\Http\Controllers\Admin\ArtistController::class);
     Route::resource('albums' , \App\Http\Controllers\Admin\AlbumController::class);
     Route::resource('tags' , \App\Http\Controllers\Admin\TagController::class);
+    Route::resource('users', \App\Http\Controllers\Admin\UserController::class)->except(["create", "store"]);
     Route::post('/albums/song/delete',
         [\App\Http\Controllers\Admin\AlbumController::class, 'deleteSongFromAlbum'])->name('album.song.delete');
     Route::resource('songs', \App\Http\Controllers\Admin\SongController::class);

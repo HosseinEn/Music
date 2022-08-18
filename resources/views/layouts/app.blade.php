@@ -87,6 +87,9 @@
                             <li class="nav-item">
                                 <a  class="nav-link" href="{{ route('tags.index') }}">ژانر ها</a>
                             </li>
+                            <li class="nav-item">
+                                <a  class="nav-link" href="{{ route('users.index') }}">کاربران</a>
+                            </li>
                         @endguest
                     </ul>
                 </div>

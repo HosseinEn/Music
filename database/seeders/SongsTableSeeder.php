@@ -19,7 +19,6 @@ class SongsTableSeeder extends Seeder
      */
     public function run()
     {
-        $faker = 
         $quality = collect(["128", "320"]);
         Song::factory(20)->make()->each(function($song) use($quality) {
             $song->artist()->associate(Artist::inRandomOrder()->get()->first());
