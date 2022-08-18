@@ -29,7 +29,7 @@ class HomeController extends Controller
         
         $artists = Artist::with(["image"])->get()->take(8);
 
-        return view('main.all_content', [
+        return view('front.main.allContent', [
             "latestAlbums"=>$latestAlbums,
             "latestSongs"=>$soloSongs,
             "tags"=>$tags,
@@ -42,9 +42,42 @@ class HomeController extends Controller
             ->orderBy("released_date", "desc")
             ->published()
             ->paginate(20);
-        return view('main.albums',[
+        return view('front.albums.albums',[
             "albums"=>$albums
         ]);
+    }
+
+    public function showAlbum(Album $album) {
+        return view('front.albums.album', ["album"=>$album]);
+    }
+
+    public function artists() {
+        $artists = Artist::with(["image"])->paginate(20);
+        return view('front.artists.artists',[
+            "artists"=>$artists
+        ]);
+    }
+
+    public function showArtist($artistSlug) {
+            $artist = Artist::where('slug', $artistSlug)
+            ->with([
+                    "songs" => function($query) {
+                        return $query->with(["tags", "image"])   
+                                     ->soloSongs()
+                                     ->published()
+                                     ->orderBy("released_date", "desc");
+                    }, 
+                    "albums"=> function($query) {
+                        return $query->with(["artist", "tags", "image"])
+                                     ->orderBy("released_date", "desc")
+                                     ->published();
+                    }, 
+                    "image"
+            ])
+            ->firstOrFail();
+
+        
+        return view('front.artists.artist', ["artist"=>$artist]);
     }
 
     public function songs() {
@@ -53,13 +86,13 @@ class HomeController extends Controller
             ->orderBy("released_date", "desc")
             ->published()
             ->paginate(20);
-        return view('main.songs', [
+        return view('front.songs.songs', [
             "songs"=>$songs
         ]);  
     }
 
     public function showSong(Song $song) {
-        return view('main.single_song', ["song"=>$song]);
+        return view('front.songs.song', ["song"=>$song]);
     }
 
     public function tags(Request $request, Tag $tag) {
@@ -73,7 +106,7 @@ class HomeController extends Controller
         }
 
         $tags = Tag::get();
-        return view('main.filtered_by_tags', [
+        return view('front.filtered_by_tags', [
             "items"=>$items,
             "tag"=>$tag,
             "tags"=>$tags

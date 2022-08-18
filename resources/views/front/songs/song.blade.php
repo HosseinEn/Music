@@ -1,26 +1,4 @@
-{{-- @extends('main.index')
-
-@section('content')
-    <div class="bg-image" 
-        style="background-image: url('{{ $song->image->url() }}');
-        height: 100vh">
-        <div class="container">
-            <div class="row text-center">
-                <div class="col-md-12" style="margin-top: 200px;">
-                    <p class="mb-0" style="color: white;">Can you see me?</p>
-                    <h1 class="" style="color: white;">Yes motherfucker</h1>
-                </div>
-            </div>
-        </div>
-    </div>
-@endsection
-
- --}}
-
-
-
-
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
     <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
@@ -49,12 +27,13 @@
         {{-- https://mdbootstrap.com/img/Photos/Others/images/76.jpg --}}
         <div class="bg-image"   
             style="background-image:linear-gradient(rgba(254, 4, 4, 0.527),rgba(102, 100, 100, 0.5)), url('{{ $song->image->url() }}');">
+            <a class="btn btn-primary" style="float: right;" href="{{ route('home') }}">Home</a>
             <div class="container">
                 <div class="row text-center"  >
                     <div class="col-md-12 textParent" style="margin-top: 200px; ">
-                        <h1 class="text-white">{{ $song->name }}</h1>
+                        <h1 class="text-white" style="font-size: 100px;">{{ $song->name }}</h1>
                         <p class="text-white mb-0">{{ $song->artist->name }}</p>
-                        <small>{{ $song->released_date }}</small>
+                        <small class="text-white">{{ $song->released_date }}</small>
                         <br>
                         <audio controls style="margin-top: 200px;">
                             <source src="{{ $song->songFiles->where("quality", 128)->count() != 0 ? Storage::url($song->songFiles->where("quality", 128)->first()->path)  : '' }}" type="audio/mpeg">

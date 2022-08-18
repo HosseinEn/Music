@@ -31,7 +31,7 @@ class SongController extends Controller
      */
     public function index(Request $request)
     {
-        $pageNumMultiplyPageNum = $this->calculateCounter($request->query('page'));
+        $pageNumberMultiplyPaginationSize = $this->calculateCounter($request->query('page'));
         if($request->has('search')) {
             $searchParam = $request->get('search');
             $songs = Song::with(["user", "artist", "songFiles", "album"])
@@ -51,7 +51,7 @@ class SongController extends Controller
         return view('songs.index',
             [
                 "songs"=>$songs,
-                "pageNumMultiplyPageNum"=>$pageNumMultiplyPageNum
+                "pageNumberMultiplyPaginationSize"=>$pageNumberMultiplyPaginationSize
             ]
         );
     }

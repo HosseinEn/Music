@@ -15,24 +15,22 @@
                             <!-- image container -->
                             <div class="figure">
                                 <!-- image -->
-                                <img class="img-responsive" src="{{ $song->image ? $song->image->url() : asset('img/user/1.jpg') }}" alt="Song's cover" />
+                                <a href="{{ route('show.song', $song->slug) }}" class="text-decoration-none">
+                                    <img class="img-responsive" src="{{ $song->image ? $song->image->url() : asset('img/user/1.jpg') }}" alt="Song's cover" />
+                                </a>
                                 <!-- paragraph -->
-                                <p>
-                                    @foreach ($song->tags as $tag)
-                                        <a class="badge bg-success" href="{{ route('front.tags', $tag->slug) }}">{{ $tag->name }}</a>
-                                    @endforeach
-                                </p>
+                                {{-- <p> --}}
+                                {{-- </p> --}}
                             </div>
                             <a href="{{ route('show.song', $song->slug) }}" class="text-decoration-none">
                                 <div class="hero-playlist">
                                     <div class="album-details">
-                                        <!-- title -->
                                         <h4>{{ $song->name }}</h4>
-                                        <!-- composed by -->
                                         <h5>{{ $song->artist->name }}</h5>
-                                        <!-- paragraph -->
-
                                         <br>
+                                        @foreach ($song->tags as $tag)
+                                            <a class="badge bg-success" href="{{ route('front.tags', $tag->slug) }}">{{ $tag->name }}</a>
+                                        @endforeach
                                     </div>
                                 </div>
                             </a>

@@ -17,7 +17,7 @@
     <tbody>
     @forelse ($albums as $album)
         <tr class="text-center">
-            <th scope="row">{{ $loop->iteration + $pageNumMultiplyPageNum }}</th>
+            <th scope="row">{{ $loop->iteration + $pageNumberMultiplyPaginationSize }}</th>
             <td>{{ $album->name }}</td>
             <td>{{ $album->slug }}</td>
             <td>{{ $album->artist->name }}</td>

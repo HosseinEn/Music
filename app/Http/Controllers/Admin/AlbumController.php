@@ -31,7 +31,7 @@ class AlbumController extends Controller
      */
     public function index(Request $request)
     {
-        $pageNumMultiplyPageNum = $this->calculateCounter($request->query('page'));
+        $pageNumberMultiplyPaginationSize = $this->calculateCounter($request->query('page'));
         if($request->has('search')) {
             $searchParam = $request->get('search');
             $albums = Album::with(["user", "artist"])
@@ -47,7 +47,7 @@ class AlbumController extends Controller
         return view('albums.index',
             [
                 "albums"=>$albums,
-                "pageNumMultiplyPageNum"=>$pageNumMultiplyPageNum
+                "pageNumberMultiplyPaginationSize"=>$pageNumberMultiplyPaginationSize
             ]
         );
     }

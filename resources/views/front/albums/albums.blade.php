@@ -1,4 +1,4 @@
-@extends('main.index')
+@extends('front.layouts.index')
 
 @section('content')
     <div class="featured pad" id="">
@@ -18,22 +18,23 @@
                                 <!-- image container -->
                                 <div class="figure">
                                     <!-- image -->
-                                    <img class="img-responsive" src="{{ $album->image ? $album->image->url() : asset('img/user/1.jpg') }}" alt="Song's cover" />
+                                    <a href="{{ route('show.album', $album->slug) }}" class="text-decoration-none">
+                                        <img class="img-responsive" src="{{ $album->image ? $album->image->url() : asset('img/user/1.jpg') }}" alt="Song's cover" />
+                                    </a>
                                     <!-- paragraph -->
-                                    <p>
-                                        @foreach ($album->tags as $tag)
-                                            <a class="badge bg-success">{{ $tag->name }}</a>
-                                        @endforeach
-                                    </p>
+                                    @foreach ($album->tags as $tag)
+                                        <a class="badge bg-success">{{ $tag->name }}</a>
+                                    @endforeach
                                 </div>
                                 <div class="hero-playlist">
                                     <div class="album-details">
                                         <!-- title -->
-                                        <h4>{{ $album->name }}</h4>
-                                        <!-- composed by -->
-                                        <h5>{{ $album->artist->name }}</h5>
-                                        <!-- paragraph -->
-
+                                        <a href="{{ route('show.album', $album->slug) }}" class="text-decoration-none">
+                                            <h4>{{ $album->name }}</h4>
+                                            <!-- composed by -->
+                                            <h5>{{ $album->artist->name }}</h5>
+                                            <!-- paragraph -->
+                                        </a>
                                         <br>
                                     </div>
                                 </div>

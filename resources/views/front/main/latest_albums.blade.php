@@ -17,34 +17,38 @@
                         <!-- music album image -->
                         <div class="figure">
                             <!-- image -->
-                            {{-- <img class="img-responsive" src="img/album/1.jpg" alt="" /> --}}
-                            <img class="img-responsive" src="{{ $album->image ? $album->image->url() : asset('img/user/1.jpg') }}" alt="" />
+                            <a href="{{ route('show.album', $album->slug) }}" class="text-decoration-none">
+                                <img class="img-responsive" src="{{ $album->image ? $album->image->url() : asset('img/user/1.jpg') }}" alt="" />
+                                <img class="img-responsive disk" src="img/album/disk.png" alt="" />
+                            </a>
                             <!-- disk image -->
-                            <img class="img-responsive disk" src="img/album/disk.png" alt="" />
                         </div>
                         <!-- album details -->
-                        <div class="album-details">
-                            <!-- title -->
-                            <h4>{{ $album->name }}</h4>
-                            <!-- composed by -->
-                            <h5>By {{ $album->artist->name }}</h5>
-                            <!-- paragraph -->
-                            @foreach ($album->tags as $tag)
-                                <a class="badge bg-success" href="{{ route('front.tags', $tag->slug) }}">{{ $tag->name }}</a>
-                            @endforeach
-                            <br>
-                        </div>
+                        <a href="{{ route('show.album', $album->slug) }}" class="text-decoration-none">
+                            <div class="album-details">
+                                <!-- title -->
+                                <h4>{{ $album->name }}</h4>
+                                <!-- composed by -->
+                                <h5>By {{ $album->artist->name }}</h5>
+                                <!-- paragraph -->
+                                @foreach ($album->tags as $tag)
+                                    <a class="badge bg-success" href="{{ route('front.tags', $tag->slug) }}">{{ $tag->name }}</a>
+                                @endforeach
+                                <br>
+                            </div>
+                        </a>
                     </div>
                     <div class="col-md-6 col-sm-6">
                         <!-- play list -->
                         <div class="playlist-content">
                             <ul class="list-unstyled">
-                                @forelse($album->songs as $song)
+                                @forelse($album->songs->take(3) as $song)
                                     <li class="playlist-number">
                                         <!-- song information -->
                                         <div class="song-info">
                                             <audio controls>
-                                                <source src="{{ $song->songFiles->where("quality", 128)->count() != 0 ? Storage::url($song->songFiles->where("quality", 128)->first()->path)  : '' }}" type="audio/mpeg">
+                                                <source src="{{ $song->songFiles->where("quality", 128)->count() != 0 ? Storage::url($song->songFiles->where("quality", 128)->first()->path)  
+                                                                                                                      : Storage::url($song->songFiles->where("quality", 320)->first()->path) }}" type="audio/mpeg">
                                                   Your browser does not support the audio element.
                                               </audio> 
                                             <!-- song title -->

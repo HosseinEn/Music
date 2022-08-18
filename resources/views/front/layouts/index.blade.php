@@ -79,11 +79,11 @@
 		<!-- wrapper -->
 		<div class="wrapper" id="home">
 
-            @include('main.header')
+            @include('front.layouts.header')
 
 			@yield('content')
 
-	        @include('main.footer')
+	        @include('front.layouts.footer')
 
 			<!-- Scroll to top -->
 			<span class="totop"><a href="#"><i class="fa fa-chevron-up"></i></a></span>

@@ -33,9 +33,9 @@
                     <span class="icon-bar"></span>
                 </button>
                 <!-- logo area -->
-                <a class="navbar-brand" href="#home">
+                <a class="navbar-brand" href="{{ route('home') }}">
                     <!-- logo image -->
-                    <img class="img-responsive" src="img/logo/logo.png" alt="" />
+                    Musics
                 </a>
             </div>
 

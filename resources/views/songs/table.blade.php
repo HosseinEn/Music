@@ -19,7 +19,7 @@
     <tbody>
     @forelse ($songs as $song)
         <tr class="text-center">
-            <th scope="row">{{ $loop->iteration + $pageNumMultiplyPageNum }}</th>
+            <th scope="row">{{ $loop->iteration + $pageNumberMultiplyPaginationSize }}</th>
             <td>{{ $song->name }}</td>
             <td>{{ $song->slug }}</td>
             <td>

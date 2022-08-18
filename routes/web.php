@@ -34,11 +34,17 @@ Route::get('/', [App\Http\Controllers\HomeController::class, "index"])
     ->name('home');
 Route::get('/albums', [App\Http\Controllers\HomeController::class, "albums"])
     ->name('front.albums');
+Route::get('/album/{album}', [App\Http\Controllers\HomeController::class, "showAlbum"])
+    ->name('show.album');
+Route::get('/artists', [App\Http\Controllers\HomeController::class, "artists"])
+    ->name('front.artists');
+Route::get('/artist/{artist}', [App\Http\Controllers\HomeController::class, "showArtist"])
+    ->name('show.artist');
 Route::get('/songs', [App\Http\Controllers\HomeController::class, "songs"])
     ->name('front.songs');  
 Route::get('/tags/{tag}', [App\Http\Controllers\HomeController::class, "tags"])
     ->name('front.tags');
 Route::get('/song/{song}', [App\Http\Controllers\HomeController::class, "showSong"])
     ->name('show.song');
-    Route::get('/song/{song}/download', [App\Http\Controllers\HomeController::class, "downloadSong"])
+Route::get('/song/{song}/download', [App\Http\Controllers\HomeController::class, "downloadSong"])
 ->name('download.song');

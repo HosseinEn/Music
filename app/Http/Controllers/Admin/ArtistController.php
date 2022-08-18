@@ -26,7 +26,7 @@ class ArtistController extends Controller
      */
     public function index(Request $request)
     {
-        $pageNumMultiplyPageNum = $this->calculateCounter($request->query('page'));
+        $pageNumberMultiplyPaginationSize = $this->calculateCounter($request->query('page'));
 
         if($request->has('search')) {
             $searchParam = $request->get('search');
@@ -38,7 +38,7 @@ class ArtistController extends Controller
         }
         return view('artists.index',
             ['artists'=>$artists,
-            'pageNumMultiplyPageNum'=>$pageNumMultiplyPageNum]);
+            'pageNumberMultiplyPaginationSize'=>$pageNumberMultiplyPaginationSize]);
     }
 
     /**

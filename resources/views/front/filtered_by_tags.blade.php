@@ -1,4 +1,4 @@
-@extends("main.index")
+@extends("front.layouts.index")
 
 @section("content")
     <div class="featured pad" id="">
@@ -36,22 +36,28 @@
                                 <!-- image container -->
                                 <div class="figure">
                                     <!-- image -->
-                                    <img class="img-responsive" src="{{  $item->image ? $item->image->url() : asset('img/user/1.jpg')  }}" alt="Song's cover" />
+                                    @if(get_class($item) === "App\Models\Album")
+                                        <a href="{{ route('show.album', $item->slug) }}" class="text-decoration-none">
+                                    @else
+                                        <a href="{{ route('show.song', $item->slug) }}" class="text-decoration-none">
+                                    @endif
+                                        <img class="img-responsive" src="{{  $item->image ? $item->image->url() : asset('img/user/1.jpg')  }}" alt="Song's cover" />
+                                    </a>
                                     <!-- paragraph -->
-                                    <p>
-                                        @foreach ($item->tags as $tag)
-                                            <a class="badge bg-success" href="{{ route('front.tags', $tag->slug) }}">{{ $tag->name }}</a>
-                                        @endforeach
-                                    </p>
+                                    @foreach ($item->tags as $tag)
+                                        <a class="badge bg-success" href="{{ route('front.tags', $tag->slug) }}">{{ $tag->name }}</a>
+                                    @endforeach
                                 </div>
                                 <div class="hero-playlist">
                                     <div class="album-details">
-                                        <!-- title -->
-                                        <h4>{{ $item->name }}</h4>
-                                        <!-- composed by -->
-                                        <h5>{{ $item->artist->name }}</h5>
-                                        <!-- paragraph -->
-
+                                        @if(get_class($item) === "App\Models\Album")
+                                            <a href="{{ route('show.album', $item->slug) }}" class="text-decoration-none">
+                                        @else
+                                            <a href="{{ route('show.song', $item->slug) }}" class="text-decoration-none">
+                                        @endif
+                                            <h4>{{ $item->name }}</h4>
+                                            <h5>{{ $item->artist->name }}</h5>
+                                        </a>
                                         <br>
                                     </div>
                                 </div>

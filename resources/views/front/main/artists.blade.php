@@ -47,8 +47,10 @@
                             <div class="team-member  delay-one">
                                 <!-- Image Hover Block -->
                                 <div class="member-img">
-                                    <!-- Image  -->
-                                    <img class="img-responsive" src="{{ $artist->image ? $artist->image->url() : asset('img/user/1.jpg') }}" alt="" />
+                                    <!-- Image  --> 
+                                    <a href="{{ route('show.artist', $artist->slug) }}" class="text-decoration-none">
+                                        <img class="img-responsive" src="{{ $artist->image ? $artist->image->url() : asset('img/user/1.jpg') }}" alt="" />
+                                    </a>
                                     <!-- Hover block -->
                                     <div class="social text-center">
                                         <a href="#"><i class="fa fa-facebook"></i></a>
@@ -57,16 +59,18 @@
                                         <a href="#"><i class="fa fa-twitter"></i></a>
                                     </div>
                                 </div>
-                                <!-- Member Details -->
-                                <h3>{{$artist->name}}</h3>
-                                <span class="designation">Guitarist</span>
+                                <a href="{{ route('show.artist', $artist->slug) }}" class="text-decoration-none">
+                                    <!-- Member Details -->
+                                    <h3>{{$artist->name}}</h3>
+                                    <span class="designation">Guitarist</span>
+                                </a>
                             </div>
                         </div>             
                     @empty
                         هنرمندی در حال حاضر وجود ندارد!
                     @endforelse
-
                 </div>
+                <h3><a href="{{ route('front.artists') }}">مشاهده بیشتر</a></h3>
             </div>
         </div>
     </div>

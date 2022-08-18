@@ -13,7 +13,7 @@
     <tbody>
     @forelse ($tags as $tag)
         <tr class="text-center">
-            <th scope="row">{{ $loop->iteration + $pageNumMultiplyPageNum }}</th>
+            <th scope="row">{{ $loop->iteration + $pageNumberMultiplyPaginationSize }}</th>
             <td>{{ $tag->name }}</td>
             <td>{{ $tag->slug }}</td>
             <td>
