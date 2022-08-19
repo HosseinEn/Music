@@ -10,12 +10,7 @@
                 <li>ایجاد موسیقی جدید</li>
             </ol>
         </nav>
-        @if($errors->any())
-            @foreach($errors->all() as $error)
-                {{$error}}
-            @endforeach
-        @endif
-        <form action="{{ route('songs.store') }}" method="POST" enctype="multipart/form-data">
+        <form class="bg-dark text-white" action="{{ route('songs.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label for="name">نام موسیقی:</label>
@@ -136,19 +131,19 @@
             <div class="form-group">
                 <label for="duration_seconds"> طول زمانی موسیقی:</label>
                 <br>
-                <input value="{{ old('duration_seconds') }}" type="number" style="width: 8rem;" class="@error('duration_seconds') is-invalid @enderror" name="duration_seconds" min="0" max="60">
+                <input value="{{ old('duration_seconds') }}" type="number" style="width: 8rem;" class="@error('duration_seconds') is-invalid @enderror text-dark" name="duration_seconds" min="0" max="60">
                 <span class="invalid-feedback" role="alert">
                     @error('duration_seconds')
                         <strong>{{ $message }}</strong>
                     @enderror
                 </span>
-                <input value="{{ old('duration_minutes') }}" type="number" style="width: 8rem;" class="@error('duration_minutes') is-invalid @enderror" name="duration_minutes" min="0" max="60">
+                <input value="{{ old('duration_minutes') }}" type="number" style="width: 8rem;" class="@error('duration_minutes') is-invalid @enderror text-dark" name="duration_minutes" min="0" max="60">
                 <span class="invalid-feedback" role="alert">
                     @error('duration_minutes')
                         <strong>{{ $message }}</strong>
                     @enderror
                 </span>
-                <input value="{{ old('duration_hours') }}" type="number" style="width: 8rem;" class="@error('duration_hours') is-invalid @enderror" name="duration_hours" min="0">
+                <input value="{{ old('duration_hours') }}" type="number" style="width: 8rem;" class="@error('duration_hours') is-invalid @enderror text-dark" name="duration_hours" min="0">
                 <span class="invalid-feedback" role="alert">
                     @error('duration_hours')
                         <strong>{{ $message }}</strong>

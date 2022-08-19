@@ -70,5 +70,6 @@ class AlbumObserver
         foreach($songs as $song) {
             $song->delete();
         }
+        $album->tags()->detach();
     }
 }

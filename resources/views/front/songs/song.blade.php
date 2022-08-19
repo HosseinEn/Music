@@ -36,7 +36,7 @@
                         <small class="text-white">{{ $song->released_date }}</small>
                         <br>
                         <audio controls style="margin-top: 200px;">
-                            <source src="{{ $song->songFiles->where("quality", 128)->count() != 0 ? Storage::url($song->songFiles->where("quality", 128)->first()->path)  : '' }}" type="audio/mpeg">
+                            <source src="{{ $song->songFiles->where("quality", 128)->count() != 0 ? Storage::url($song->songFiles->where("quality", 128)->first()->path)  : Storage::url($song->songFiles->where("quality", 320)->first()->path) }}" type="audio/mpeg">
                               Your browser does not support the audio element.
                           </audio> 
                         <br>

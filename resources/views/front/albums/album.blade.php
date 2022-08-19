@@ -84,32 +84,5 @@
             }
             window.addEventListener('click', onClick)
         </script>
-        {{-- <div class="bg-image"   
-            style="background-image:linear-gradient(rgba(254, 4, 4, 0.527),rgba(102, 100, 100, 0.5)), url('{{ $song->image->url() }}');">
-            <div class="container">
-                <div class="row text-center"  >
-                    <div class="col-md-12 textParent" style="margin-top: 200px; ">
-                        <h1 class="text-white">{{ $song->name }}</h1>
-                        <p class="text-white mb-0">{{ $song->artist->name }}</p>
-                        <small>{{ $song->released_date }}</small>
-                        <br>
-                        <audio controls style="margin-top: 200px;">
-                            <source src="{{ $song->songFiles->where("quality", 128)->count() != 0 ? Storage::url($song->songFiles->where("quality", 128)->first()->path)  : '' }}" type="audio/mpeg">
-                              Your browser does not support the audio element.
-                          </audio> 
-                        <br>
-                        <div class="mt-4">
-                            @if($song->songFiles()->quality128Exists())
-                                <a href="{{ route('download.song', $song->slug) }}?quality=128" class="btn btn-secondary" >Download 128kbps</a><br>
-                            @endif
-                            @if($song->songFiles()->quality320Exists())
-                                <a href="{{ route('download.song', $song->slug) }}?quality=320" class="btn btn-secondary mt-2">Download 320kbps</a>
-                            @endif
-                        </div>
-                    </div>
-                    
-                </div>
-            </div>
-        </div> --}}
     </body>
 </html>

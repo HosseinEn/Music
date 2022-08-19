@@ -22,5 +22,5 @@
 
     @include('front.main.meet')
 
-    @include('front.main.contact')    
+    {{-- @include('front.main.contact')     --}}
 @endsection

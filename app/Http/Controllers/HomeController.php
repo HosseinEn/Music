@@ -17,7 +17,7 @@ class HomeController extends Controller
             ->published()
             ->get()
             ->take(3);
-        // dd($latestAlbums->toArray());
+
         $soloSongs = Song::with(["artist", "tags", "image"])            
         ->soloSongs()
         ->orderBy("released_date", "desc")
@@ -37,72 +37,14 @@ class HomeController extends Controller
         ]);
     }
 
-    public function albums() {
-        $albums = Album::with(["songs", "artist", "tags", "image"])
-            ->orderBy("released_date", "desc")
-            ->published()
-            ->paginate(20);
-        return view('front.albums.albums',[
-            "albums"=>$albums
-        ]);
-    }
-
-    public function showAlbum(Album $album) {
-        return view('front.albums.album', ["album"=>$album]);
-    }
-
-    public function artists() {
-        $artists = Artist::with(["image"])->paginate(20);
-        return view('front.artists.artists',[
-            "artists"=>$artists
-        ]);
-    }
-
-    public function showArtist($artistSlug) {
-            $artist = Artist::where('slug', $artistSlug)
-            ->with([
-                    "songs" => function($query) {
-                        return $query->with(["tags", "image"])   
-                                     ->soloSongs()
-                                     ->published()
-                                     ->orderBy("released_date", "desc");
-                    }, 
-                    "albums"=> function($query) {
-                        return $query->with(["artist", "tags", "image"])
-                                     ->orderBy("released_date", "desc")
-                                     ->published();
-                    }, 
-                    "image"
-            ])
-            ->firstOrFail();
-
-        
-        return view('front.artists.artist', ["artist"=>$artist]);
-    }
-
-    public function songs() {
-        $songs = Song::with(["artist", "tags", "image"])            
-            ->soloSongs()
-            ->orderBy("released_date", "desc")
-            ->published()
-            ->paginate(20);
-        return view('front.songs.songs', [
-            "songs"=>$songs
-        ]);  
-    }
-
-    public function showSong(Song $song) {
-        return view('front.songs.song', ["song"=>$song]);
-    }
-
     public function tags(Request $request, Tag $tag) {
         $show = $request->has("show") ? $request->query("show") : "songs";
         $items = [];
         if($show == "albums") {
-            $items = $tag->albums()->with(["image", "artist", "tags"])->orderBy("released_date", "desc")->paginate(20);
+            $items = $tag->albums()->with(["image", "artist", "tags"])->published()->orderBy("released_date", "desc")->paginate(20);
         }
         else if ($show == "songs") {
-            $items = $tag->songs()->soloSongs()->with(["image", "artist", "tags"])->orderBy("released_date", "desc")->paginate(20);
+            $items = $tag->songs()->soloSongs()->with(["image", "artist", "tags"])->published()->orderBy("released_date", "desc")->paginate(20);
         }
 
         $tags = Tag::get();
@@ -113,7 +55,8 @@ class HomeController extends Controller
         ]);
     }
 
-    public function downloadSong(Request $request, Song $song) {
+    public function downloadSong(Request $request, $songSlug) {
+        $song = Song::where('slug', $songSlug)->published()->firstOrFail();
         $quality = "";
         if($request->has('quality')) {
             $quality = $request->query("quality");

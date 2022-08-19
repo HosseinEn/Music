@@ -40,17 +40,8 @@ class HomeController extends Controller
         ]);
     }
 
-    // public function counts() {
-    //     $artistsCount = Artist::count();
-    //     $usersCount = User::count();
-    //     $songsCount = Song::count();
-    //     $albumsCount = Album::count();
-    //     return response()->json([
-    //         "artistsCount" =>$artistsCount,
-    //         "usersCount"=>$usersCount,
-    //         "songsCount"=>$songsCount,
-    //         "albumsCount"=>$albumsCount,
-    //         "redirect"=>route('admin.home')
-    //     ]);
-    // }
+    public function controlNotification(Request $request) {
+        dd($request->all());
+        return redirect()->back()->with('success', "وضعیت اطلاع رسانی با موفقیت تغییر کرد!");
+    }
 }

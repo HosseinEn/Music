@@ -34,4 +34,10 @@ class Album extends Model
     public function scopePublished(Builder $query) {
         return $query->where('published', true);
     }
+    
+    // public static function boot() {
+    //     parent::boot();
+
+    //     static::addGlobalScope(new PublishedScope);
+    // }
 }

@@ -35,6 +35,7 @@ class SongObserver
         if($song->image) {
             $song->image->delete();
         }
+        $song->tags()->detach();
     }
 
 }

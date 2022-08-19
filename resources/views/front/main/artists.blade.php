@@ -62,7 +62,6 @@
                                 <a href="{{ route('show.artist', $artist->slug) }}" class="text-decoration-none">
                                     <!-- Member Details -->
                                     <h3>{{$artist->name}}</h3>
-                                    <span class="designation">Guitarist</span>
                                 </a>
                             </div>
                         </div>             

@@ -25,7 +25,9 @@
             <ul class="list-group mt-3">
                 @forelse ($album->songs as $song)
                     <li class="list-group-item">
-                        <h5>{{ $song->name }}</h5>
+                        <a href="{{ route('songs.show', $song->slug) }}">
+                            <h5>{{ $song->name }}</h5>
+                        </a>
                     </li>
                 @empty
                     <li class="list-group-item">

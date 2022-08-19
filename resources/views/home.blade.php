@@ -17,83 +17,90 @@
                     </div>
                     <div id="wrapper">
                         <div class="content-area">
-                          <div class="container-fluid">
-                            <div class="text-right mt-3 mb-3 d-fixed">
-                              <a
-                                href="https://github.com/apexcharts/apexcharts.js/tree/master/samples/vanilla-js/dashboards/modern"
-                                target="_blank"
-                                class="btn btn-outline-primary mr-2"
-                              >
-                                <span class="btn-text">View Code</span>
-                              </a>
+                            <div class="container-fluid">
+                                <div class="text-right mt-3 mb-3 d-fixed">
+                                <a
+                                    href="https://github.com/apexcharts/apexcharts.js/tree/master/samples/vanilla-js/dashboards/modern"
+                                    target="_blank"
+                                    class="btn btn-outline-primary mr-2"
+                                >
+                                    <span class="btn-text">View Code</span>
+                                </a>
+                                </div>
+                                <div class="main">
+                                <div class="row sparkboxes mt-4 mb-4">
+                                    <div class="col-md-4">
+                                    <div class="box box1">
+                                        <div id="spark1"></div>
+                                    </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                    <div class="box box2">
+                                        <div id="spark2"></div>
+                                    </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                    <div class="box box3">
+                                        <div id="spark3"></div>
+                                    </div>
+                                    </div>
+                                </div>
+                    
+                                <div class="row mt-5 mb-4">
+                                    <div class="col-md-6">
+                                    <div class="box">
+                                        <div id="bar"></div>
+                                    </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                    <div class="box">
+                                        <div id="donut"></div>
+                                    </div>
+                                    </div>
+                                </div>
+                    
+                                <div class="row mt-4 mb-4">
+                                    <div class="col-md-6">
+                                    <div class="box">
+                                        <div id="area"></div>
+                                    </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                    <div class="box">
+                                        <div id="line"></div>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
                             </div>
-                            <div class="main">
-                              <div class="row sparkboxes mt-4 mb-4">
-                                <div class="col-md-4">
-                                  <div class="box box1">
-                                    <div id="spark1"></div>
-                                  </div>
-                                </div>
-                                <div class="col-md-4">
-                                  <div class="box box2">
-                                    <div id="spark2"></div>
-                                  </div>
-                                </div>
-                                <div class="col-md-4">
-                                  <div class="box box3">
-                                    <div id="spark3"></div>
-                                  </div>
-                                </div>
-                              </div>
-                  
-                              <div class="row mt-5 mb-4">
-                                <div class="col-md-6">
-                                  <div class="box">
-                                    <div id="bar"></div>
-                                  </div>
-                                </div>
-                                <div class="col-md-6">
-                                  <div class="box">
-                                    <div id="donut"></div>
-                                  </div>
-                                </div>
-                              </div>
-                  
-                              <div class="row mt-4 mb-4">
-                                <div class="col-md-6">
-                                  <div class="box">
-                                    <div id="area"></div>
-                                  </div>
-                                </div>
-                                <div class="col-md-6">
-                                  <div class="box">
-                                    <div id="line"></div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
                         </div>
                       </div>
-                      <script src="{{ asset('js/apexchart.js') }}"></script>
-                      <script>
-                          var options = {
-                              chart: {
-                                  type: 'area'
-                              },
-                              series: [{
-                                  name: 'تعداد',
-                                  data: [{!! $songsCount !!}, {!! $usersCount !!}, {!! $artistsCount !!}, {!! $albumsCount !!}]
-                              }],
-                              xaxis: {
-                                  categories: ["موسیقی ها", "کاربران", "هنرمندان", "آلبوم ها"]
-                              }
-                          }
-                          
-                          var chart = new ApexCharts(document.querySelector("#chart"), options);
-                          
-                          chart.render();
-                    </script>
+                        <form action="{{ route('admin.notification') }}" method="POST">
+                            @csrf
+                            <div class="custom-control custom-switch">
+                                <label class="custom-control-label" for="customSwitch1">اطلاع رسانی از طریق ایمیل</label>
+                                <input type="checkbox" class="custom-control-input" name="notification" id="customSwitch1" onchange="form.submit();">
+                            </div>
+                        </form>
+                        <script src="{{ asset('js/apexchart.js') }}"></script>
+                        <script>
+                            var options = {
+                                chart: {
+                                    type: 'area'
+                                },
+                                series: [{
+                                    name: 'تعداد',
+                                    data: [{!! $songsCount !!}, {!! $usersCount !!}, {!! $artistsCount !!}, {!! $albumsCount !!}]
+                                }],
+                                xaxis: {
+                                    categories: ["موسیقی ها", "کاربران", "هنرمندان", "آلبوم ها"]
+                                }
+                            }
+                            
+                            var chart = new ApexCharts(document.querySelector("#chart"), options);
+                            
+                            chart.render();
+                        </script>
                 </div>
             </div>
         </div>
