@@ -46,14 +46,15 @@
                                     <li class="playlist-number">
                                         <!-- song information -->
                                         <div class="song-info">
-                                            <audio controls>
+                                            <h4>{{ $song->name }}</h4>
+                                            <audio controls style="float: left;">
                                                 <source src="{{ $song->songFiles->where("quality", 128)->count() != 0 ? Storage::url($song->songFiles->where("quality", 128)->first()->path)  
                                                                                                                       : Storage::url($song->songFiles->where("quality", 320)->first()->path) }}" type="audio/mpeg">
                                                   Your browser does not support the audio element.
                                               </audio> 
                                             <!-- song title -->
-                                            <h4>{{ $song->name }}</h4>
-                                            <p><strong>Album</strong>: {{$album->name}} &nbsp;|&nbsp; <strong>Artist</strong>: 
+                                            <p>
+                                                <strong>Album</strong>: {{$album->name}} &nbsp;|&nbsp; <strong>Artist</strong>: 
                                                 {{ $album->artist->name == $song->artist->name ? $album->artist->name : $album->artist->name . ' Feat ' . $song->artist->name }}
                                             </p>
                                         </div>

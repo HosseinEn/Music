@@ -162,15 +162,16 @@ class SongController extends Controller
         ]);
         $this->uniqueSlugOnUpdate($request, $song, 'songs');
         $this->handleImageOnUpdate($request, $song, 'song', 'cover');
+        $songUpload->validateSongFileAndUpdate($request, $song);
+        $song->tags()->sync($request->tags);
+        $song->update($request->all());
         if(isset($request->album)) {
             $this->addSongToAlbum($song, $request->album);
         }
         else {
             $song->album()->disassociate();
+            $song->save();
         }
-        $songUpload->validateSongFileAndUpdate($request, $song);
-        $song->tags()->sync($request->tags);
-        $song->update($request->all());
         return redirect(route('songs.index'))->with('success', 'اطلاعات آهنگ با موفقیت ویرایش شد!');
     }
 

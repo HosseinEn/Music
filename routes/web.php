@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\Admin\SongFileAccessController;
+use App\Mail\ContactUs;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,6 +40,8 @@ Route::get('/tags/{tag}', [App\Http\Controllers\HomeController::class, "tags"])
     ->name('front.tags');
 Route::get('/song/{song}/download', [App\Http\Controllers\HomeController::class, "downloadSong"])
     ->name('download.song')->middleware("throttle:5, 1");
+Route::post('/contact', [App\Http\Controllers\HomeController::class, "contactUs"])
+    ->name('contact');
 Route::get('/albums', [App\Http\Controllers\Front\AlbumController::class, "index"])
     ->name('front.albums');
 Route::get('/album/{album}', [App\Http\Controllers\Front\AlbumController::class, "show"])
@@ -53,3 +57,26 @@ Route::get('/song/{song}', [App\Http\Controllers\Front\SongController::class, "s
 Route::get('/search', [App\Http\Controllers\Front\SearchController::class, "search"])
     ->name("search");
 
+
+// Route::get('/api/{search}', function($search) {
+//     $response = Http::withHeaders([
+//         'X-RapidAPI-Key'=>'not for now kiddo',
+//         'X-RapidAPI-Host'=>'shazam.p.rapidapi.com'
+//     ])->get('https://shazam.p.rapidapi.com/search', [
+//         "term"=>"{$search}",
+//         'locale' => 'en-US',
+//         'offset' => '0',
+//         'limit' => '10'
+//     ]);
+//     dd($response->json());
+// });
+
+Route::get('/contactUs', function() {
+    $data = [
+        "name"=>"حسین",
+        "email"=>"testing@gmail.com",
+        "phone"=>"09111111111",
+        "message" =>"Hello from the other side...."
+    ];
+    return new ContactUs($data);
+});

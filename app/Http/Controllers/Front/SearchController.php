@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class SearchController extends Controller
 {
     public function search(Request $request) {
-        if($request->has("query")) {
+        if($request->has("query") && $request->get("query") != null) {
             $searchParam = $request->get("query");
             $albums = Album::with(["image", "artist"])->where('name', 'like', "%{$searchParam}%")
                                   ->published()

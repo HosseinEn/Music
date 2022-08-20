@@ -2,6 +2,12 @@
 
 @section('content')
 
+    @if (Session::has('success'))
+        <div class="alert alert-success" style="line-height: 275px;  height: 200px;" role="alert">
+            {{session('success')}}
+        </div>
+    @endif
+
     @include('front.main.banner')
 
     <!-- block for animate navigation menu -->
@@ -25,5 +31,5 @@
 
     @include('front.main.meet')
 
-    {{-- @include('front.main.contact') --}}
+    @include('front.main.contact')
 @endsection

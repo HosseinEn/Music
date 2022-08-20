@@ -49,7 +49,7 @@
                                 <div class="member-img">
                                     <!-- Image  --> 
                                     <a href="{{ route('show.artist', $artist->slug) }}" class="text-decoration-none">
-                                        <img class="img-responsive" src="{{ $artist->image ? $artist->image->url() : asset('img/user/1.jpg') }}" alt="" />
+                                        <img class="img-responsive" style="height: 250px;" src="{{ $artist->image ? $artist->image->url() : asset('img/user/1.jpg') }}" alt="" />
                                     </a>
                                     <!-- Hover block -->
                                     <div class="social text-center">

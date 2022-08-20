@@ -16,7 +16,7 @@
                             <div class="figure">
                                 <!-- image -->
                                 <a href="{{ route('show.song', $song->slug) }}" class="text-decoration-none">
-                                    <img class="img-responsive" src="{{ $song->image ? $song->image->url() : asset('img/user/1.jpg') }}" alt="Song's cover" />
+                                    <img class="img-responsive" style="height: 250px;" src="{{ $song->image ? $song->image->url() : asset('img/user/1.jpg') }}" alt="Song's cover" />
                                 </a>
                                 <!-- paragraph -->
                                 {{-- <p> --}}

@@ -109,6 +109,6 @@
 		<!-- HTML5 Support for IE -->
 		<script src="{{ asset('js/html5shiv.js') }}"></script>
 		<!-- Custom JS -->
-		<script src="{{ asset('js/custom.js') }}"></script>
+		{{-- <script src="{{ asset('js/custom.js') }}"></script> --}}
 	</body>
 </html>

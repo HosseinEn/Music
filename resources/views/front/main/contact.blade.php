@@ -39,26 +39,47 @@
         <div class="form-content ">
             <!-- paragraph -->
             <p>آیا پیشنهاد یا انتقادی دارید؟ با ما در میان بگذارید!</p>
-            <form role="form" id="contactForm" method="post">
+            <form action="{{ route('contact') }}" id="contactForm" method="POST">
+                @csrf
                 <div class="row">
                     <div class="col-md-6 col-sm-6">
                         <div class="form-group">
                             <label for="name">نام:</label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter name">
+                            <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}" placeholder="نام را وارد نمایید">
+                            <span class="text-danger" role="alert">
+                                @error('name')
+                                <strong>{{ $message }}</strong>
+                                @enderror
+                            </span>
                         </div>
                         <div class="form-group">
                             <label for="email">ایمیل:</label>
-                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
+                            <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" placeholder="ایمیل را وارد نمایید">
+                            <span class="text-danger" role="alert">
+                                @error('email')
+                                <strong>{{ $message }}</strong>
+                                @enderror
+                            </span>
                         </div>
                         <div class="form-group">
                             <label for="phone">تلفن همراه:</label>
-                            <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter phone">
+                            <input type="text" class="form-control @error('phone') is-invalid @enderror" id="phone" name="phone" value="{{ old('phone') }}" placeholder="تلفن همراه را وارد نمایید">
+                            <span class="text-danger" role="alert">
+                                @error('phone')
+                                <strong>{{ $message }}</strong>
+                                @enderror
+                            </span>
                         </div>
                     </div>
                     <div class="col-md-6 col-sm-6">
                         <div class="form-group">
                             <label for="message">پیام شما:</label>
-                            <textarea class="form-control" id="message" name="message" rows="9" placeholder="Enter message"></textarea>
+                            <textarea class="form-control @error('message') is-invalid @enderror" id="message" name="message" rows="9" placeholder="">{{ old('message') }}</textarea>
+                            <span class="text-danger" role="alert">
+                                @error('message')
+                                <strong>{{ $message }}</strong>
+                                @enderror
+                            </span>
                         </div>
                     </div>
                 </div>

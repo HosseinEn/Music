@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SendContactUsRequest;
+use App\Mail\ContactUs;
 use App\Models\Album;
 use App\Models\Artist;
 use App\Models\Song;
 use App\Models\Tag;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
@@ -74,5 +78,13 @@ class HomeController extends Controller
         }
         $downloadName = $song->artist->name . " - " . $song->name . " ({$quality}) " . "." . $songFile->extension;
         return Storage::download($songPath, $downloadName);
+    }
+
+    public function contactUs(SendContactUsRequest $request) {
+        $users = User::where('is_admin', true)->get();
+        foreach($users as $user) {
+            Mail::to($user)->send(new ContactUs($request->all()));
+        }
+        return redirect()->back()->with('success', 'پیام شما با موفقیت ارسال شد!');
     }
 }
