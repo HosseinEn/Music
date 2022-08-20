@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Storage;
 class HomeController extends Controller
 {
     public function index() {
-        $latestAlbums = Album::with(["songs", "artist", "tags", "image", "songs.songFiles"])
+        $latestAlbums = Album::with(["songs", "songs.artist", "artist", "tags", "image", "songs.songFiles"])
             ->orderBy("released_date", "desc")
             ->published()
             ->get()

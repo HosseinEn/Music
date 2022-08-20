@@ -53,7 +53,9 @@
                                               </audio> 
                                             <!-- song title -->
                                             <h4>{{ $song->name }}</h4>
-                                            <p><strong>Album</strong>: {{$album->name}} &nbsp;|&nbsp; <strong>Artist</strong>: {{$album->artist->name }}</p>
+                                            <p><strong>Album</strong>: {{$album->name}} &nbsp;|&nbsp; <strong>Artist</strong>: 
+                                                {{ $album->artist->name == $song->artist->name ? $album->artist->name : $album->artist->name . ' Feat ' . $song->artist->name }}
+                                            </p>
                                         </div>
                                         <div class="clearfix"></div>
                                     </li>

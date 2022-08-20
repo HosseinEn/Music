@@ -30,6 +30,11 @@
             <a class="btn btn-primary" style="float: right;" href="{{ route('home') }}">Home</a>
             <div class="container">
                 <div class="row text-center"  >
+                    @if($song->album)
+                        <a href="{{ route('show.album', $song->album->slug) }}" class="text-decoration-none">
+                            <h3 class="text-light mt-3">Album: {{ $song->album->name }}</h3>
+                        </a>
+                    @endif
                     <div class="col-md-12 textParent" style="margin-top: 200px; ">
                         <h1 class="text-white" style="font-size: 100px;">{{ $song->name }}</h1>
                         <p class="text-white mb-0">{{ $song->artist->name }}</p>

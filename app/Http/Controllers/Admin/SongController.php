@@ -104,6 +104,9 @@ class SongController extends Controller
     public function addSongToAlbum($song, $album_id) {
         $album = Album::findOrFail($album_id);
         $song->album()->associate($album);
+        $song->published = $album->published;
+        $song->auto_publish = $album->auto_publish;
+        $song->publish_date = $album->publish_date;
         $song->save();
     }
 

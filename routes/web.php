@@ -37,7 +37,7 @@ Route::get('/', [App\Http\Controllers\HomeController::class, "index"])
 Route::get('/tags/{tag}', [App\Http\Controllers\HomeController::class, "tags"])
     ->name('front.tags');
 Route::get('/song/{song}/download', [App\Http\Controllers\HomeController::class, "downloadSong"])
-    ->name('download.song');
+    ->name('download.song')->middleware("throttle:5, 1");
 Route::get('/albums', [App\Http\Controllers\Front\AlbumController::class, "index"])
     ->name('front.albums');
 Route::get('/album/{album}', [App\Http\Controllers\Front\AlbumController::class, "show"])
@@ -50,4 +50,6 @@ Route::get('/songs', [App\Http\Controllers\Front\SongController::class, "index"]
     ->name('front.songs');  
 Route::get('/song/{song}', [App\Http\Controllers\Front\SongController::class, "show"])
     ->name('show.song');
+Route::get('/search', [App\Http\Controllers\Front\SearchController::class, "search"])
+    ->name("search");
 

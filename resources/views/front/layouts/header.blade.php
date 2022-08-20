@@ -42,6 +42,7 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
+                    <li><a href="{{ route('home') }}#search">جستجو</a></li>
                     @guest
                         <li><a href="{{ route('login') }}">ورود</a></li>
                         <li><a href="{{ route('register')  }}">ثبت نام</a></li>
@@ -58,8 +59,8 @@
                             </form>
                         </li>
                     @endguest
-                    <li><a href="{{ route('home') }}#latestalbum">جدیدترین آلبوم ها</a></li>
-                    <li><a href="{{ route('home') }}#latestsongs">جدیدترین موسیقی ها</a></li>
+                    <li><a href="{{ route('home') }}#latestalbum" style="font-size: 12px;">جدیدترین آلبوم ها</a></li>
+                    <li><a href="{{ route('home') }}#latestsongs" style="font-size: 12px;">جدیدترین موسیقی ها</a></li>
                     <li><a href="{{ route('home') }}#genres">ژانرها</a></li>
                     <li><a href="{{ route('home') }}#events">رویداد ها</a></li>
                     <li><a href="{{ route('home') }}#artists">هنرمندان</a></li>

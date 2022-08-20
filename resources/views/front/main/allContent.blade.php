@@ -3,8 +3,11 @@
 @section('content')
 
     @include('front.main.banner')
+
     <!-- block for animate navigation menu -->
     <div class="nav-animate"></div>
+
+    @include('front.main.search')
 
     @include('front.main.latest_albums')
 
@@ -22,5 +25,5 @@
 
     @include('front.main.meet')
 
-    {{-- @include('front.main.contact')     --}}
+    {{-- @include('front.main.contact') --}}
 @endsection

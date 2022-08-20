@@ -4,9 +4,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
-        .textParent {
-            /* backdrop-filter: invert(80%); */
-        }
         .bg-image {
             position: relative;
             background-size: cover;
@@ -19,7 +16,6 @@
             width: 100%;
             opacity: 0.5;
             background-repeat: no-repeat;
-            /* background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('http://placehold.it/350x150'); */
         }
     </style>
     </head>
@@ -40,9 +36,11 @@
                 <div class="container" id="{{$song->slug}}">
                     <div class="row text-center">
                         <h3 class="text-light mt-3">Album: {{ $album->name }}</h3>
-                        <div class="col-md-12 textParent" style="margin-top: 200px; ">
+                        <div class="col-md-12" style="margin-top: 200px; ">
                             <h1 class="text-white" style="font-size: 100px;">{{ $song->name }}</h1>
-                            <p class="text-white mb-0">{{ $album->artist->name }}</p>
+                            <p class="text-white mb-0">
+                                {{ $album->artist->name == $song->artist->name ? $album->artist->name : $album->artist->name . ' Feat ' . $song->artist->name }}
+                            </p>
                             <small  class="text-white">{{ $album->released_date }}</small>
                             <br>
                             <audio controls style="margin-top: 200px;">
