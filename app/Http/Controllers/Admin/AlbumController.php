@@ -165,6 +165,9 @@ class AlbumController extends Controller
     public function deleteSongFromAlbum(Request $request) {
         $song  = Song::findOrFail($request->song_id);
         $song->album_id = null;
+        $song->published = false;
+        $song->auto_publish = false;
+        $song->publish_date = null;
         $song->save();
         return redirect()->back()->with('success', 'موسیقی با موفقیت از آلبوم حذف شد!');
     }

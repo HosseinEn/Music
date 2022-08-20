@@ -10,7 +10,7 @@
                 <li>ویرایش موسیقی {{$song->name}}</li>
             </ol>
         </nav>
-        <form action="{{ route('songs.update', $song->slug) }}" method="POST" enctype="multipart/form-data">
+        <form class="bg-dark text-white" action="{{ route('songs.update', $song->slug) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="form-group">

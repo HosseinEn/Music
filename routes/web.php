@@ -71,12 +71,3 @@ Route::get('/search', [App\Http\Controllers\Front\SearchController::class, "sear
 //     dd($response->json());
 // });
 
-Route::get('/contactUs', function() {
-    $data = [
-        "name"=>"حسین",
-        "email"=>"testing@gmail.com",
-        "phone"=>"09111111111",
-        "message" =>"Hello from the other side...."
-    ];
-    return new ContactUs($data);
-});
