@@ -41,7 +41,7 @@
                                     @else
                                         <a href="{{ route('show.song', $item->slug) }}" class="text-decoration-none">
                                     @endif
-                                        <img class="img-responsive" src="{{  $item->image ? $item->image->url() : asset('img/user/1.jpg')  }}" alt="Song's cover" />
+                                        <img class="img-responsive" style="height: 200px;" src="{{  $item->image ? $item->image->url() : asset('img/user/1.jpg')  }}" alt="Song's cover" />
                                     </a>
                                     <!-- paragraph -->
                                     @foreach ($item->tags as $tag)

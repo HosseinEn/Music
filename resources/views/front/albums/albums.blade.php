@@ -19,7 +19,7 @@
                                 <div class="figure">
                                     <!-- image -->
                                     <a href="{{ route('show.album', $album->slug) }}" class="text-decoration-none">
-                                        <img class="img-responsive" src="{{ $album->image ? $album->image->url() : asset('img/user/1.jpg') }}" alt="Song's cover" />
+                                        <img class="img-responsive" style="height: 200px;" src="{{ $album->image ? $album->image->url() : asset('img/user/1.jpg') }}" alt="Song's cover" />
                                     </a>
                                     <!-- paragraph -->
                                     @foreach ($album->tags as $tag)

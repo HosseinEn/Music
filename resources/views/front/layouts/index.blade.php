@@ -22,7 +22,7 @@
 {{--		<!-- Custom CSS -->--}}
 {{--		<link href="css/style.css" rel="stylesheet">--}}
 {{--		<link href="css/style-color.css" rel="stylesheet">--}}
-
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
 		<!-- Favicon -->
 		<link rel="shortcut icon" href="img/logo/favicon.ico">
 

@@ -5,6 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
+                <h4>ثبت نام کرده اید؟ <a href="{{ route('login') }}">وارد شوید!</a></h4>
                 <div class="card-header">{{ __('فرم ثبت نام') }}</div>
 
                 <div class="card-body">
