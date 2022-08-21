@@ -59,6 +59,19 @@ class User extends Authenticatable
         return $this->hasMany(Album::class);
     }
 
+
+    public function likedSongs() {
+        return $this->morphedByMany(Song::class, "likeable")->withTimestamps();
+    }
+
+    public function likedAlbums() {
+        return $this->morphedByMany(Album::class, "likeable")->withTimestamps();
+    }
+
+    public function likedArtists() {
+        return $this->morphedByMany(Artist::class, "likeable")->withTimestamps();
+    }
+
     public static function boot() {
         parent::boot();
     }

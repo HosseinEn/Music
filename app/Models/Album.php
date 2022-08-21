@@ -27,6 +27,10 @@ class Album extends Model
         return $this->morphToMany(Tag::class, 'taggable');
     }
 
+    public function likes() {
+        return $this->morphToMany(Like::class, "likeable");
+    }
+
     public function tagIDs() {
         return $this->tags()->get()->pluck('id')->toArray()?? [];
     }

@@ -22,6 +22,10 @@ class Artist extends Model
         return $this->hasMany(Song::class);
     }
 
+    public function likes() {
+        return $this->morphToMany(Like::class, "likeable");
+    }
+
     public function scopeSoloSongs(Builder $query) {
         return $this->songs()->doesntHave('album');
     }
