@@ -34,6 +34,23 @@
                 <div class="row text-center">
                     <h3 class="text-light mt-3">Album: {{ $album->name }}</h3>
                     <div class="col-md-12" style="margin-top: 20px; ">
+                        @auth
+                        <h2>افزودن {{$album->name}} به علاقه مندی ها</h2>
+                        <form action="{{ route('user.liked.album', $album->slug) }}" id="like_form" method="POST">
+                            @csrf
+                        </form>
+                        <i onclick="document.querySelector('#like_form').submit()" 
+                            class="fa fa-bookmark" style="font-size: 90px;"></i>
+                        <form action="{{ route('user.removed.liked.album', $album->slug) }}" id="remove_like_form" method="POST">
+                            @csrf
+                        </form>
+                        <i onclick="document.querySelector('#remove_like_form').submit()"
+                            class="far fa-bookmark" style="font-size: 80px;"></i>
+                    @else
+                        <h3 class="text-center" 
+                            style="background-color: darkgray; line-height: 50px; border-radius: 10px;">
+                            <a href="{{ route('register') }}">ثبت نام</a> کنید و این هنرمند را به علاقه مندی های خود اضافه کنید!</h3>
+                    @endguest
                         <h1 class="text-white" style="font-size: 70px;">{{ $song->name }}</h1>
                         <p class="text-white mb-0">
                             {{ $album->artist->name == $song->artist->name 
@@ -42,12 +59,19 @@
                         </p>
                         <small class="text-white">{{ $album->released_date }}</small>
                         <br>
-                        <audio
+                        <audio controls style="margin-top: 200px;">
+                            <source src="{{ $song->songFiles->where("quality", 128)->count() != 0 
+                                ? Storage::url($song->songFiles->where("quality", 128)->first()->path)  
+                                : Storage::url($song->songFiles->where("quality", 320)->first()->path) }}" type="audio/mpeg">
+                              Your browser does not support the audio element.
+                          </audio> 
+                        {{-- <audio
                             src="{{ $song->songFiles->where('quality', 128)->count() != 0
                                 ? Storage::url($song->songFiles->where('quality', 128)->first()->path)
                                 : Storage::url($song->songFiles->where('quality', 320)->first()->path) }}"
-                            id="songPlayer"></audio>
-                        <div class="audio-container">
+                            id="songPlayer">
+                        </audio> --}}
+                        {{-- <div class="audio-container">
                             <div class="circle-wrap">
                                 <div class="circle">
                                     <div class="mask full animationEffect">
@@ -64,13 +88,6 @@
                                 </div>
 
                             </div>
-                            <div class="infoContainer">
-                                {{-- <section>{{ $song->artist->name }}</section> --}}
-
-                            </div>
-                            <div class="titleCont">
-                                {{-- <section id="TitleShown">{{ $song->name }}</section> --}}
-                            </div>
                             <div class="inputCont">
                                 <input style="" type="range" min="0" max="0" id="seekbar">
                                 <section style="margin-left: 10px;" id="currentTimeShown"></section>/
@@ -79,7 +96,7 @@
                             <br>
                             Music Player by<a href="https://github.com/Arash-Seifi"
                                 class="text-white text-decoration-none"> Arash Seifi</a>
-                        </div>
+                        </div> --}}
 
                         <br>
                         <div class="">

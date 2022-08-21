@@ -50,7 +50,7 @@
                         @if(Auth::user()->is_admin)
                             <li><a href="{{ route('admin.home') }}">{{ Auth::user()->name }}</a></li>
                         @else
-                            <li><a href="{{ route('home') }}">{{ Auth::user()->name }}</a></li>
+                            <li><a href="{{ route('user.favorites') }}">{{ Auth::user()->name }}</a></li>
                         @endif
                         <li>
                             <form action="{{ route('logout') }}" method="POST" style="margin-top: 18px;">

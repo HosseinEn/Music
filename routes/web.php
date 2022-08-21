@@ -30,33 +30,73 @@ Route::prefix('admin')->middleware('is_admin')->group(function() {
         [\App\Http\Controllers\Admin\AlbumController::class, 'deleteSongFromAlbum'])->name('album.song.delete');
     Route::resource('songs', \App\Http\Controllers\Admin\SongController::class);
     Route::get('/song/{song}/download', [SongFileAccessController::class, "downloadSongFile"])->name('admin.download.song');
-    Route::post('/notification', [App\Http\Controllers\Admin\HomeController::class, 'controlNotification'])->name('admin.notification');
+    Route::post('/notification', [App\Http\Controllers\Admin\HomeController::class, 'controlNotification'])
+        ->name('admin.notification');
 });
 
 
-Route::get('/', [App\Http\Controllers\HomeController::class, "index"])
-    ->name('home');
-Route::get('/tags/{tag}', [App\Http\Controllers\HomeController::class, "tags"])
-    ->name('front.tags');
-Route::get('/song/{song}/download', [App\Http\Controllers\HomeController::class, "downloadSong"])
-    ->name('download.song')->middleware("throttle:5, 1");
-Route::post('/contact', [App\Http\Controllers\HomeController::class, "contactUs"])
-    ->name('contact');
+// Route::get('/', [App\Http\Controllers\HomeController::class, "index"])
+//     ->name('home');
+// Route::get('/tags/{tag}', [App\Http\Controllers\HomeController::class, "tags"])
+//     ->name('front.tags');
+// Route::get('/song/{song}/download', [App\Http\Controllers\HomeController::class, "downloadSong"])
+//     ->name('download.song')->middleware("throttle:5, 1");
+// Route::post('/contact', [App\Http\Controllers\HomeController::class, "contactUs"])
+//     ->name('contact');
+
+Route::controller(App\Http\Controllers\HomeController::class)->group(function() {
+    Route::get('/', "index")->name('home');
+    Route::get('/tags/{tag}', "tags")->name('front.tags');
+    Route::get('/song/{song}/download', "downloadSong")->name('download.song')->middleware("throttle:5, 1");
+    Route::post('/contact', "contactUs")->name('contact');
+});
+
+// Route::get('/liked', [App\Http\Controllers\Front\LikeController::class, "index"])
+//     ->name('user.favorites');
+// Route::post('/artist/{artist}/liked', [App\Http\Controllers\Front\LikeController::class, "addArtistToFavorite"])
+//     ->name('user.liked.artist');
+// Route::post('/album/{album}/liked', [App\Http\Controllers\Front\LikeController::class, "addSongToFavorite"])
+//     ->name('user.liked.song');
+// Route::post('/song/{song}/liked', [App\Http\Controllers\Front\LikeController::class, "addAlbumToFavorite"])
+//     ->name('user.liked.album');
+// Route::post('/album/{album}/delete/liked', [App\Http\Controllers\Front\LikeController::class, "removeAlbumFromFavorite"])
+//     ->name('user.removed.liked.album');
+// Route::post('/artist/{artist}/delete/liked', [App\Http\Controllers\Front\LikeController::class, "removeArtistsFromFavorite"])
+//     ->name('user.removed.liked.album');
+// Route::post('/song/{song}/delete/liked', [App\Http\Controllers\Front\LikeController::class, "removeSongFromFavorite"])
+//     ->name('user.remove.liked.album');
+   
+
+Route::controller(App\Http\Controllers\Front\LikeController::class)->group(function() {
+    Route::get('/liked',  "index")->name('user.favorites');
+
+    Route::post('/artist/{artist}/liked',  "addArtistToFavorite")->name('user.liked.artist');
+    Route::post('/album/{album}/liked',  "addAlbumToFavorite")->name('user.liked.album');
+    Route::post('/song/{song}/liked',  "addSongToFavorite")->name('user.liked.song');
+        
+    Route::post('/album/{album}/delete/liked',  "removeAlbumFromFavorite")->name('user.removed.liked.album');
+    Route::post('/artist/{artist}/delete/liked',  "removeArtistFromFavorite")->name('user.removed.liked.artist');
+    Route::post('/song/{song}/delete/liked',  "removeSongFromFavorite")->name('user.removed.liked.song');
+});
+
+ 
+
 Route::get('/albums', [App\Http\Controllers\Front\AlbumController::class, "index"])
     ->name('front.albums');
 Route::get('/album/{album}', [App\Http\Controllers\Front\AlbumController::class, "show"])
     ->name('show.album');
+
 Route::get('/artists', [App\Http\Controllers\Front\ArtistController::class, "index"])
     ->name('front.artists');
 Route::get('/artist/{artist}', [App\Http\Controllers\Front\ArtistController::class, "show"])
     ->name('show.artist');
+
 Route::get('/songs', [App\Http\Controllers\Front\SongController::class, "index"])
     ->name('front.songs');  
 Route::get('/song/{song}', [App\Http\Controllers\Front\SongController::class, "show"])
     ->name('show.song');
 Route::get('/search', [App\Http\Controllers\Front\SearchController::class, "search"])
     ->name("search");
-
 
 // Route::get('/api/{search}', function($search) {
 //     $response = Http::withHeaders([

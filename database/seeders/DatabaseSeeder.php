@@ -13,7 +13,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call([UsersTableSeeder::class, ArtistsTableSeeder::class,
-         AlbumsTableSeeder::class, SongsTableSeeder::class, TagsTableSeeder::class, TaggablesTableSeeder::class]);
+        $this->call([
+            UsersTableSeeder::class,
+            ArtistsTableSeeder::class,
+            AlbumsTableSeeder::class, 
+            SongsTableSeeder::class, 
+            TagsTableSeeder::class, 
+            TaggablesTableSeeder::class,
+            LikeablesTableSeeder::class
+        ]);
     }
 }

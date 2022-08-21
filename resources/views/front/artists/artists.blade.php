@@ -19,7 +19,7 @@
                                 <div class="figure">
                                     <!-- image -->
                                     <a href="{{ route('show.artist', $artist->slug) }}" class="text-decoration-none">
-                                        <img class="img-responsive" src="{{ $artist->image ? $artist->image->url() : asset('img/user/1.jpg') }}" alt="Song's cover" />
+                                        <img class="img-responsive" style="height: 200px;" src="{{ $artist->image ? $artist->image->url() : asset('img/user/1.jpg') }}" alt="Song's cover" />
                                     </a>
                                 </div>
                                 <div class="hero-playlist">
