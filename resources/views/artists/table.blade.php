@@ -1,4 +1,4 @@
-<table class="table table-striped">
+<table class="table table-striped mt-3" style="border-color: black;" border="1px;">
     <thead>
     <tr>
         <th class="text-center">#</th>

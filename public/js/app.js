@@ -27750,19 +27750,6 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 /***/ }),
 
-/***/ "./resources/css/css/font-awesome.min.css":
-/*!************************************************!*\
-  !*** ./resources/css/css/font-awesome.min.css ***!
-  \************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
 /***/ "./resources/css/css/style-color.css":
 /*!*******************************************!*\
   !*** ./resources/css/css/style-color.css ***!
@@ -28263,7 +28250,6 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/css/css/animate.min.css")))
 /******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/css/css/style.css")))
 /******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/css/css/owl.carousel.css")))
-/******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/css/css/font-awesome.min.css")))
 /******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/css/css/style-color.css")))
 /******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/css/css/bootstrap.css")))
 /******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/css/css/bootstrap.min.css")))

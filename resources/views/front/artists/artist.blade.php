@@ -1,5 +1,6 @@
 @extends('front.layouts.index')
 
+@section('title', $artist->namee)
 @section('content')
     <div class="featured pad" id="">
         <div class="container">

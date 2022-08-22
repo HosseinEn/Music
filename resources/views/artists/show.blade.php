@@ -10,42 +10,44 @@
             </ol>
         </nav>
         <div class="row">
-            هنرمند:{{ $artist->name }}<br>
-            @if($artist->image)
-                <img src="{{ $artist->image->url() }}" alt="Artist image here" class="img-thumbnail" style="width: 100px;">
-            @endif
-            <h3>آلبوم ها:</h3>
-            <ul class="list-group mt-3">
-                @forelse ($artist->albums as $album)
-                    <li class="list-group-item active">
-                        <h5>{{ $album->name }}</h5>
-                    </li>
-                    @forelse ($album->songs as $song)
-                        <li class="list-group-item">
+            <div class="card mb-3">
+                <img class="card-img-top" src="{{ $artist->image->url() }}" alt="Card image cap">
+                <div class="card-body">
+                    <h2 class="card-title">{{ $artist->name }}</h2>
+                </div>
+            </div>
+
+            <h1>موسیقی ها:</h1>
+            <ul class="list-group">
+                @forelse ($artist->songs as $song)
+                    <a class="text-dark" style="font-size: 20px;"
+                        href="{{ route('songs.show', $song->slug) }}">
+                        <li class="list-group-item" name="{{ $song->slug }}">
                             {{ $song->name }}
-                            <hr>
                         </li>
-                    @empty
-                        <li class="list-group-item">
-                            در این آلبوم موسیقی ای وجود ندارد!
+                    </a>
+                @empty
+                    <li class="list-group-item">
+                        هنرمند هیچ موسیقی ندارد!
+                    </li>
+                @endforelse
+            </ul>
+
+            <h1>آلبوم ها:</h1>
+            <ul class="list-group">
+                @forelse ($artist->albums as $album)
+                    <a class="text-dark" style="font-size: 20px;"
+                        href="{{ route('albums.show', $album->slug) }}">
+                        <li class="list-group-item" name="{{ $album->slug }}">
+                            {{ $album->name }}
                         </li>
-                    @endforelse
+                    </a>
                 @empty
                     <li class="list-group-item">
                         هنرمند هیچ آلبومی ندارد!
                     </li>
                 @endforelse
             </ul>
-
-            <hr class="mt-5">
-            <h3 class="mt-5">تک موسیقی ها:</h3>
-            <ul class="list-group">
-                @forelse ($soloSongs as $song)
-                    <li class="list-group-item">{{ $song->name }}</li>
-                @empty
-                    <li class="list-group-item">هنرمند آهنگ تکی ندارد!</li>
-                @endforelse
-            </ul>
         </div>
-    </div>
+
 @endsection

@@ -11,7 +11,7 @@
                 </ol>
             </nav>
 
-            <form action="{{ route('tags.update', $tag->slug) }}" method="POST" enctype="multipart/form-data">
+            <form class="bg-dark text-white" action="{{ route('tags.update', $tag->slug) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method("PUT")
                 <div class="form-group">

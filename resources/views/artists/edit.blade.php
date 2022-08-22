@@ -15,7 +15,7 @@
             @include('messages')
 
 
-            <form action="{{ route('artists.update', $artist->slug) }}" method="POST" enctype="multipart/form-data">
+            <form class="bg-dark text-white" action="{{ route('artists.update', $artist->slug) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('put')
                 <div class="form-group">

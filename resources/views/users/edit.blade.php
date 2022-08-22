@@ -10,7 +10,7 @@
                     <li>ویرایش کاربر {{$user->name}}</li>
                 </ol>
             </nav>
-            <form action="{{ route('users.update', $user->id) }}" method="POST">
+            <form class="bg-dark text-white" action="{{ route('users.update', $user->id) }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="form-group">

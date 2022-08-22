@@ -10,31 +10,52 @@
             </ol>
         </nav>
         <div class="row">
-            <h1>{{ $album->name }}</h1><br>
-            @if($album->image)
-                <img src="{{ $album->image->url() }}" alt="Album image here" class="img-thumbnail" style="width: 100px;">
-            @endif
-            <h3>هنرمند:<a href="{{ route('artists.show', $album->artist->slug) }}">{{ $album->artist->name }}</a></h3>
-            ژانر:
-            <br>
-            @foreach ($album->tags as $tag)
-                <p><a class="badge bg-success">{{ $tag->name }}</a></p>
-            @endforeach
-            <hr>
-            <h1>موسیقی ها:</h1>
-            <ul class="list-group mt-3">
-                @forelse ($album->songs as $song)
-                    <li class="list-group-item">
-                        <a href="{{ route('songs.show', $song->slug) }}">
-                            <h5>{{ $song->name }}</h5>
+            <div class="card mb-3">
+                <img class="card-img-top" src="{{ $album->image->url() }}" alt="Card image cap">
+                <div class="card-body">
+                    <h2 class="card-title">{{ $album->name }}</h2>
+                    <hr>
+                    <p class="card-text">
+                        <b>هنرمند: </b>
+                        <a href="{{ route('artists.show', $album->artist->slug) }}">
+                            {{ $album->artist->name }}
                         </a>
-                    </li>
+                    </p>
+                    <hr>
+                    <p class="card-text">
+                        <b>تاریخ انتشار توسط هنرمند:</b>
+                        {{(new Carbon\Carbon($album->released_date))->format('d-m-Y')}}
+                    </p>
+                    <hr>
+                    <p class="card-text">
+                        <b>ژانر ها:</b>
+                        @foreach ($album->tags as $tag)
+                            <a class="badge bg-success">{{ $tag->name }}</a>
+                        @endforeach
+                    </p>
+                    <hr>
+                    <p class="card-text">
+                        <b>طول آلبوم:</b>
+                        {{$album->duration}}
+                    </p>
+                </div>
+            </div>
+            <h1>موسیقی ها:</h1>
+            <ul class="list-group">
+                @forelse ($album->songs as $song)
+                    <a class="text-dark" style="font-size: 20px;"
+                        href="{{ route('songs.show', $song->slug) }}">
+                        <li class="list-group-item" name="{{ $song->slug }}">
+                            {{ $song->name }}
+                        </li>
+                    </a>
                 @empty
                     <li class="list-group-item">
                         آلبوم هیچ موسیقی ندارد!
                     </li>
                 @endforelse
             </ul>
+
         </div>
-    </div>
+
 @endsection

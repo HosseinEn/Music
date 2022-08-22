@@ -3,11 +3,6 @@
 @section('content')
     <div class="container">
         <div class="row">
-            {{--            @if($errors->any())--}}
-            {{--                @foreach($errors->all() as $error)--}}
-            {{--                    {{$error}}<br>--}}
-            {{--                @endforeach--}}
-            {{--            @endif--}}
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li><a href="{{ route('admin.home') }}">خانه</a></li>
@@ -18,7 +13,39 @@
 
             @include('messages')
 
-            <form action="{{ route('albums.update', $album->slug) }}" method="POST" enctype="multipart/form-data">
+            <div class="row">
+                <h3 for="songs_table">موسیقی های آلبوم:</h3>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th class="text-center">نام آهنگ</th>
+                        <th class="text-center">حذف از آلبوم</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @forelse($album->songs as $song)
+                        <tr class="text-center">
+                            <td>{{ $song->name}}</td>
+                            <td>
+                                <form action="{{ route('album.song.delete')}}" method="POST">
+                                    @csrf
+                                    <input type="hidden" value="{{ $song->id }}" name="song_id">
+                                    <input type="submit" class="btn btn-danger" value="حذف">
+                                </form>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td>موسیقی ای در این آلبوم وجود ندارد!</td>
+                            <td></td>
+                        </tr>
+                    @endforelse
+                    </tbody>
+                </table>
+            </div>
+
+            <form action="{{ route('albums.update', $album->slug) }}" method="POST" enctype="multipart/form-data"
+                class="bg-dark text-white">
                 @csrf
                 @method('PUT')
                 <div class="form-group">
@@ -166,37 +193,6 @@
                     <button type="submit" class="btn btn-warning">ویرایش</button>
                 </div>
             </form>
-            <div class="form-group">
-                <label for="songs_table">موسیقی های آلبوم:</label>
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th class="text-center">نام آهنگ</th>
-                        <th class="text-center">حذف از آلبوم</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @forelse($album->songs as $song)
-                        <tr class="text-center">
-                            <td>{{ $song->name}}</td>
-                            <td>
-                                <form action="{{ route('album.song.delete')}}" method="POST">
-                                    @csrf
-                                    <input type="hidden" value="{{ $song->id }}" name="song_id">
-                                    <input type="submit" class="btn btn-danger" value="حذف">
-                                </form>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td>موسیقی ای در این آلبوم وجود ندارد!</td>
-                            <td></td>
-                        </tr>
-                    @endforelse
-                    </tbody>
-                </table>
-            </div>
-
         </div>
     </div>
 
