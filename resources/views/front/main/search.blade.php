@@ -1,4 +1,5 @@
-<div class="container" style="margin-top: 100px;" dir="ltr" id="search">
+<div id="search"></div>
+<div class="container" style="margin-top: 100px;" dir="ltr">
     <h2 class="text-center" style="margin-bottom: 50px;">!جستجو کنید</h2>
     <div class="row d-flex justify-content-center align-items-center">
         <div class="col-md-12">

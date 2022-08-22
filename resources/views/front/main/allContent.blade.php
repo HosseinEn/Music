@@ -17,9 +17,13 @@
 
     @include('front.main.latest_albums')
 
+    @include('front.main.popular_albums')
+
     {{-- @include('front.main.promo') --}}
 
     @include('front.main.latest_songs')
+
+    @include('front.main.popular_songs')
 
     @include('front.main.call_to_action')
 

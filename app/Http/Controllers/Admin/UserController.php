@@ -61,10 +61,7 @@ class UserController extends Controller
             "name" => "required",
             "email" => ["required", "email", Rule::unique('users')->ignore($user->id)]
         ], $this->messages());
-        $user->update([
-            "name"=>$request->name,
-            "email"=>$request->email
-        ]);
+        $user->update($request->all());
         return redirect(route('users.index'))->with("success", "کاربر با موفقیت ویرایش شد");
     }
 

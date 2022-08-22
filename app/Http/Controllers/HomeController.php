@@ -22,12 +22,27 @@ class HomeController extends Controller
             ->get()
             ->take(3);
 
+        $popularAlbums = Album::withCount('likes')
+            ->with(["songs", "songs.artist", "artist", "tags", "image", "songs.songFiles"])
+            ->orderBy('likes_count', 'desc')
+            ->published()
+            ->get()
+            ->take(3);
+
         $soloSongs = Song::with(["artist", "tags", "image"])            
-        ->soloSongs()
-        ->orderBy("released_date", "desc")
-        ->published()
-        ->get()
-        ->take(9);
+            ->soloSongs()
+            ->orderBy("released_date", "desc")
+            ->published()
+            ->get()
+            ->take(9);
+
+        $popularSongs = Song::withCount('likes')
+            ->with(["artist", "tags", "image"])            
+            ->soloSongs()
+            ->orderBy("released_date", "desc")
+            ->published()
+            ->get()
+            ->take(9);
 
         $tags = Tag::get()->take(8);
         
@@ -35,7 +50,9 @@ class HomeController extends Controller
 
         return view('front.main.allContent', [
             "latestAlbums"=>$latestAlbums,
+            "popularAlbums"=>$popularAlbums,
             "latestSongs"=>$soloSongs,
+            "popularSongs"=>$popularSongs,
             "tags"=>$tags,
             "artists"=>$artists
         ]);

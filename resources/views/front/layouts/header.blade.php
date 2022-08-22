@@ -42,15 +42,29 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="{{ route('home') }}#search">جستجو</a></li>
                     @guest
-                        <li><a href="{{ route('login') }}">ورود</a></li>
-                        <li><a href="{{ route('register')  }}">ثبت نام</a></li>
+                        <li class="nav-item"><a href="{{ route('login') }}">ورود</a></li>
+                        <li class="nav-item"><a href="{{ route('register')  }}">ثبت نام</a></li>
                     @else
                         @if(Auth::user()->is_admin)
                             <li><a href="{{ route('admin.home') }}">{{ Auth::user()->name }}</a></li>
                         @else
-                            <li><a href="{{ route('user.favorites') }}">{{ Auth::user()->name }}</a></li>
+                            <li>
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"
+                                    style="margin-top: 18px; margin-right: 5px;">
+                                        {{ Auth::user()->name }}
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" style="" aria-labelledby="dropdownMenu1">
+                                        <li><a style="color: black;" href="{{ route('user.favorites') }}">علاقه مندی های شما</a></li>
+                                        {{-- <li><a href="#">Another action</a></li> --}}
+                                        {{-- <li><a href="#">Something else here</a></li> --}}
+                                        {{-- <li role="separator" class="divider"></li> --}}
+                                        {{-- <li><a href="#">Separated link</a></li> --}}
+                                    </ul>
+                                </div>
+                            </li>
                         @endif
                         <li>
                             <form action="{{ route('logout') }}" method="POST" style="margin-top: 18px;">
@@ -59,8 +73,9 @@
                             </form>
                         </li>
                     @endguest
-                    <li><a href="{{ route('home') }}#latestalbum" style="font-size: 12px;">جدیدترین آلبوم ها</a></li>
-                    <li><a href="{{ route('home') }}#latestsongs" style="font-size: 12px;">جدیدترین موسیقی ها</a></li>
+                    <li><a href="{{ route('home') }}#search">جستجو</a></li>
+                    <li><a href="{{ route('home') }}#latestalbum">آلبوم ها</a></li>
+                    <li><a href="{{ route('home') }}#latestsongs">موسیقی ها</a></li>
                     <li><a href="{{ route('home') }}#genres">ژانرها</a></li>
                     <li><a href="{{ route('home') }}#events">رویداد ها</a></li>
                     <li><a href="{{ route('home') }}#artists">هنرمندان</a></li>

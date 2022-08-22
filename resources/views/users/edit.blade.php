@@ -33,6 +33,20 @@
                         @enderror
                     </span>
                 </div>
+                @can('promote', $user)
+                    <div class="form-group">
+                        <label for="is_admin">نقش:</label>
+                        <select name="is_admin" id="is_admin">
+                            <option value="0" selected>کاربر</option>
+                            <option value="1">ادمین</option>
+                        </select>
+                        <span class="invalid-feedback" role="alert">
+                            @error('email')
+                                <strong>{{ $message }}</strong>
+                            @enderror
+                        </span>
+                    </div>
+                @endcan
                 <div class="form-group">
                     <button type="submit" class="btn btn-warning">ویرایش</button>
                 </div>

@@ -34,5 +34,9 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('edit-admin', function($currentUser, $editUser) {
             return $currentUser->id == $editUser->id || !$editUser->is_admin;
         });
+
+        Gate::define('promote', function($currentUser, $editUser) {
+            return $currentUser->id !== $editUser->id && !$editUser->is_admin;
+        });
     }
 }

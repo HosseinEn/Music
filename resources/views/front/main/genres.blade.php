@@ -15,8 +15,6 @@
                         <div class="col-md-3 col-sm-6">
                             <div class="why-item  delay-one">
                                 <span class="why-number" style="font-size:34px;">{{ $tag->name }}</span>
-                                <!-- paragraph -->
-                                <p>Sed ut perspi ciatis unde omnis iste natus error sit vol uptatem accus antium totam rem aperiam, eaque ipsa quae ab illo inventore veritatisnatus.</p>
                             </div>
                         </div>
                     </a>
