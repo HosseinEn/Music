@@ -32,25 +32,29 @@
             </ul>
             <div class="container" id="{{ $song->slug }}">
                 <div class="row text-center">
-                    <h3 class="text-light mt-3">Album: {{ $album->name }}</h3>
-                    <div class="col-md-12" style="margin-top: 20px; ">
+                    @if($loop->first)
+                        <h3 class="text-light mt-3">Album: {{ $album->name }}</h3>
                         @auth
-                        <h2>افزودن {{$album->name}} به علاقه مندی ها</h2>
-                        <form action="{{ route('user.liked.album', $album->slug) }}" id="like_form" method="POST">
-                            @csrf
-                        </form>
-                        <i onclick="document.querySelector('#like_form').submit()" 
-                            class="fa fa-bookmark" style="font-size: 90px;"></i>
-                        <form action="{{ route('user.removed.liked.album', $album->slug) }}" id="remove_like_form" method="POST">
-                            @csrf
-                        </form>
-                        <i onclick="document.querySelector('#remove_like_form').submit()"
-                            class="far fa-bookmark" style="font-size: 80px;"></i>
-                    @else
-                        <h3 class="text-center" 
-                            style="background-color: darkgray; line-height: 50px; border-radius: 10px;">
-                            <a href="{{ route('register') }}">ثبت نام</a> کنید و این هنرمند را به علاقه مندی های خود اضافه کنید!</h3>
-                    @endguest
+                            @if($album->userLiked())
+                                <form action="{{ route('user.removed.liked.album', $album->slug) }}" id="remove_like_form" method="POST">
+                                    @csrf
+                                </form>
+                                <i onclick="document.querySelector('#remove_like_form').submit()"
+                                    class="fa fa-bookmark" style="font-size: 30px; cursor: pointer;"></i>
+                            @else
+                                <form action="{{ route('user.liked.album', $album->slug) }}" id="like_form" method="POST">
+                                    @csrf
+                                </form>
+                                <i onclick="document.querySelector('#like_form').submit()" 
+                                    class="far fa-bookmark" style="font-size: 30px; cursor: pointer;"></i><p class="text-dark">Save Album!</p>
+                            @endif
+                        @else
+                            <h3 class="text-center" 
+                                style="line-height: 50px; border-radius: 10px;">
+                                !<a href="{{ route('register') }}">ثبت نام</a> کنید و این آلبوم را به علاقه مندی های خود اضافه کنید</h3>
+                        @endguest
+                    @endif  
+                    <div class="col-md-12" style="margin-top: 20px; ">
                         <h1 class="text-white" style="font-size: 70px;">{{ $song->name }}</h1>
                         <p class="text-white mb-0">
                             {{ $album->artist->name == $song->artist->name 
@@ -64,7 +68,26 @@
                                 ? Storage::url($song->songFiles->where("quality", 128)->first()->path)  
                                 : Storage::url($song->songFiles->where("quality", 320)->first()->path) }}" type="audio/mpeg">
                               Your browser does not support the audio element.
-                          </audio> 
+                        </audio> 
+                        @auth
+                            @if($song->userLiked())
+                                <form action="{{ route('user.removed.liked.song', $song->slug) }}" id="remove_song{{$song->id}}_like_form" method="POST">
+                                    @csrf
+                                </form>
+                                <i onclick="document.querySelector('#remove_song{{$song->id}}_like_form').submit()"
+                                    class="fa fa-bookmark" style="font-size: 30px; cursor: pointer;"></i>
+                            @else
+                                <form action="{{ route('user.liked.song', $song->slug) }}" id="song{{$song->id}}_like_form" method="POST">
+                                    @csrf
+                                </form>
+                                <i onclick="document.querySelector('#song{{$song->id}}_like_form').submit()" 
+                                    class="far fa-bookmark" style="font-size: 30px; cursor: pointer;"></i>
+                            @endif
+                        @else
+                            <h5 class="text-center" 
+                                style="border-radius: 10px;">
+                            !<a href="{{ route('register') }}">ثبت نام</a> کنید و این موسیقی را به علاقه مندی های خود اضافه کنید</h5>
+                        @endguest
                         {{-- <audio
                             src="{{ $song->songFiles->where('quality', 128)->count() != 0
                                 ? Storage::url($song->songFiles->where('quality', 128)->first()->path)

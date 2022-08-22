@@ -6,6 +6,7 @@ use App\Traits\ModelsCommonMethods;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 
 class Artist extends Model
 {
@@ -23,11 +24,15 @@ class Artist extends Model
     }
 
     public function likes() {
-        return $this->morphToMany(Like::class, "likeable");
+        return $this->morphToMany(User::class, "likeable");
     }
 
     public function scopeSoloSongs(Builder $query) {
         return $this->songs()->doesntHave('album');
+    }
+
+    public function userLiked() {
+        return $this->likes()->where('user_id', Auth::user()->id)->exists();
     }
 
     public static function boot() {

@@ -4,17 +4,19 @@
     <div class="featured pad" id="">
         <div class="container">
             @auth
-                <h2>افزودن {{$artist->name}} به علاقه مندی ها</h2>
-                <form action="{{ route('user.liked.artist', $artist->slug) }}" id="like_form" method="POST">
-                    @csrf
-                </form>
-                <i onclick="document.querySelector('#like_form').submit()" 
-                    class="fa fa-bookmark" style="font-size: 90px;"></i>
-                <form action="{{ route('user.removed.liked.artist', $artist->slug) }}" id="remove_like_form" method="POST">
-                    @csrf
-                </form>
-                <i onclick="document.querySelector('#remove_like_form').submit()"
-                    class="far fa-bookmark" style="font-size: 80px;"></i>
+                @if($artist->userLiked())
+                    <form action="{{ route('user.removed.liked.artist', $artist->slug) }}" id="remove_like_form" method="POST">
+                        @csrf
+                    </form>
+                    <i onclick="document.querySelector('#remove_like_form').submit()"
+                        class="fa fa-bookmark" style="font-size: 30px; cursor: pointer;"></i>
+                @else
+                    <form action="{{ route('user.liked.artist', $artist->slug) }}" id="like_form" method="POST">
+                        @csrf
+                    </form>
+                    <i onclick="document.querySelector('#like_form').submit()" 
+                        class="far fa-bookmark" style="font-size: 30px; cursor: pointer;"></i><p class="text-dark">!Save Artist</p>
+                @endif
             @else
                 <h3 class="text-center" 
                     style="background-color: darkgray; line-height: 50px; border-radius: 10px;">

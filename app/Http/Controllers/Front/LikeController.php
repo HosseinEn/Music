@@ -26,9 +26,9 @@ class LikeController extends Controller
     {
         // TODO Order by created_date in likeable table
         $user = User::findOrFail(Auth::user()->id);
-        $artists = $user->likedArtists;
-        $albums = $user->likedAlbums;
-        $songs = $user->likedSongs;
+        $artists = $user->likedArtists()->orderBy("created_at", "desc")->get();
+        $albums = $user->likedAlbums()->orderBy("created_at", "desc")->get();
+        $songs = $user->likedSongs()->orderBy("created_at", "desc")->get();
         return view('front.favorites.userFavorites', compact(["artists", "albums", "songs"]));
     }
 
@@ -36,39 +36,39 @@ class LikeController extends Controller
     {
         $user = User::findOrFail(Auth::user()->id);
         $user->likedArtists()->attach($artist);
-        return redirect(route('user.favorites'))->with('success', 'هنرمند با موفقیت به لیست علاقه مندی های شما اضافه شد!');
+        return redirect()->back();
     }
 
     public function addAlbumToFavorite(Album $album)
     {
         $user = User::findOrFail(Auth::user()->id);
         $user->likedAlbums()->attach($album);
-        return redirect(route('user.favorites'))->with('success', 'آلبوم با موفقیت به لیست علاقه مندی های شما اضافه شد!');
+        return redirect()->back();
     }
 
     public function addSongToFavorite(Song $song)
     {
         $user = User::findOrFail(Auth::user()->id);
         $user->likedSongs()->attach($song);
-        return redirect(route('user.favorites'))->with('success', 'موسیقی با موفقیت به لیست علاقه مندی های شما اضافه شد!');
+        return redirect()->back();
     }
 
     public function removeArtistFromFavorite(Artist $artist) 
     {
         $user = User::findOrFail(Auth::user()->id);
         $user->likedArtists()->detach($artist);
-        return redirect(route('user.favorites'))->with('success', 'هنرمند با موفقیت از لیست علاقه مندی های شما حذف شد!');
+        return redirect()->back();
     }
 
     public function removeAlbumFromFavorite(Album $album) {
         $user = User::findOrFail(Auth::user()->id);
         $user->likedAlbums()->detach($album);
-        return redirect(route('user.favorites'))->with('success', 'آلبوم با موفقیت از لیست علاقه مندی های شما حذف شد!');
+        return redirect()->back();
     }
     
     public function removeSongFromFavorite(Song $song) {
         $user = User::findOrFail(Auth::user()->id);
         $user->likedSongs()->detach($song);
-        return redirect(route('user.favorites'))->with('success', 'موسیقی با موفقیت از لیست علاقه مندی های شما حذف شد!');
+        return redirect()->back();
     }
 }

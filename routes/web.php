@@ -20,7 +20,6 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::prefix('admin')->middleware('is_admin')->group(function() {
-    // Route::get('counts', [HomeController::class, 'counts']);
     Route::get('/home', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin.home');
     Route::resource('artists', \App\Http\Controllers\Admin\ArtistController::class);
     Route::resource('albums' , \App\Http\Controllers\Admin\AlbumController::class);
@@ -34,38 +33,12 @@ Route::prefix('admin')->middleware('is_admin')->group(function() {
         ->name('admin.notification');
 });
 
-
-// Route::get('/', [App\Http\Controllers\HomeController::class, "index"])
-//     ->name('home');
-// Route::get('/tags/{tag}', [App\Http\Controllers\HomeController::class, "tags"])
-//     ->name('front.tags');
-// Route::get('/song/{song}/download', [App\Http\Controllers\HomeController::class, "downloadSong"])
-//     ->name('download.song')->middleware("throttle:5, 1");
-// Route::post('/contact', [App\Http\Controllers\HomeController::class, "contactUs"])
-//     ->name('contact');
-
 Route::controller(App\Http\Controllers\HomeController::class)->group(function() {
     Route::get('/', "index")->name('home');
     Route::get('/tags/{tag}', "tags")->name('front.tags');
     Route::get('/song/{song}/download', "downloadSong")->name('download.song')->middleware("throttle:5, 1");
     Route::post('/contact', "contactUs")->name('contact');
 });
-
-// Route::get('/liked', [App\Http\Controllers\Front\LikeController::class, "index"])
-//     ->name('user.favorites');
-// Route::post('/artist/{artist}/liked', [App\Http\Controllers\Front\LikeController::class, "addArtistToFavorite"])
-//     ->name('user.liked.artist');
-// Route::post('/album/{album}/liked', [App\Http\Controllers\Front\LikeController::class, "addSongToFavorite"])
-//     ->name('user.liked.song');
-// Route::post('/song/{song}/liked', [App\Http\Controllers\Front\LikeController::class, "addAlbumToFavorite"])
-//     ->name('user.liked.album');
-// Route::post('/album/{album}/delete/liked', [App\Http\Controllers\Front\LikeController::class, "removeAlbumFromFavorite"])
-//     ->name('user.removed.liked.album');
-// Route::post('/artist/{artist}/delete/liked', [App\Http\Controllers\Front\LikeController::class, "removeArtistsFromFavorite"])
-//     ->name('user.removed.liked.album');
-// Route::post('/song/{song}/delete/liked', [App\Http\Controllers\Front\LikeController::class, "removeSongFromFavorite"])
-//     ->name('user.remove.liked.album');
-   
 
 Route::controller(App\Http\Controllers\Front\LikeController::class)->group(function() {
     Route::get('/liked',  "index")->name('user.favorites');
@@ -97,17 +70,4 @@ Route::get('/song/{song}', [App\Http\Controllers\Front\SongController::class, "s
     ->name('show.song');
 Route::get('/search', [App\Http\Controllers\Front\SearchController::class, "search"])
     ->name("search");
-
-// Route::get('/api/{search}', function($search) {
-//     $response = Http::withHeaders([
-//         'X-RapidAPI-Key'=>'not for now kiddo',
-//         'X-RapidAPI-Host'=>'shazam.p.rapidapi.com'
-//     ])->get('https://shazam.p.rapidapi.com/search', [
-//         "term"=>"{$search}",
-//         'locale' => 'en-US',
-//         'offset' => '0',
-//         'limit' => '10'
-//     ]);
-//     dd($response->json());
-// });
 
