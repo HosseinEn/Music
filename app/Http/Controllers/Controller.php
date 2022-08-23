@@ -24,10 +24,8 @@ class Controller extends BaseController
         return self::PAGINATEDBY * ($pageNumber - 1);
     }
 
-    public function storeImageOnPublicDisk($imageFile, $name, $id) {
-        $dateAndTime = now()->format("Y-m-d_hmsu");
-        $extension = $imageFile->guessClientExtension();
-        $path = $imageFile->storeAs("public/{$name}_images", "{$name}_{$id}_{$dateAndTime}.{$extension}");
+    public function storeImageOnPublicDisk($imageFile, $name) {
+        $path = $imageFile->store("public/{$name}_images");
         return $path;
     }
 
@@ -45,7 +43,7 @@ class Controller extends BaseController
 
     public function addImageToModelAndStore($request, $model, $modelName, $imageFileName) {
         $imageFile = $request->file($imageFileName);
-        $path = $this->storeImageOnPublicDisk($imageFile, $modelName, $model->id);
+        $path = $this->storeImageOnPublicDisk($imageFile, $modelName);
         $image = Image::make(["path" => $path]);
         $model->image()->save($image);
     }
@@ -79,7 +77,7 @@ class Controller extends BaseController
     public function replaceOldImage($model, $imageFile, $modelName) {
         $oldImagePath = $model->image->path;
         Storage::delete($oldImagePath);
-        $path = $this->storeImageOnPublicDisk($imageFile, $modelName, $model->id);
+        $path = $this->storeImageOnPublicDisk($imageFile, $modelName);
         $model->image()->update(["path"=>$path]);
     }
 
