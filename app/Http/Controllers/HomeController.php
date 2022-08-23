@@ -10,49 +10,59 @@ use App\Models\Song;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
 {
     public function index() {
-        $latestAlbums = Album::with(["songs", "songs.artist", "artist", "tags", "image", "songs.songFiles"])
-            ->orderBy("released_date", "desc")
-            ->published()
-            ->get()
-            ->take(3);
 
-        $popularAlbums = Album::withCount('likes')
-            ->with(["songs", "songs.artist", "artist", "tags", "image", "songs.songFiles"])
-            ->orderBy('likes_count', 'desc')
-            ->published()
-            ->get()
-            ->take(3);
+        $cachedLatestAlbum = Cache::remember("latestAlbums", 10, function() {
+            return Album::with(["songs", "songs.artist", "artist", "tags", "image", "songs.songFiles"])
+                ->orderBy("released_date", "desc")
+                ->published()
+                ->get()
+                ->take(3);
+        });
 
-        $soloSongs = Song::with(["artist", "tags", "image"])            
-            ->soloSongs()
-            ->orderBy("released_date", "desc")
-            ->published()
-            ->get()
-            ->take(9);
+        $cachedPopularAlbums = Cache::remember("popularAlbums", 10, function() {
+            return Album::withCount('likes')
+                ->with(["songs", "songs.artist", "artist", "tags", "image", "songs.songFiles"])
+                ->orderBy('likes_count', 'desc')
+                ->published()
+                ->get()
+                ->take(3);
+        });
 
-        $popularSongs = Song::withCount('likes')
-            ->with(["artist", "tags", "image"])            
-            ->soloSongs()
-            ->orderBy("released_date", "desc")
-            ->published()
-            ->get()
-            ->take(9);
+        $cachedSoloSongs = Cache::remember("soloSongs", 10, function() {
+            return Song::with(["artist", "tags", "image"])            
+                ->soloSongs()
+                ->orderBy("released_date", "desc")
+                ->published()
+                ->get()
+                ->take(9);
+        });
+
+        $cachedPopularSongs = Cache::remember("popularSongs", 10, function() {
+            return Song::withCount('likes')
+                ->with(["artist", "tags", "image"])            
+                ->soloSongs()
+                ->orderBy("released_date", "desc")
+                ->published()
+                ->get()
+                ->take(9);
+        });
 
         $tags = Tag::get()->take(8);
         
         $artists = Artist::with(["image"])->get()->take(8);
 
         return view('front.main.allContent', [
-            "latestAlbums"=>$latestAlbums,
-            "popularAlbums"=>$popularAlbums,
-            "latestSongs"=>$soloSongs,
-            "popularSongs"=>$popularSongs,
+            "latestAlbums"=>$cachedLatestAlbum,
+            "popularAlbums"=>$cachedPopularAlbums,
+            "latestSongs"=>$cachedSoloSongs,
+            "popularSongs"=>$cachedPopularSongs,
             "tags"=>$tags,
             "artists"=>$artists
         ]);

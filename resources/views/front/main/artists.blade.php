@@ -49,14 +49,14 @@
                                 <div class="member-img">
                                     <!-- Image  --> 
                                     <a href="{{ route('show.artist', $artist->slug) }}" class="text-decoration-none">
-                                        <img class="img-responsive" style="height: 250px;" src="{{ $artist->image ? $artist->image->url() : asset('img/user/1.jpg') }}" alt="" />
+                                        <img class="img-responsive" style="height: 200px;" src="{{ $artist->image ? $artist->image->url() : asset('img/user/1.jpg') }}" alt="" />
                                     </a>
                                     <!-- Hover block -->
                                     <div class="social text-center">
-                                        <a href="#"><i class="fa fa-facebook"></i></a>
-                                        <a href="#"><i class="fa fa-google-plus"></i></a>
-                                        <a href="#"><i class="fa fa-linkedin"></i></a>
-                                        <a href="#"><i class="fa fa-twitter"></i></a>
+                                        <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                                        <a href="#"><i class="fa-brands fa-google-plus"></i></a>
+                                        <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+                                        <a href="#"><i class="fa-brands fa-twitter"></i></a>
                                     </div>
                                 </div>
                                 <a href="{{ route('show.artist', $artist->slug) }}" class="text-decoration-none">

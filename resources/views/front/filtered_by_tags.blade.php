@@ -41,7 +41,7 @@
                                     @else
                                         <a href="{{ route('show.song', $item->slug) }}" class="text-decoration-none">
                                     @endif
-                                        <img class="img-responsive" style="height: 200px;" src="{{  $item->image ? $item->image->url() : asset('img/user/1.jpg')  }}" alt="Song's cover" />
+                                        <img class="img-responsive" style="" src="{{  $item->image ? $item->image->url() : asset('img/user/1.jpg')  }}" alt="Song's cover" />
                                     </a>
                                     <!-- paragraph -->
                                     @foreach ($item->tags as $tag)
@@ -64,7 +64,7 @@
                             </div>
                         </div>          
                     @empty
-                        آهنگی در حال حاضر وجود ندارد!
+                        آهنگ یا آلبومی در حال حاضر وجود ندارد!
                     @endforelse
                 </div>
                 {{ $items->appends($_GET)->links() }}

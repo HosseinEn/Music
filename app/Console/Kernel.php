@@ -16,14 +16,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        /* 
-            Auto publish songs | albums 
-            Run php artisan schedule:work and comment out this code.
-        */
         $schedule->job(new PublishFiles)->everyMinute();
-        // $schedule->call(function() {
-        //     PublishFiles::dispatch();
-        // })->everyMinute();
     }
 
     /**
