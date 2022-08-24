@@ -8,8 +8,10 @@
         </div>
         <div class="why-content">
             <!-- paragraph -->
-            <p class="why-message">It would be a great pleasure to have you in our team, follow these steps to join us.</p>
-            <div class="row">
+            <div class="hero-content">
+                <p>موسیقی ها و آلبوم های موجود در هر ژانر را بیابید!</p>
+            </div>
+            <div class="row" style="text-align: center;">
                 @forelse ($tags as $tag)
                     <a href="{{ route('front.tags', $tag->slug) }}">
                         <div class="col-md-3 col-sm-6">

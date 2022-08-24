@@ -7,7 +7,7 @@
             <h2>جدیدترین آلبوم ها</h2>
             <hr>
             <!-- paragraph -->
-            <p>We sing the best <strong class="theme-color">Songs</strong> and now we control the world best <strong class="theme-color">Music</strong>.</p>
+            <p>جدیدترین آلبوم هایی که <strong class="theme-color">اخیرا</strong> منتشر شده اند!</p>
         </div>
         @forelse($latestAlbums as $album)
             <!-- hero play list -->
@@ -41,13 +41,13 @@
                     <div class="col-md-6 col-sm-6">
                         <!-- play list -->
                         <div class="playlist-content">
-                            <ul class="list-unstyled">
+                            <ul class="list-unstyled" style="margin: 0 auto;">
                                 @forelse($album->songs->take(3) as $song)
-                                    <li class="playlist-number">
+                                    <li class="playlist-number" >
                                         <!-- song information -->
-                                        <div class="song-info">
-                                            <h4>{{ $song->name }}</h4>
-                                            <audio controls style="float: left;">
+                                        <div class="song-info" >
+                                            <h4><b>{{ $song->name }}</b></h4>
+                                            <audio controls >
                                                 <source src="{{ $song->songFiles->where("quality", 128)->count() != 0 ? Storage::url($song->songFiles->where("quality", 128)->first()->path)  
                                                                                                                       : Storage::url($song->songFiles->where("quality", 320)->first()->path) }}" type="audio/mpeg">
                                                   Your browser does not support the audio element.
@@ -73,7 +73,7 @@
                 آلبومی در حال حاضر وجود ندارد!
             </div>
         @endforelse
-        <h3><a href="{{ route('front.albums') }}">مشاهده بیشتر</a></h3>
+        <h3><a class="btn btn-primary btn-lg" href="{{ route('front.albums') }}?order=released">مشاهده بیشتر >></a></h3>
     </div>
 </div>
 <!--/ hero end -->

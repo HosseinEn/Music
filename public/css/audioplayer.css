@@ -1,7 +1,7 @@
 .bg-image {
     position: relative;
     background-size: cover;
-    height: 900px !important;
+    height: 1000px !important;
 }
 
 .bg-image:after {

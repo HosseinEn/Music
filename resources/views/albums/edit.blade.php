@@ -186,7 +186,7 @@
                         @enderror
                     </span>
                     @if($album->image)
-                        <img src="{{ $album->image->url() }}" alt="album_image">
+                        <img class="img-thumbnail mt-2" style="height: 70px;" src="{{ $album->image->url() }}" alt="album_image">
                     @endif
                 </div>
                 <div class="form-group">

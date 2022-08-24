@@ -13,11 +13,17 @@ class SongController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $songs = Song::with(["artist", "tags", "image"])            
+        $order = "released_date";
+
+        if($request->has("order") && $request->query("order") === "popular") {
+            $order = "likes_count";
+        }
+
+        $songs = Song::withCount('likes')->with(["artist", "tags", "image"])            
         ->soloSongs()
-        ->orderBy("released_date", "desc")
+        ->orderBy($order, "desc")
         ->published()
         ->paginate(20);
         return view('front.songs.songs', [

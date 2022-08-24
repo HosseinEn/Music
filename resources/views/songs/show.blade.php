@@ -22,6 +22,15 @@
                         {{ $song->artist->name }}
                     </a>
                 </p>
+                @if($song->album)
+                    <hr>
+                    <p class="card-text">
+                        آلبوم: 
+                        <a href="{{ route('albums.show', $song->album->slug) }}">
+                            {{ $song->album->name }}
+                        </a>
+                    </p>
+                @endif
                 <hr>
                 <p class="card-text">
                     <b>تاریخ انتشار توسط هنرمند:</b>

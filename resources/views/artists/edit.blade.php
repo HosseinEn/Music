@@ -44,7 +44,7 @@
                     <input type="file" name="image" class="form-control  @error('image') is-invalid @enderror"
                            id="file">
                     @if($artist->image)
-                        <img src="{{ Storage::url($artist->image->path) }}" alt="artist_image">
+                        <img class="img-thumbnail mt-2" style="height: 70px;"  src="{{ Storage::url($artist->image->path) }}" alt="artist_image">
                     @endif
                     <span class="invalid-feedback" role="alert">
                         @error('image')

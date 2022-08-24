@@ -7,7 +7,7 @@
             <h2>محبوب ترین آلبوم ها</h2>
             <hr>
             <!-- paragraph -->
-            <p>We sing the best <strong class="theme-color">Songs</strong> and now we control the world best <strong class="theme-color">Music</strong>.</p>
+            <p>محبوب ترین آلبوم هایی که <strong class="theme-color">کاربران</strong> انتخاب کرده اند!</p>
         </div>
         @forelse($popularAlbums as $album)
             <!-- hero play list -->
@@ -46,7 +46,7 @@
                                     <li class="playlist-number">
                                         <!-- song information -->
                                         <div class="song-info">
-                                            <h4>{{ $song->name }}</h4>
+                                            <h4><b>{{ $song->name }}</b></h4>
                                             <audio controls style="float: left;">
                                                 <source src="{{ $song->songFiles->where("quality", 128)->count() != 0 ? Storage::url($song->songFiles->where("quality", 128)->first()->path)  
                                                                                                                       : Storage::url($song->songFiles->where("quality", 320)->first()->path) }}" type="audio/mpeg">
@@ -73,7 +73,7 @@
                 آلبومی در حال حاضر وجود ندارد!
             </div>
         @endforelse
-        <h3><a href="{{ route('front.albums') }}">مشاهده بیشتر</a></h3>
+        <h3><a class="btn btn-primary btn-lg" href="{{ route('front.albums') }}?order=popular">مشاهده بیشتر >></a></h3>
     </div>
 </div>
 <!--/ hero end -->

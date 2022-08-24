@@ -215,7 +215,7 @@
                 <input type="file" name="cover" class="form-control  @error('cover') is-invalid @enderror" id="cover"
                     value="{{old('cover')}}">
                 @if($song->image) 
-                    <img src="{{ $song->image->url() }}" alt="Song image">
+                    <img class="img-thumbnail mt-2" style="height: 70px;"  src="{{ $song->image->url() }}" alt="Song image">
                 @endif
                 <span class="invalid-feedback" role="alert">
                     @error('cover')

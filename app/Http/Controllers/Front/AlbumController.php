@@ -13,10 +13,15 @@ class AlbumController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $albums = Album::with(["songs", "artist", "tags", "image"])
-        ->orderBy("released_date", "desc")
+        $order = "released_date";
+
+        if($request->has("order") && $request->query("order") === "popular") {
+            $order = "likes_count";
+        }
+        $albums = Album::withCount('likes')->with(["songs", "artist", "tags", "image"])
+        ->orderBy($order, "desc")
         ->published()
         ->paginate(20);
 

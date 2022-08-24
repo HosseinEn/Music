@@ -12,7 +12,7 @@
     </thead>
     <tbody>
     @forelse ($users as $user)
-        <tr class="text-center">
+        <tr class="text-center" style="{{ $user->id == Auth::user()->id ? 'background-color: rgb(190, 227, 209);' : '' }}">
             <th scope="row">{{ $loop->iteration + $pageNumberMultiplyPaginationSize }}</th>
             <td>{{ $user->name }}</td>
             <td>{{ $user->email }}</td>

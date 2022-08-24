@@ -62,14 +62,6 @@ class HomeController extends Controller
         else {
             $notifyAdmin = NotifyAdmin::create($request->except("_token"));
         }
-        // NotifyAdmin::updateOrCreate([
-        //     "user_id"=>Auth::user()->id,
-        //     "crud_on_songs"=>$request->crud_on_songs ? true : false,
-        //     "crud_on_albums"=>$request->crud_on_albums ? true : false,
-        //     "crud_on_tags"=>$request->crud_on_tags ? true : false,
-        //     "crud_on_users"=>$request->crud_on_users ? true : false,
-        //     "crud_on_artists"=>$request->crud_on_artists ? true : false,
-        // ]);
         return redirect()->back()->with('success', "وضعیت اطلاع رسانی با موفقیت تغییر کرد!");
     }
 }

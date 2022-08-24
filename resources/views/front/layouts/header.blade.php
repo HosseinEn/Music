@@ -12,10 +12,10 @@
             <div class="sm-right">
                 <!-- social link -->
                 <div class="sm-social-link">
-                    <a class="h-facebook" href="#"><i class="fa fa-facebook"></i></a>
-                    <a class="h-twitter" href="#"><i class="fa fa-twitter"></i></a>
-                    <a class="h-google" href="#"><i class="fa fa-google-plus"></i></a>
-                    <a class="h-linkedin" href="#"><i class="fa fa-linkedin"></i></a>
+                    <a class="h-facebook" href="#"><i class="fa-brands fa-facebook"></i></a>
+                    <a class="h-twitter" href="#"><i class="fa-brands fa-twitter"></i></a>
+                    <a class="h-google" href="#"><i class="fa-brands fa-google-plus"></i></a>
+                    <a class="h-linkedin" href="#"><i class="fa-brands fa-linkedin"></i></a>
                 </div>
             </div>
             <div class="clearfix"></div>
@@ -58,10 +58,6 @@
                                     </button>
                                     <ul class="dropdown-menu" style="" aria-labelledby="dropdownMenu1">
                                         <li><a style="color: black;" href="{{ route('user.favorites') }}">علاقه مندی های شما</a></li>
-                                        {{-- <li><a href="#">Another action</a></li> --}}
-                                        {{-- <li><a href="#">Something else here</a></li> --}}
-                                        {{-- <li role="separator" class="divider"></li> --}}
-                                        {{-- <li><a href="#">Separated link</a></li> --}}
                                     </ul>
                                 </div>
                             </li>
@@ -77,7 +73,6 @@
                     <li><a href="{{ route('home') }}#latestalbum">آلبوم ها</a></li>
                     <li><a href="{{ route('home') }}#latestsongs">موسیقی ها</a></li>
                     <li><a href="{{ route('home') }}#genres">ژانرها</a></li>
-                    <li><a href="{{ route('home') }}#events">رویداد ها</a></li>
                     <li><a href="{{ route('home') }}#artists">هنرمندان</a></li>
                     <li><a href="{{ route('home') }}#contact">ارتباط با ما</a></li>
                 </ul>

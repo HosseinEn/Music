@@ -26,7 +26,9 @@ class UserController extends Controller
 
         if($request->has('search')) {
             $searchParam = $request->get('search');
-            $users = User::where('name', 'like', "%{$searchParam}%")->paginate(self::PAGINATEDBY);
+            $users = User::where('name', 'like', "%{$searchParam}%")
+                           ->orWhere('email', 'like', "%{$searchParam}%")
+                           ->paginate(self::PAGINATEDBY);
         }
         else {
             $users = User::orderBy("created_at", "desc")->paginate(self::PAGINATEDBY);

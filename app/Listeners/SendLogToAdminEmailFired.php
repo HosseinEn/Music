@@ -39,31 +39,20 @@ class SendLogToAdminEmailFired
     private function adminApprovedToReceiveNotification() {
         switch($this->modelName) {
             case "album":
-                if($this->notifyAdminFor->crud_on_albums) {
-                    return true;    
-                }
+                return (boolean) $this->notifyAdminFor->crud_on_albums;
                 break;
             case "song":
-                if($this->notifyAdminFor->crud_on_songs) {
-                    return true;
-                }
+                return (boolean) $this->notifyAdminFor->crud_on_songs;
                 break;
             case "artist":
-                if($this->notifyAdminFor->crud_on_artists) {
-                    return true;
-                }
+                return (boolean) $this->notifyAdminFor->crud_on_artists;
                 break;
             case "user":
-                if($this->notifyAdminFor->crud_on_users) {
-                    return true;
-                }
+                return (boolean) $this->notifyAdminFor->crud_on_users;
                 break;
             case "tag":
-                if($this->notifyAdminFor->crud_on_tags) {
-                    return true;
-                }
+                return (boolean) $this->notifyAdminFor->crud_on_tags;
                 break;
         }
-        return false;
     }
 }

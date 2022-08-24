@@ -29,7 +29,7 @@
 
     @include('front.main.genres')
 
-    @include('front.main.events')
+    {{-- @include('front.main.events') --}}
 
     @include('front.main.artists')
 

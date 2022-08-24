@@ -77,7 +77,7 @@
                             <table class="table table-striped " style="border-color: black;" border="1px;">
                                 <thead>
                                     <tr>
-                                        <th class="text-center">اطلاع رسانی</th>
+                                        <th class="text-center">اطلاع رسانی از طریق ایمیل</th>
                                         <th class="text-center">فعال</th>
                                         <th class="text-center">غیرفعال</th>
                                     </tr>

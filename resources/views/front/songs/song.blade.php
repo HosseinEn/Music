@@ -51,7 +51,7 @@
                     <p class="text-white mb-0">{{ $song->artist->name }}</p>
                     <small class="text-white">{{ $song->released_date }}</small>
                     <br>
-                    <audio src="{{ $song->songFiles->where('quality', 128)->count() != 0 
+                    <audio id="songPlayer" src="{{ $song->songFiles->where('quality', 128)->count() != 0 
                             ? Storage::url($song->songFiles->where('quality', 128)->first()->path) 
                             : Storage::url($song->songFiles->where('quality', 320)->first()->path) }}" id="songPlayer"></audio>
                     <div class="audio-container">
