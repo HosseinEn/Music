@@ -17,7 +17,7 @@ class SongObserver
     public function updating(Song $song)
     {
         $moveSong = new MoveSongBetweenDisksService();
-        $moveSong->moveSongBetweenDisksAndUpdatePath($song);
+        $moveSong->moveSongBetweenDisksAndUpdatePath($song);   
     }
 
     /**
@@ -35,7 +35,7 @@ class SongObserver
         if($song->image) {
             $song->image->delete();
         }
-        $song->tags()->detach();
+        $song->tags()->detach();   
     }
 
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\SendLogToAdminEmail;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreSongRequest;
 use App\Http\Requests\UpdateSongRequest;
@@ -9,6 +10,7 @@ use App\Models\Album;
 use App\Models\Artist;
 use App\Models\Song;
 use App\Models\Tag;
+use App\Models\User;
 use App\Services\MoveSongBetweenDisksService;
 use App\Services\SongCreateUpdateAndUploadService;
 use Cviebrock\EloquentSluggable\Services\SlugService;
@@ -82,7 +84,6 @@ class SongController extends Controller
      */
     public function store(StoreSongRequest $request, SongCreateUpdateAndUploadService $songUploadAndCreate)
     {
-        // TODO event for song belong to album
         $validatedData = $request->validated();
         $validatedData["user_id"] = Auth::user()->id;
         $validatedData["published"] = $request->published;
@@ -98,6 +99,8 @@ class SongController extends Controller
             $this->addImageToModelAndStore($request, $song, 'song', 'cover');
         }    
         $song->tags()->attach($request->tags);
+        $user = User::where('id', Auth::user()->id)->get()->first();
+        event(new SendLogToAdminEmail($user, "song.create"));  
         return redirect(route('songs.index'))->with('success','موسیقی با موفقیت ایجاد گردید!');
     }
 
@@ -172,6 +175,8 @@ class SongController extends Controller
             $song->album()->disassociate();
             $song->save();
         }
+        $user = User::where('id', Auth::user()->id)->get()->first();
+        event(new SendLogToAdminEmail($user, "song.update"));
         return redirect(route('songs.index'))->with('success', 'اطلاعات آهنگ با موفقیت ویرایش شد!');
     }
 
@@ -185,6 +190,8 @@ class SongController extends Controller
     {
         // Model events
         $song->delete();
+        $user = User::where('id', Auth::user()->id)->get()->first();
+        event(new SendLogToAdminEmail($user, "song.delete"));   
         return redirect()->back()->with('success', 'موسیقی با موفقیت حذف گردید!');
     }
 }

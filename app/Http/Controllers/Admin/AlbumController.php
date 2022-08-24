@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\SendLogToAdminEmail;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAlbumRequest;
 use App\Http\Requests\UpdateAlbumRequest;
@@ -9,6 +10,7 @@ use App\Models\Album;
 use App\Models\Artist;
 use App\Models\Song;
 use App\Models\Tag;
+use App\Models\User;
 use App\Services\MoveSongBetweenDisksService;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Http\Request;
@@ -87,6 +89,8 @@ class AlbumController extends Controller
         if($request->has('cover')) {
             $this->addImageToModelAndStore($request, $album, 'album', 'cover');
         }       
+        $user = User::where('id', Auth::user()->id)->get()->first();
+        event(new SendLogToAdminEmail($user, "album.create"));   
         return redirect(route('albums.index'))->with('success', 'آلبوم با موفقیت ایجاد شد!');
     }
 
@@ -141,6 +145,8 @@ class AlbumController extends Controller
         $this->handleImageOnUpdate($request, $album, 'album', 'cover');
         $album->tags()->sync(request()->tags);
         $album->update($request->all());
+        $user = User::where('id', Auth::user()->id)->get()->first();
+        event(new SendLogToAdminEmail($user, "album.update"));   
         return redirect(route('albums.index'))->with('success', 'اطلاعات آلبوم با موفقیت ویرایش شد!');
     }
 
@@ -159,6 +165,8 @@ class AlbumController extends Controller
     {
         // Model events
         $album->delete();
+        $user = User::where('id', Auth::user()->id)->get()->first();
+        event(new SendLogToAdminEmail($user, "album.delete"));   
         return redirect()->back()->with('success', 'آلبوم  همراه با موسیقی ها با موفقیت حذف گردیدند!');
     }
 

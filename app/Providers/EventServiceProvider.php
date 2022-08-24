@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Events\SendLogToAdminEmail;
+use App\Listeners\SendLogToAdminEmailFired;
 use App\Models\Album;
 use App\Models\Song;
 use App\Observers\AlbumObserver;
@@ -21,6 +23,9 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+        ],
+        SendLogToAdminEmail::class => [
+            SendLogToAdminEmailFired::class,
         ],
     ];
 

@@ -58,13 +58,16 @@ class HomeController extends Controller
         
         $artists = Artist::with(["image"])->get()->take(8);
 
+        $banner = Song::with(["image", "artist"])->orderBy('released_date', 'desc')->published()->get()->take(7);
+
         return view('front.main.allContent', [
             "latestAlbums"=>$cachedLatestAlbum,
             "popularAlbums"=>$cachedPopularAlbums,
             "latestSongs"=>$cachedSoloSongs,
             "popularSongs"=>$cachedPopularSongs,
             "tags"=>$tags,
-            "artists"=>$artists
+            "artists"=>$artists,
+            "banner"=>$banner
         ]);
     }
 
@@ -108,7 +111,7 @@ class HomeController extends Controller
     }
 
     public function contactUs(SendContactUsRequest $request) {
-        $users = User::where('is_admin', true)->get();
+        $users = User::isAdmin()->get();
         foreach($users as $user) {
             Mail::to($user)->send(new ContactUs($request->all()));
         }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\SendLogToAdminEmail;
 use App\Traits\ModelsCommonMethods;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -37,8 +38,19 @@ class Artist extends Model
 
     public static function boot() {
         parent::boot();
+        $user = null;
+        if(Auth::check()) 
+            $user = User::where('id', Auth::user()->id)->get()->first();
+        
+        Artist::creating(function() use ($user) {
+            event(new SendLogToAdminEmail($user, "artist.create"));          
+        });
 
-        Artist::deleting(function($artist) {
+        Artist::updating(function() use ($user) {
+            event(new SendLogToAdminEmail($user, "artist.update"));          
+        });
+
+        Artist::deleting(function($artist) use ($user) {
             $artist->image->delete();
             $songs = $artist->songs;
             foreach($songs as $song) {
@@ -48,6 +60,7 @@ class Artist extends Model
             foreach($albums as $album) {
                 $album->delete();
             }
+            event(new SendLogToAdminEmail($user, "artist.delete"));          
         });
     }
 }

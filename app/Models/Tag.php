@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\Events\SendLogToAdminEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Support\Facades\Auth;
 
 class Tag extends Model
 {
@@ -36,6 +38,25 @@ class Tag extends Model
                 'source' => 'name'
             ]
         ];
+    }
+
+    public static function boot() {
+        parent::boot();
+        $user = null;
+        if (Auth::check())
+            $user = User::where('id', Auth::user()->id)->get()->first();
+            
+        Tag::creating(function()use ($user) {
+            event(new SendLogToAdminEmail($user, "tag.create"));          
+        });
+
+        Tag::updating(function()use ($user) {
+            event(new SendLogToAdminEmail($user, "tag.update"));          
+        });
+
+        Tag::deleting(function()use ($user) {
+            event(new SendLogToAdminEmail($user, "tag.delete"));          
+        });
     }
 
 }

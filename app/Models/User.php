@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Events\SendLogToAdminEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -72,7 +75,26 @@ class User extends Authenticatable
         return $this->morphedByMany(Artist::class, "likeable")->withTimestamps();
     }
 
+    public function notifyAdmin() {
+        return $this->hasOne(NotifyAdmin::class);
+    }
+
+    public function scopeIsAdmin(Builder $query) {
+        return $query->where('is_admin', true);
+    }
+
     public static function boot() {
         parent::boot();
+        $user = null;
+        if (Auth::check())
+            $user = User::where('id', Auth::user()->id)->get()->first();
+            
+        User::updating(function() use ($user) {
+            event(new SendLogToAdminEmail($user, "user.update"));          
+        });
+
+        User::deleting(function() use ($user) {
+            event(new SendLogToAdminEmail($user, "user.delete"));          
+        });
     }
 }

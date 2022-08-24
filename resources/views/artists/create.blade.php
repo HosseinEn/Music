@@ -12,7 +12,7 @@
                 </ol>
             </nav>
 
-            <form action="{{ route('artists.store') }}" method="POST" enctype="multipart/form-data">
+            <form class="bg-dark text-white" action="{{ route('artists.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
                     <label for="name">نام هنرمند:</label>
