@@ -52,14 +52,17 @@ class Artist extends Model
 
         Artist::deleting(function($artist) use ($user) {
             $artist->image->delete();
-            $songs = $artist->songs;
-            foreach($songs as $song) {
-                $song->delete();
-            }
+
             $albums = $artist->albums;
             foreach($albums as $album) {
                 $album->delete();
             }
+
+            $songs = $artist->songs;
+            foreach($songs as $song) {
+                $song->delete();
+            }
+            
             event(new SendLogToAdminEmail($user, "artist.delete"));          
         });
     }

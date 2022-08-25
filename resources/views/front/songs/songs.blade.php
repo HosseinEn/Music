@@ -1,6 +1,13 @@
 @extends('front.layouts.index')
 
+@section('title', request()->query('order') 
+                  ? (request()->get('order') === 'popular' 
+                        ? 'موسیقی ها - ' . 'محبوب ترین ها' 
+                        : 'موسیقی ها - ' . 'جدید ترین ها') 
+                  : 'موسیقی ها - ' . 'جدیدترین ها')
+
 @section('content')
+
     <div class="featured pad" id="">
         <div class="container">
             <!-- default heading -->

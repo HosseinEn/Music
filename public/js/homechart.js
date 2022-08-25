@@ -29,7 +29,6 @@
     
 //     chart.render();
 
-//     // console.log('fuck')
 //     // if(data.redirect) {
 //     // window.location = data.redirect;
 //     // }

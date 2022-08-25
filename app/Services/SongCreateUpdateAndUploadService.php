@@ -28,7 +28,7 @@ class SongCreateUpdateAndUploadService {
             $this->retrieveSongFileAndStoreAndCreateRelation("128");
             $this->retrieveSongFileAndStoreAndCreateRelation("320");
         }
-        else if ($quality == "128" || $quality == "320" ){
+        else if ($quality == "128" || $quality == "320"){
             $this->validateFile($quality);
             $this->song = Song::create($validatedData);
             $this->retrieveSongFileAndStoreAndCreateRelation($quality);
@@ -45,8 +45,6 @@ class SongCreateUpdateAndUploadService {
         $this->updateFileIfChanged("128");
         $this->updateFileIfChanged("320");
     }
-
- 
 
     private function throwQualityError() {
         $error = \Illuminate\Validation\ValidationException::withMessages([

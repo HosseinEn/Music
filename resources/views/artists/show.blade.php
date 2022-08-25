@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', $artist->name)
+
 @section('content')
     <div class="container">
         <nav aria-label="breadcrumb">

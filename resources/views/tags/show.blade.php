@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'مشاهده ژانر')
+
 @section('content')
     <div class="container">
         <nav aria-label="breadcrumb">

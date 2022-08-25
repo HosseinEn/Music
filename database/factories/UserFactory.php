@@ -25,12 +25,12 @@ class UserFactory extends Factory
     }
 
 
-    public function createHozi()
+    public function createAdmin()
     {
         return $this->state(function (array $attributes) {
             return [
-                'name' => 'Hozi',
-                'email'=>'hozi@gmail.com',
+                'name' => 'admin',
+                'email'=>'admin@gmail.com',
                 'is_admin'=>true
             ];
         });

@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'ایجاد هنرمند')
+
 @section('content')
     <div class="container">
         <div class="row">

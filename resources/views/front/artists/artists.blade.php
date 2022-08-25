@@ -1,5 +1,7 @@
 @extends('front.layouts.index')
 
+@section('title', 'هنرمندان')
+
 @section('content')
     <div class="featured pad" id="">
         <div class="container">

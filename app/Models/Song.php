@@ -14,7 +14,16 @@ class Song extends Model
     use HasFactory;
     use ModelsCommonMethods;
 
-    protected $fillable = ["name", "slug", "released_date", "artist_id", "user_id", "published", "publish_date", "auto_publish"];
+    protected $fillable = [
+        "name",
+        "slug", 
+        "released_date", 
+        "artist_id", 
+        "user_id", 
+        "published", 
+        "publish_date", 
+        "auto_publish"
+    ];
 
     public function artist() {
         return $this->belongsTo(Artist::class);
@@ -22,10 +31,6 @@ class Song extends Model
 
     public function album() {
         return $this->belongsTo(Album::class);
-    }
-
-    public function scopeSoloSongs(Builder $query) {
-        return $query->doesntHave('album');
     }
 
     public function tags() {
@@ -45,11 +50,15 @@ class Song extends Model
         return $this->hasMany(SongFile::class);
     }
 
+    public function userLiked() {
+        return $this->likes()->where('user_id', Auth::user()->id)->exists();
+    }
+
     public function scopePublished(Builder $query) {
         return $query->where('published', true);
     }
 
-    public function userLiked() {
-        return $this->likes()->where('user_id', Auth::user()->id)->exists();
+    public function scopeSoloSongs(Builder $query) {
+        return $query->doesntHave('album');
     }
 }
