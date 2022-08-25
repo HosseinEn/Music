@@ -82,22 +82,17 @@ class SongController extends Controller
      * @param  \App\Http\Requests\StoreSongRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreSongRequest $request, SongCreateUpdateAndUploadService $songUploadAndCreate)
+    public function store(StoreSongRequest $request, SongCreateUpdateAndUploadService $songValidateAndCreate)
     {
-        $validatedData = $request->validated();
-        $validatedData["user_id"] = Auth::user()->id;
-        $validatedData["published"] = $request->published;
-        $validatedData["auto_publish"] = $request->auto_publish ? true : false;
-        $duration = $this->createDuration($validatedData);
-        $request->merge(["duration"=>$duration]);
-        $this->createSlug($validatedData, Song::class);
-        $song = $songUploadAndCreate->validateSongFileAndStore($request, $validatedData);
-        if(isset($request->album)) {
-            $this->addSongToAlbum($song, $request->album);
-        }
-        if($request->has('cover')) {
-            $this->addImageToModelAndStore($request, $song, 'song', 'cover');
-        }    
+        $request->merge([
+            "duration" => $this->createDuration(),
+            "user_id" => Auth::user()->id,
+            "auto_publish" => $request->auto_publish ? true : false
+        ]);
+        $this->createSlug($request, Song::class);
+        $song = $songValidateAndCreate->validateSongFileAndStore($request);
+        $this->addSongToAlbum($song, $request->album);
+        $this->addImageToModelAndStore($song, 'song', 'cover');
         $song->tags()->attach($request->tags);
         $user = User::where('id', Auth::user()->id)->get()->first();
         event(new SendLogToAdminEmail($user, "song.create"));  
@@ -105,15 +100,15 @@ class SongController extends Controller
     }
 
     public function addSongToAlbum($song, $album_id) {
-        $album = Album::findOrFail($album_id);
-        $song->album()->associate($album);
-        $song->published = $album->published;
-        $song->auto_publish = $album->auto_publish;
-        $song->publish_date = $album->publish_date;
-        $song->save();
+        if(isset($album_id)) {
+            $album = Album::findOrFail($album_id);
+            $song->album()->associate($album);
+            $song->published = $album->published;
+            $song->auto_publish = $album->auto_publish;
+            $song->publish_date = $album->publish_date;
+            $song->save();
+        }
     }
-
-
 
     /**
      * Display the specified resource.

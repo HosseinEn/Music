@@ -8,6 +8,20 @@ use App\Services\MoveSongBetweenDisksService;
 
 class AlbumObserver
 {
+    public function createDuration(& $validatedData) {
+        $seconds = $validatedData["duration_seconds"];
+        $minutes = $validatedData["duration_minutes"];
+        $hours   = $validatedData["duration_hours"];
+        $this->unsetDurationSubsets($validatedData);
+        return $hours . ':' . $minutes . ':' . $seconds;
+    }
+
+    public function unsetDurationSubsets(& $validatedData) {
+        unset($validatedData["duration_seconds"]);
+        unset($validatedData["duration_minutes"]);
+        unset($validatedData["duration_hours"]);
+    }
+    
     /**
      * Handle the Album "creating" event.
      *
@@ -71,5 +85,6 @@ class AlbumObserver
             $song->delete();
         }
         $album->tags()->detach();
+        $album->likes()->detach();
     }
 }

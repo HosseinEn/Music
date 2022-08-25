@@ -59,13 +59,12 @@ class ArtistController extends Controller
      */
     public function store(StoreArtistRequest $request)
     {
-        $validatedData = $request->validated();
-        $validatedData["user_id"] = Auth::user()->id;
-        $this->createSlug($validatedData, Artist::class);
-        $artist = Artist::create($validatedData);
-        if($request->has('image')) {
-            $this->addImageToModelAndStore($request, $artist, 'artist', 'image');
-        }
+        $request->merge([
+            "user_id" => Auth::user()->id
+        ]);
+        $this->createSlug($request, Artist::class);
+        $artist = Artist::create($request->all());
+        $this->addImageToModelAndStore($artist, 'artist', 'image');
         return redirect(route('artists.index'))->with('success','هنرمند با موفقیت ایجاد گردید!');
     }
 

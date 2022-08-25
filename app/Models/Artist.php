@@ -62,7 +62,7 @@ class Artist extends Model
             foreach($songs as $song) {
                 $song->delete();
             }
-            
+            $artist->likes()->detach();
             event(new SendLogToAdminEmail($user, "artist.delete"));          
         });
     }

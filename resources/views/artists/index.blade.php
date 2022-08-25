@@ -30,7 +30,7 @@
                 </div>
                 </div>
             </div>
-
+            <p class="mt-3">* با حذف هنرمند، آلبوم ها و موسیقی های مرتبط حذف خواهند شد!</p>
             @include('artists.table')
         </div>
     </div>

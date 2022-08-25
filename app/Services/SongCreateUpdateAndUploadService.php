@@ -18,19 +18,35 @@ class SongCreateUpdateAndUploadService {
     private const FILE_128_UPLOAD_PUBLISHED_PATH = "public/published_song_files/128";
     private const FILE_320_UPLOAD_PUBLISHED_PATH = "public/published_song_files/320";
 
-    public function validateSongFileAndStore($request, $validatedData) {
+    public function validateSongFileAndStore($request) {
         $this->request = $request;
         $quality = (string) $request->quality;
         if($quality == "128_320") {
             $this->validateFile("128");
             $this->validateFile("320");
-            $this->song = Song::create($validatedData);
+            $this->song = Song::create($request->except([
+                "quality",
+                "duration_hours",
+                "duration_minutes",
+                "duration_seconds",
+                "album",
+                "tags",
+                "cover"
+            ]));
             $this->retrieveSongFileAndStoreAndCreateRelation("128");
             $this->retrieveSongFileAndStoreAndCreateRelation("320");
         }
         else if ($quality == "128" || $quality == "320"){
             $this->validateFile($quality);
-            $this->song = Song::create($validatedData);
+            $this->song = Song::create($request->except([
+                "quality",
+                "duration_hours",
+                "duration_minutes",
+                "duration_seconds",
+                "album",
+                "tags",
+                "cover"
+            ]));
             $this->retrieveSongFileAndStoreAndCreateRelation($quality);
         }
         else {

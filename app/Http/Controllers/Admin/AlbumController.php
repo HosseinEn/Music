@@ -80,15 +80,20 @@ class AlbumController extends Controller
      */
     public function store(StoreAlbumRequest $request)
     {
-        $validatedData = $request->validated();
-        $validatedData["user_id"] = Auth::user()->id;
-        $validatedData["duration"] = $this->createDuration($validatedData);
-        $validatedData["auto_publish"] = $request->auto_publish ? true : false;
-        $this->createSlug($validatedData, Album::class);
-        $album = Album::create($validatedData);
-        if($request->has('cover')) {
-            $this->addImageToModelAndStore($request, $album, 'album', 'cover');
-        }       
+        $request->merge([
+            "duration" => $this->createDuration(),
+            "user_id" => Auth::user()->id,
+            "auto_publish" => $request->auto_publish ? true : false
+        ]);
+        $this->createSlug($request, Album::class);
+        $album = Album::create($request->except([
+            "duration_hours",
+            "duration_minutes",
+            "duration_seconds",
+            "tags",
+            "cover"
+        ]));
+        $this->addImageToModelAndStore($album, 'album', 'cover');
         $user = User::where('id', Auth::user()->id)->get()->first();
         event(new SendLogToAdminEmail($user, "album.create"));   
         return redirect(route('albums.index'))->with('success', 'آلبوم با موفقیت ایجاد شد!');

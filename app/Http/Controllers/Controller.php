@@ -41,11 +41,13 @@ class Controller extends BaseController
         return $slugBase;
     }
 
-    public function addImageToModelAndStore($request, $model, $modelName, $imageFileName) {
-        $imageFile = $request->file($imageFileName);
-        $path = $this->storeImageOnPublicDisk($imageFile, $modelName);
-        $image = Image::make(["path" => $path]);
-        $model->image()->save($image);
+    public function addImageToModelAndStore($model, $modelName, $imageFileName) {
+        if(request()->has($imageFileName)) {
+            $imageFile = request()->file($imageFileName);
+            $path = $this->storeImageOnPublicDisk($imageFile, $modelName);
+            $image = Image::make(["path" => $path]);
+            $model->image()->save($image);
+        }
     }
 
     public function uniqueSlugOnUpdate($request, $model, $tableName) {
@@ -65,7 +67,7 @@ class Controller extends BaseController
     public function handleImageOnUpdate($request, $model, $modelName, $imageFileName) {
         if($request->has($imageFileName)) {
             if(!$model->image) {
-                $this->addImageToModelAndStore($request, $model, $modelName, $imageFileName);
+                $this->addImageToModelAndStore($model, $modelName, $imageFileName);
             }
             else {
                 $imageFile = $request->file($imageFileName);
@@ -81,32 +83,28 @@ class Controller extends BaseController
         $model->image()->update(["path"=>$path]);
     }
 
-    public function createDuration(& $validatedData) {
-        $seconds = $validatedData["duration_seconds"];
-        $minutes = $validatedData["duration_minutes"];
-        $hours   = $validatedData["duration_hours"];
-        $this->unsetDurationSubsets($validatedData);
-        return $hours . ':' . $minutes . ':' . $seconds;
-    }
-
-    public function unsetDurationSubsets(& $validatedData) {
-        unset($validatedData["duration_seconds"]);
-        unset($validatedData["duration_minutes"]);
-        unset($validatedData["duration_hours"]);
-    }
-
-    public function createSlug(& $validatedData, $model) {
-        if(!isset($validatedData["slug"])) {
-            $slugBase = $validatedData["name"];
+    public function createSlug($request, $model) {
+        if(!isset($request->slug)) {
+            $slugBase = $request->name;
         }
         else {
-            $slugBase = $validatedData["slug"];
+            $slugBase = $request->slug;
         }
         $slug = SlugService::createSlug($model, 'slug', strtolower($slugBase));
         if(empty($slug)) {
             $this->slugIsNotValid();
         }
-        $validatedData["slug"] = $slug;
+        $request->merge([
+            "slug"=>$slug
+        ]);
+    }
+
+    public function createDuration() {
+        $seconds = request()->duration_seconds;
+        $minutes = request()->duration_minutes;
+        $hours   = request()->duration_hours;
+        $duration =  $hours . ':' . $minutes . ':' . $seconds;
+        return $duration;
     }
 
     public function slugIsNotValid() {

@@ -36,6 +36,7 @@ class SongObserver
             $song->image->delete();
         }
         $song->tags()->detach();   
+        $song->likes()->detach();
     }
 
 }
