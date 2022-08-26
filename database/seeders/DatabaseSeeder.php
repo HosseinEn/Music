@@ -15,12 +15,12 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             UsersTableSeeder::class,
-            ArtistsTableSeeder::class,
-            AlbumsTableSeeder::class, 
-            SongsTableSeeder::class, 
-            TagsTableSeeder::class, 
-            TaggablesTableSeeder::class,
-            LikeablesTableSeeder::class
+            // ArtistsTableSeeder::class,
+            // AlbumsTableSeeder::class, 
+            // SongsTableSeeder::class, 
+            // TagsTableSeeder::class, 
+            // TaggablesTableSeeder::class,
+            // LikeablesTableSeeder::class
         ]);
     }
 }

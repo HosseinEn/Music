@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'پنل ادمین')
+
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
@@ -21,7 +23,6 @@
                                     <div class="text-right mt-3 mb-3 d-fixed">
                                         <a href="https://github.com/apexcharts/apexcharts.js/tree/master/samples/vanilla-js/dashboards/modern"
                                             target="_blank" class="btn btn-outline-primary mr-2">
-                                            <span class="btn-text">View Code</span>
                                         </a>
                                     </div>
                                     <div class="main">

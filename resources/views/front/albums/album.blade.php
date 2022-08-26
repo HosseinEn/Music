@@ -76,13 +76,13 @@
                                     @csrf
                                 </form>
                                 <i onclick="document.querySelector('#remove_song{{$song->id}}_like_form').submit()"
-                                    class="fa fa-bookmark" style="font-size: 30px; cursor: pointer;"></i>
+                                    class="fa fa-bookmark" style="font-size: 30px; cursor: pointer;"></i><p class="text-dark">Save this song!</p>
                             @else
                                 <form action="{{ route('user.liked.song', $song->slug) }}" id="song{{$song->id}}_like_form" method="POST">
                                     @csrf
                                 </form>
                                 <i onclick="document.querySelector('#song{{$song->id}}_like_form').submit()" 
-                                    class="far fa-bookmark" style="font-size: 30px; cursor: pointer;"></i>
+                                    class="far fa-bookmark" style="font-size: 30px; cursor: pointer;"></i><p class="text-dark">Save this song!</p>
                             @endif
                         @else
                             <h5 class="text-center" 
@@ -124,11 +124,11 @@
 
                         <br>
                         <div class="">
-                            @if ($song->songFiles()->quality128Exists())
+                            @if ($song->songFiles->where("quality", 128)->count() != 0 )
                                 <a href="{{ route('download.song', $song->slug) }}?quality=128"
                                     class="btn btn-secondary">Download 128kbps</a><br>
                             @endif
-                            @if ($song->songFiles()->quality320Exists())
+                            @if ($song->songFiles->where("quality", 320)->count() != 0 )
                                 <a href="{{ route('download.song', $song->slug) }}?quality=320"
                                     class="btn btn-secondary mt-1">Download 320kbps</a>
                             @endif

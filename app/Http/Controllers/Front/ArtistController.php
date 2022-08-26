@@ -32,7 +32,7 @@ class ArtistController extends Controller
         $artist = Artist::where('slug', $artistSlug)
         ->with([
                 "songs" => function($query) {
-                    return $query->with(["tags", "image"])   
+                    return $query->with(["artist", "tags", "image"])   
                                  ->soloSongs()
                                  ->published()
                                  ->orderBy("released_date", "desc");

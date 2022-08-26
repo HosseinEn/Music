@@ -16,7 +16,7 @@
                             <div class="figure">
                                 <!-- image -->
                                 <a href="{{ route('show.song', $song->slug) }}" class="text-decoration-none">
-                                    <img class="img-responsive" style="height: 200px;" src="{{ $song->image ? $song->image->url() : asset('img/user/1.jpg') }}" alt="Song's cover" />
+                                    <img class="img-responsive" style="display: block; margin-left: auto; margin-right: auto; height: 270px;" src="{{ $song->image ? $song->image->url() : asset('img/user/1.jpg') }}" alt="Song's cover" />
                                 </a>
                                 @foreach ($song->tags as $tag)
                                     <a class="badge bg-success" href="{{ route('front.tags', $tag->slug) }}">{{ $tag->name }}</a>

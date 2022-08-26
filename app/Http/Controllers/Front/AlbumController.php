@@ -38,7 +38,7 @@ class AlbumController extends Controller
      */
     public function show($albumSlug)
     {
-        $album = Album::where('slug', $albumSlug)->published()->firstOrFail();
+        $album = Album::with(["songs", "songs.artist", "tags", "songs.image", "songs.songFiles"])->where('slug', $albumSlug)->published()->firstOrFail();
         return view('front.albums.album', ["album"=>$album]);
     }
 }

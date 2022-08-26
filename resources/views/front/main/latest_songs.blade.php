@@ -17,7 +17,7 @@
                                 <!-- image -->
                                 <a href="{{ route('show.song', $song->slug) }}" class="text-decoration-none">
                                     <img class="img-responsive" 
-                                        style="  display: block; margin-left: auto; margin-right: auto; height: 270px;"
+                                        style="display: block; margin-left: auto; margin-right: auto; height: 270px;"
                                         src="{{ $song->image ? $song->image->url() : asset('img/user/1.jpg') }}" alt="Song's cover" />
                                 </a>
                             </div>

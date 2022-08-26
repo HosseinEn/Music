@@ -13,7 +13,7 @@
                     <!-- big icon -->
                     <i class="fa fa-street-view"></i>
                     <!-- contact details  -->
-                    <span class="contact-details">#30/67, 5th Street, Mega Market Circle, New Delhi - 625001</span>
+                    <span class="contact-details">#30/67, Blah Blah Blah Blah - 625001</span>
                 </div>
             </div>
             <div class="col-md-4 col-sm-4">
@@ -22,7 +22,7 @@
                     <!-- big icon -->
                     <i class="fa fa-wifi"></i>
                     <!-- contact details  -->
-                    <span class="contact-details">music.site@melodi.com</span>
+                    <span class="contact-details">hosseinen81@gmail.com</span>
                 </div>
             </div>
             <div class="col-md-4 col-sm-4">
