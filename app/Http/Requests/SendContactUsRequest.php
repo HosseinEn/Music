@@ -27,7 +27,8 @@ class SendContactUsRequest extends FormRequest
             "name"=>"required",
             "email"=>"required|email",
             "phone"=>"required|regex:/[0-9]{11}/",
-            "message"=>"required|max:700"
+            "message"=>"required|max:700",
+            "g-recaptcha-response"=>"required"
         ];
     }
 
@@ -40,7 +41,8 @@ class SendContactUsRequest extends FormRequest
             "phone.required"=>"پر کردن تلفن همراه الزامی است.",
             "phone.regex"=>"لطفا یک تلفن همراه معتبر وارد نمایید!",
             "message.required"=> "پر کردن پیام الزامی است!",
-            "message.max"=> "حداکثر :max کاراکتر مجاز است!"
+            "message.max"=> "حداکثر :max کاراکتر مجاز است!",
+            "g-recaptcha-response.required"=>"لطفا کپچا را تکمیل نمایید!"
         ];
     }
 }

@@ -83,6 +83,12 @@
                         </div>
                     </div>
                 </div>
+                <div name="g-recaptcha-response" class="g-recaptcha @error('g-recaptcha-response') is-invalid @enderror" data-sitekey="6LeCw6whAAAAABD6S_RyCfEdZ6dzF2OC7k0qiMMv"></div>
+                <span class="text-danger" role="alert">
+                    @error('g-recaptcha-response')
+                    <strong>{{ $message }}</strong>
+                    @enderror
+                </span>
                 <div class="text-center">
                     <button type="submit" class="btn btn-lg btn-theme">ارسال پیام</button>
                 </div>

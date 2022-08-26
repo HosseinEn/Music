@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'ثبت نام')
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -61,7 +63,12 @@
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation"  autocomplete="new-password">
                             </div>
                         </div>
-
+                        <div name="g-recaptcha-response" class="g-recaptcha @error('g-recaptcha-response') is-invalid @enderror" data-sitekey="6LeCw6whAAAAABD6S_RyCfEdZ6dzF2OC7k0qiMMv"></div>
+                        @error('g-recaptcha-response')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">

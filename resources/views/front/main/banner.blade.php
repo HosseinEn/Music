@@ -5,8 +5,8 @@
         <div class="carousel-inner" role="listbox">
             @forelse($banner as $song)
                 <div class="item {{ $loop->first ? 'active' : '' }} ">
-                    {{-- <img style="" src="{{ asset('img/banner/b1.jpg') }}" alt="{{ $song->name }}"> --}}
-                    <img class="img-fluid" src="{{ $song->image->url() }}" alt="{{ $song->name }}">
+                    <img style="" src="{{ asset('img/banner/b1.jpg') }}" alt="{{ $song->name }}">
+                    {{-- <img class="img-fluid" src="{{ $song->image->url() }}" alt="{{ $song->name }}"> --}}
                     <div class="container">
                         <!-- banner caption -->
                         <div class="carousel-caption slide-one">

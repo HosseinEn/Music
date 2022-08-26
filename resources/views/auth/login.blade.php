@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'ورود')
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -10,7 +12,6 @@
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
-
                         <div class="row mb-3">
                             <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('آدرس ایمیل') }}</label>
 
@@ -38,7 +39,14 @@
                                 @enderror
                             </div>
                         </div>
-
+                        <div class="row mb-3">
+                            <div name="g-recaptcha-response" class="g-recaptcha @error('g-recaptcha-response') is-invalid @enderror" data-sitekey="6LeCw6whAAAAABD6S_RyCfEdZ6dzF2OC7k0qiMMv"></div>
+                            @error('g-recaptcha-response')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
                         <div class="row mb-3">
                             <div class="col-md-6 offset-md-4">
                                 <div class="form-check">
@@ -50,7 +58,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="row mb-0">
                             <div class="col-md-8 offset-md-4">
                                 <button type="submit" class="btn btn-primary">

@@ -6,7 +6,7 @@
             <!-- secondary menu left link area -->
             <div class="sm-left">
                 <strong>Phone</strong>:&nbsp; <a href="#">555 555 555</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                <strong>E-mail</strong>:&nbsp; <a href="#">music.site@melodi.com</a>
+                <strong>E-mail</strong>:&nbsp; <a href="#">music.site@test.com</a>
             </div>
             <!-- secondary menu right link area -->
             <div class="sm-right">

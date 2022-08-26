@@ -91,7 +91,7 @@
 
 {{--        <script src="{{ asset('js/app.js') }}"></script>--}}
 {{--        <script src="{{ asset('js/bootstrap.js') }}"></script>--}}
-
+		<script src="https://www.google.com/recaptcha/api.js" async defer></script>
         <!-- Javascript files -->
 		<!-- jQuery -->
 		<script src="{{ asset('js/jquery.js') }}"></script>

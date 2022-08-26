@@ -55,6 +55,7 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'g-recaptcha-response' => ["required"]
         ],$this->messages());
     }
 
@@ -70,7 +71,8 @@ class RegisterController extends Controller
             "password.required" => "لطفا پسوورد را پر نمایید!",
             "password.string" => "تنها رشته برای پسوورد مجاز است!",
             "password.min" => "حداقل ۸ کاراکتر برای پسوود مجاز است!",
-            "password.confirmed" => "پسوورد ها با یکدیگر مطابقت ندارند!"
+            "password.confirmed" => "پسوورد ها با یکدیگر مطابقت ندارند!",
+            "g-recaptcha-response.required" => "لطفا کپچا را تکمیل نمایید!"
         ];
     }
 
