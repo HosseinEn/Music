@@ -11,6 +11,7 @@ use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
@@ -60,6 +61,13 @@ class HomeController extends Controller
 
         $banner = Song::with(["image", "artist"])->orderBy('released_date', 'desc')->published()->get()->take(7);
 
+        $comingSoonSong = Song::where('published', false)
+                              ->where('auto_publish', true)
+                              ->orderBy('publish_date', 'asc')
+                              ->take(1)
+                              ->get()
+                              ->first();
+
         return view('front.main.allContent', [
             "latestAlbums"=>$cachedLatestAlbum,
             "popularAlbums"=>$cachedPopularAlbums,
@@ -67,7 +75,8 @@ class HomeController extends Controller
             "popularSongs"=>$cachedPopularSongs,
             "tags"=>$tags,
             "artists"=>$artists,
-            "banner"=>$banner
+            "banner"=>$banner,
+            "comingSoonSong"=>$comingSoonSong
         ]);
     }
 
