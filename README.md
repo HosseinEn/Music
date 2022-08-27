@@ -21,44 +21,89 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
+# Laravel Musics Website
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Explore in musics website written in PHP using Laravel framework. Find artists, songs and albums you
+like in this application which created by admins in admin panel. Admin panel with variaty of accessibility
+on content produced. 
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Requirements
 
-## Laravel Sponsors
+- PHP 7.3+
+- Composer
+- Git
+- MYSQL 5.7+.
+(Easy way) You may install XAMPP, AMPPS, WAMP or whatever you prefer in order to set up a MySQL database
+which gives you access to phpmyadmin on windows and running this application. For Linux users, Install mysql-server database. (Godspeed!)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## Installation
 
-### Premium Partners
+1. Clone the repo and `cd` into it. (`git clone https://github.com/HosseinEn/Musics.git`)
+4. `composer install` (you have to install and add composer to you system env path before running this command
+5. Rename or copy `.env.example` file to `.env`
+6. `php artisan key:generate`
+7.  `php artisan storage:link` (Make sure you have storage directory in public folder or image and files won't show up!)
+8. Set your database credentials in your `.env` file.
+9. `php artisan migrate:fresh --seed`
+10. `php artisan serve`
+11. Visit `127.0.0.1:8000` in your browser.
+12. Log in to admin panel using following credentials:
+	<br/>`email: testing@admin.com`
+	<br/>`password: 12345678`
+13. (Optional) Set your mail service credentials in your `.env` file if you want to use application email sending services. (Recommended for local testing: https://mailtrap.io/)
+14. (Optional) Change `QUEUE_CONNECTION=sync` in `.env` file to `database` if you want to use queueable mail service and run `php artisan migrate` to create jobs table.
+15. (Optional) Change your `CACHE_DRIVER=file` to redis or other caching systems if you are into using other caching systems rather than your filesystem.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
 
-## Contributing
+<br/>
+<br/>
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+If you are interested in checking the auto publish scheduling system run:
+<br/>
+`php artisan schedule:work`
+<br/>
+https://laravel.com/docs/9.x/scheduling#running-the-scheduler-locally
 
-## Code of Conduct
+<br/>
+<br/>
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+And for using queue system run:
+<br/>
+`php artisan queue:work`
+<br/>
+https://laravel.com/docs/9.x/queues#running-the-queue-worker
 
-## Security Vulnerabilities
+## Features
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-## License
+- Private disk for unpublished song files for security purposes.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- Services for transferring between private and public disks by changing song status.
+
+- Admin Panel with songs, artists, users, albums and tags management system with strong validation on forms, image and audio files and searchable tables.
+
+- Using Caching method to enhance performance on Front page.
+
+- Sending logs to admin email on changes if enabled in panel using Laravel Mailable, queue, event and listeners system.
+
+- Automatic songs publishing on a specific date using Laravel job scheduling system.
+
+- Using area chart for count of records in admin panel.
+
+- Providing SEO-friendly, human-readable automatic name slugging  for  routing throughout the application (Persian and English supported).
+
+- Sending emails as suggestions for admins by visitors.
+
+- Providing user's favorite page for registered users to add or remove songs, albums, and artists.
+
+- Using Laravel Eloquent relations (including polymorphics), observers and model events to handle related models on creating, updating and deleting.
+
+- Providing songs download in 128 and 320 kbps.
+
+- Recaptcha for login, register and contact us to prevent malicious activites. (Throttle middleware is used for login by default, I added this for song downloading too) 
+
+## Demo Video (1.84MB)
+https://user-images.githubusercontent.com/83599557/187021466-24046ce9-18e9-4efa-b3a7-a3b35c8117f5.mp4
+
+
+
