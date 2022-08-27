@@ -6,21 +6,9 @@
 		<!-- Description, Keywords and Author -->
 		<meta name="description" content="Your description">
 		<meta name="keywords" content="Your,Keywords">
-
+		<meta name="author" content="Hossein Enshaei">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-{{--		<!-- Styles -->--}}
-{{--		<!-- Bootstrap CSS -->--}}
-{{--		<link href="css/bootstrap.min.css" rel="stylesheet">--}}
-{{--		<!-- Animate CSS -->--}}
-{{--		<link href="css/animate.min.css" rel="stylesheet">--}}
-{{--		<!-- Basic stylesheet -->--}}
-{{--		<link rel="stylesheet" href="css/owl.carousel.css">--}}
-{{--		<!-- Font awesome CSS -->--}}
-{{--		<link href="css/font-awesome.min.css" rel="stylesheet">--}}
-{{--		<!-- Custom CSS -->--}}
-{{--		<link href="css/style.css" rel="stylesheet">--}}
-{{--		<link href="css/style-color.css" rel="stylesheet">--}}
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
 		<!-- Favicon -->
 		<link rel="shortcut icon" href="{{ asset('img/logo/favicon.ico') }}">
@@ -89,8 +77,6 @@
 
 		</div>
 
-{{--        <script src="{{ asset('js/app.js') }}"></script>--}}
-{{--        <script src="{{ asset('js/bootstrap.js') }}"></script>--}}
 		<script src="https://www.google.com/recaptcha/api.js" async defer></script>
         <!-- Javascript files -->
 		<!-- jQuery -->
@@ -108,6 +94,5 @@
 		<!-- HTML5 Support for IE -->
 		<script src="{{ asset('js/html5shiv.js') }}"></script>
 		<!-- Custom JS -->
-		{{-- <script src="{{ asset('js/custom.js') }}"></script> --}}
 	</body>
 </html>
